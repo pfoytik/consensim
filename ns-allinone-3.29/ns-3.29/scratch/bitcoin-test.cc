@@ -546,6 +546,8 @@ main (int argc, char *argv[])
 
   }
 
+std::cout << "This is not NS LOG but it will do for now..... \n";
+
 #ifdef MPI_TEST
 
   // Exit the MPI execution environment
@@ -558,6 +560,7 @@ main (int argc, char *argv[])
 #else
   NS_FATAL_ERROR ("Can't use distributed simulator without MPI compiled in");
 #endif
+
 }
 
 double get_wall_time()
@@ -931,6 +934,7 @@ void PrintTotalStats (nodeStatistics *stats, int totalNodes, double start, doubl
   std::cout << "] average = " << average/chunkTimeouts.size() << "\n" ;
 
   std::cout << "\n";
+
 }
 
 void PrintBitcoinRegionStats (uint32_t *bitcoinNodesRegions, uint32_t totalNodes)

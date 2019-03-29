@@ -9,7 +9,18 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f2ffa721-684b-4c4b-bf4d-a4ce28715a73" name="Default Changelist" comment="" />
+    <list default="true" id="f2ffa721-684b-4c4b-bf4d-a4ce28715a73" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/../../ARL_ODU_Blockchain_Research.pptx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../ARL_ODU_Blockchain_Research_v2.pptx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Bitcoin-Simulator" beforeDir="false" afterPath="$PROJECT_DIR$/../../Bitcoin-Simulator" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Consensus_Simulation_Methodology.doc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Consensus_Simulation_Methodology.docx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Consensus_Simulation_Methodology.odt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Consensus_Simulation_Methodology.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Kiayias2017_Chapter_OuroborosAProvablySecureProof-.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Ouroboros-BFT-Protocol.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../hand_simulation.ods" beforeDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -20,6 +31,7 @@
     <session id="-604534267">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
+          <entry key="project.closed" value="1" />
           <entry key="project.open.time.21" value="1" />
           <entry key="project.open.time.3" value="1" />
           <entry key="project.opened" value="2" />
@@ -59,7 +71,6 @@
               <caret line="28" column="5" selection-start-line="28" selection-start-column="5" selection-end-line="28" selection-end-column="5" />
               <folding>
                 <element signature="e#1061#1077#0" expanded="true" />
-                <element signature="e#1601#24718#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -69,7 +80,7 @@
         <entry file="file://$PROJECT_DIR$/build/ns3/applications-module.h">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="30">
-              <caret line="2" lean-forward="true" selection-start-line="2" selection-end-line="2" />
+              <caret line="2" selection-start-line="2" selection-end-line="2" />
               <folding>
                 <element signature="e#31#148#0" expanded="true" />
                 <element signature="e#214#251#0" expanded="true" />
@@ -84,6 +95,9 @@
     <findStrings>
       <find>bitcoin</find>
     </findStrings>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
@@ -105,6 +119,7 @@
     <option name="width" value="1853" />
     <option name="height" value="1168" />
   </component>
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
     <navigator proportions="" version="1">
       <foldersAlwaysOnTop value="true" />
@@ -166,12 +181,12 @@
       <option name="presentableId" value="Default" />
       <updated>1541800637264</updated>
       <workItem from="1541800640019" duration="2265000" />
-      <workItem from="1549575846771" duration="1800000" />
+      <workItem from="1549575846771" duration="2399000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="4065000" />
+    <option name="totallyTimeSpent" value="4664000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="67" y="35" width="1853" height="1168" extended-state="0" />
@@ -216,7 +231,6 @@
           <caret line="28" column="5" selection-start-line="28" selection-start-column="5" selection-end-line="28" selection-end-column="5" />
           <folding>
             <element signature="e#1061#1077#0" expanded="true" />
-            <element signature="e#1601#24718#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -224,7 +238,7 @@
     <entry file="file://$PROJECT_DIR$/build/ns3/applications-module.h">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="30">
-          <caret line="2" lean-forward="true" selection-start-line="2" selection-end-line="2" />
+          <caret line="2" selection-start-line="2" selection-end-line="2" />
           <folding>
             <element signature="e#31#148#0" expanded="true" />
             <element signature="e#214#251#0" expanded="true" />

@@ -1,4 +1,4 @@
-# project ns (3.29) configured on Thu Oct  4 14:26:16 2018 by
+# project ns (3.29) configured on Fri Mar 22 11:00:16 2019 by
 # waf 2.0.9 (abi 20, python 2070cf0 on linux2)
 # using ./waf configure --build-profile=optimized --out=build/optimized --with-pybindgen=/home/bill/Desktop/workspace/ns-allinone-3.24/pybindgen-0.17.0.post41+ngd10fa60 --enable-mpi --enable-static
 #
@@ -526,36 +526,36 @@ Checking for compilation flag -march=native support
 ==>
 int main() { return 0; }
 <==
-[1/1] Compiling [32mbuild/optimized/.conf_check_2e1c9ac8498167d908015683e6ad65f0/test.cpp[0m
+[1/1] Compiling [32mbuild/optimized/.conf_check_021469d4e598fd1eed79748e813a51ec/test.cpp[0m
 
-['/usr/bin/g++', '-std=c++11', '-march=native', '-DNS3_BUILD_PROFILE_OPTIMIZED', '../test.cpp', '-c', '-o/home/pfoytik/Documents/Blockchain/simulation/ns-allinone-3.29/ns-3.29/build/optimized/.conf_check_2e1c9ac8498167d908015683e6ad65f0/testbuild/test.cpp.1.o']
+['/usr/bin/g++', '-std=c++11', '-march=native', '-DNS3_BUILD_PROFILE_OPTIMIZED', '../test.cpp', '-c', '-o/home/pfoytik/Documents/Blockchain/simulation/ns-allinone-3.29/ns-3.29/build/optimized/.conf_check_021469d4e598fd1eed79748e813a51ec/testbuild/test.cpp.1.o']
 ok
 ------------------------------------------------------
 Checking for compilation flag -Wl,--soname=foo support
 ==>
 int main() { return 0; }
 <==
-[1/1] Compiling [32mbuild/optimized/.conf_check_2e1c9ac8498167d908015683e6ad65f0/test.cpp[0m
+[1/1] Compiling [32mbuild/optimized/.conf_check_021469d4e598fd1eed79748e813a51ec/test.cpp[0m
 
-['/usr/bin/g++', '-std=c++11', '-march=native', '-fstrict-overflow', '-Wstrict-overflow=2', '-Wl,--soname=foo', '-DNS3_BUILD_PROFILE_OPTIMIZED', '../test.cpp', '-c', '-o/home/pfoytik/Documents/Blockchain/simulation/ns-allinone-3.29/ns-3.29/build/optimized/.conf_check_2e1c9ac8498167d908015683e6ad65f0/testbuild/test.cpp.1.o']
+['/usr/bin/g++', '-std=c++11', '-march=native', '-fstrict-overflow', '-Wstrict-overflow=2', '-Wl,--soname=foo', '-DNS3_BUILD_PROFILE_OPTIMIZED', '../test.cpp', '-c', '-o/home/pfoytik/Documents/Blockchain/simulation/ns-allinone-3.29/ns-3.29/build/optimized/.conf_check_021469d4e598fd1eed79748e813a51ec/testbuild/test.cpp.1.o']
 ok
 ----------------------------------------------------------------
 Checking for compilation flags -Wl,--whole-archive,-B... support
 ==>
 int main() { return 0; }
 <==
-[1/1] Compiling [32mbuild/optimized/.conf_check_2e1c9ac8498167d908015683e6ad65f0/test.cpp[0m
+[1/1] Compiling [32mbuild/optimized/.conf_check_021469d4e598fd1eed79748e813a51ec/test.cpp[0m
 
-['/usr/bin/g++', '-std=c++11', '-march=native', '-fstrict-overflow', '-Wstrict-overflow=2', '-DNS3_BUILD_PROFILE_OPTIMIZED', '../test.cpp', '-c', '-o/home/pfoytik/Documents/Blockchain/simulation/ns-allinone-3.29/ns-3.29/build/optimized/.conf_check_2e1c9ac8498167d908015683e6ad65f0/testbuild/test.cpp.1.o']
+['/usr/bin/g++', '-std=c++11', '-march=native', '-fstrict-overflow', '-Wstrict-overflow=2', '-DNS3_BUILD_PROFILE_OPTIMIZED', '../test.cpp', '-c', '-o/home/pfoytik/Documents/Blockchain/simulation/ns-allinone-3.29/ns-3.29/build/optimized/.conf_check_021469d4e598fd1eed79748e813a51ec/testbuild/test.cpp.1.o']
 ok
 ----------------------------------------------------------------
 Checking for compilation flag -std=c++11 support
 ==>
 int main() { return 0; }
 <==
-[1/1] Compiling [32mbuild/optimized/.conf_check_2e1c9ac8498167d908015683e6ad65f0/test.cpp[0m
+[1/1] Compiling [32mbuild/optimized/.conf_check_021469d4e598fd1eed79748e813a51ec/test.cpp[0m
 
-['/usr/bin/g++', '-std=c++11', '-march=native', '-fstrict-overflow', '-Wstrict-overflow=2', '-std=c++11', '-DNS3_BUILD_PROFILE_OPTIMIZED', '../test.cpp', '-c', '-o/home/pfoytik/Documents/Blockchain/simulation/ns-allinone-3.29/ns-3.29/build/optimized/.conf_check_2e1c9ac8498167d908015683e6ad65f0/testbuild/test.cpp.1.o']
+['/usr/bin/g++', '-std=c++11', '-march=native', '-fstrict-overflow', '-Wstrict-overflow=2', '-std=c++11', '-DNS3_BUILD_PROFILE_OPTIMIZED', '../test.cpp', '-c', '-o/home/pfoytik/Documents/Blockchain/simulation/ns-allinone-3.29/ns-3.29/build/optimized/.conf_check_021469d4e598fd1eed79748e813a51ec/testbuild/test.cpp.1.o']
 ok
 ----------------------------------------------------------------
 Checking boost includes
@@ -606,9 +606,9 @@ checking for uint128_t
         }
         
 <==
-[1/2] Compiling [32mbuild/optimized/.conf_check_322e94a1d90c7f2ed18e2618ce79f647/test.cpp[0m
+[1/2] Compiling [32mbuild/optimized/.conf_check_aa12e0156ebb8c1cf3204254cd8f4b29/test.cpp[0m
 
-['/usr/bin/g++', '-std=c++11', '-march=native', '-fstrict-overflow', '-Wstrict-overflow=2', '-std=c++11', '-DNS3_BUILD_PROFILE_OPTIMIZED', '../test.cpp', '-c', '-o/home/pfoytik/Documents/Blockchain/simulation/ns-allinone-3.29/ns-3.29/build/optimized/.conf_check_322e94a1d90c7f2ed18e2618ce79f647/testbuild/test.cpp.1.o']
+['/usr/bin/g++', '-std=c++11', '-march=native', '-fstrict-overflow', '-Wstrict-overflow=2', '-std=c++11', '-DNS3_BUILD_PROFILE_OPTIMIZED', '../test.cpp', '-c', '-o/home/pfoytik/Documents/Blockchain/simulation/ns-allinone-3.29/ns-3.29/build/optimized/.conf_check_aa12e0156ebb8c1cf3204254cd8f4b29/testbuild/test.cpp.1.o']
 err: ../test.cpp: In function ‘int main(int, char**)’:
 ../test.cpp:6:7: error: ‘uint128_t’ was not declared in this scope
   if ((uint128_t *) 0) return 0;
@@ -647,12 +647,12 @@ checking for __uint128_t
         }
         
 <==
-[1/2] Compiling [32mbuild/optimized/.conf_check_0fd9ccefee07f1b26b64b58d958e1a8d/test.cpp[0m
+[1/2] Compiling [32mbuild/optimized/.conf_check_d6092ac75729fbed49c9364c11588bb2/test.cpp[0m
 
-['/usr/bin/g++', '-std=c++11', '-march=native', '-fstrict-overflow', '-Wstrict-overflow=2', '-std=c++11', '-DNS3_BUILD_PROFILE_OPTIMIZED', '../test.cpp', '-c', '-o/home/pfoytik/Documents/Blockchain/simulation/ns-allinone-3.29/ns-3.29/build/optimized/.conf_check_0fd9ccefee07f1b26b64b58d958e1a8d/testbuild/test.cpp.1.o']
-[2/2] Linking [33mbuild/optimized/.conf_check_0fd9ccefee07f1b26b64b58d958e1a8d/testbuild/testprog[0m
+['/usr/bin/g++', '-std=c++11', '-march=native', '-fstrict-overflow', '-Wstrict-overflow=2', '-std=c++11', '-DNS3_BUILD_PROFILE_OPTIMIZED', '../test.cpp', '-c', '-o/home/pfoytik/Documents/Blockchain/simulation/ns-allinone-3.29/ns-3.29/build/optimized/.conf_check_d6092ac75729fbed49c9364c11588bb2/testbuild/test.cpp.1.o']
+[2/2] Linking [33mbuild/optimized/.conf_check_d6092ac75729fbed49c9364c11588bb2/testbuild/testprog[0m
 
-['/usr/bin/g++', 'test.cpp.1.o', '-o/home/pfoytik/Documents/Blockchain/simulation/ns-allinone-3.29/ns-3.29/build/optimized/.conf_check_0fd9ccefee07f1b26b64b58d958e1a8d/testbuild/testprog', '-Wl,-Bstatic', '-Wl,-Bdynamic']
+['/usr/bin/g++', 'test.cpp.1.o', '-o/home/pfoytik/Documents/Blockchain/simulation/ns-allinone-3.29/ns-3.29/build/optimized/.conf_check_d6092ac75729fbed49c9364c11588bb2/testbuild/testprog', '-Wl,-Bstatic', '-Wl,-Bdynamic']
 yes
 ----------------------------------------------------------------
 Checking high precision implementation
@@ -668,12 +668,12 @@ int main(int argc, char **argv) {
 }
 
 <==
-[1/2] Compiling [32mbuild/optimized/.conf_check_180fe391020c99e46aa67b5d1e16f8fa/test.cpp[0m
+[1/2] Compiling [32mbuild/optimized/.conf_check_eeccfc084c63c161fd3c13a9b247467a/test.cpp[0m
 
-['/usr/bin/g++', '-std=c++11', '-march=native', '-fstrict-overflow', '-Wstrict-overflow=2', '-std=c++11', '-DNS3_BUILD_PROFILE_OPTIMIZED', '-DHAVE___UINT128_T=1', '-DINT64X64_USE_128=1', '../test.cpp', '-c', '-o/home/pfoytik/Documents/Blockchain/simulation/ns-allinone-3.29/ns-3.29/build/optimized/.conf_check_180fe391020c99e46aa67b5d1e16f8fa/testbuild/test.cpp.1.o']
-[2/2] Linking [33mbuild/optimized/.conf_check_180fe391020c99e46aa67b5d1e16f8fa/testbuild/testprog[0m
+['/usr/bin/g++', '-std=c++11', '-march=native', '-fstrict-overflow', '-Wstrict-overflow=2', '-std=c++11', '-DNS3_BUILD_PROFILE_OPTIMIZED', '-DHAVE___UINT128_T=1', '-DINT64X64_USE_128=1', '../test.cpp', '-c', '-o/home/pfoytik/Documents/Blockchain/simulation/ns-allinone-3.29/ns-3.29/build/optimized/.conf_check_eeccfc084c63c161fd3c13a9b247467a/testbuild/test.cpp.1.o']
+[2/2] Linking [33mbuild/optimized/.conf_check_eeccfc084c63c161fd3c13a9b247467a/testbuild/testprog[0m
 
-['/usr/bin/g++', 'test.cpp.1.o', '-o/home/pfoytik/Documents/Blockchain/simulation/ns-allinone-3.29/ns-3.29/build/optimized/.conf_check_180fe391020c99e46aa67b5d1e16f8fa/testbuild/testprog', '-Wl,-Bstatic', '-Wl,-Bdynamic']
+['/usr/bin/g++', 'test.cpp.1.o', '-o/home/pfoytik/Documents/Blockchain/simulation/ns-allinone-3.29/ns-3.29/build/optimized/.conf_check_eeccfc084c63c161fd3c13a9b247467a/testbuild/testprog', '-Wl,-Bstatic', '-Wl,-Bdynamic']
 yes
 ----------------------------------------------------------------
 Checking for header inttypes.h
@@ -686,12 +686,12 @@ int main(int argc, char **argv) {
 }
 
 <==
-[1/2] Compiling [32mbuild/optimized/.conf_check_b58ec3a3c9ef7d5c948318b2ed36060d/test.cpp[0m
+[1/2] Compiling [32mbuild/optimized/.conf_check_548859962005c5438f9a0f64fb11a812/test.cpp[0m
 
-['/usr/bin/g++', '-std=c++11', '-march=native', '-fstrict-overflow', '-Wstrict-overflow=2', '-std=c++11', '-DNS3_BUILD_PROFILE_OPTIMIZED', '-DHAVE___UINT128_T=1', '-DINT64X64_USE_128=1', '-DHAVE_STDINT_H=1', '../test.cpp', '-c', '-o/home/pfoytik/Documents/Blockchain/simulation/ns-allinone-3.29/ns-3.29/build/optimized/.conf_check_b58ec3a3c9ef7d5c948318b2ed36060d/testbuild/test.cpp.1.o']
-[2/2] Linking [33mbuild/optimized/.conf_check_b58ec3a3c9ef7d5c948318b2ed36060d/testbuild/testprog[0m
+['/usr/bin/g++', '-std=c++11', '-march=native', '-fstrict-overflow', '-Wstrict-overflow=2', '-std=c++11', '-DNS3_BUILD_PROFILE_OPTIMIZED', '-DHAVE___UINT128_T=1', '-DINT64X64_USE_128=1', '-DHAVE_STDINT_H=1', '../test.cpp', '-c', '-o/home/pfoytik/Documents/Blockchain/simulation/ns-allinone-3.29/ns-3.29/build/optimized/.conf_check_548859962005c5438f9a0f64fb11a812/testbuild/test.cpp.1.o']
+[2/2] Linking [33mbuild/optimized/.conf_check_548859962005c5438f9a0f64fb11a812/testbuild/testprog[0m
 
-['/usr/bin/g++', 'test.cpp.1.o', '-o/home/pfoytik/Documents/Blockchain/simulation/ns-allinone-3.29/ns-3.29/build/optimized/.conf_check_b58ec3a3c9ef7d5c948318b2ed36060d/testbuild/testprog', '-Wl,-Bstatic', '-Wl,-Bdynamic']
+['/usr/bin/g++', 'test.cpp.1.o', '-o/home/pfoytik/Documents/Blockchain/simulation/ns-allinone-3.29/ns-3.29/build/optimized/.conf_check_548859962005c5438f9a0f64fb11a812/testbuild/testprog', '-Wl,-Bstatic', '-Wl,-Bdynamic']
 yes
 ----------------------------------------------------------------
 Checking for header sys/inttypes.h
@@ -704,9 +704,9 @@ int main(int argc, char **argv) {
 }
 
 <==
-[1/2] Compiling [32mbuild/optimized/.conf_check_725f4b5b1940f24fbb6bbef10d0320a9/test.cpp[0m
+[1/2] Compiling [32mbuild/optimized/.conf_check_b9cb0bf012c9c82cef04facd54e2b61d/test.cpp[0m
 
-['/usr/bin/g++', '-std=c++11', '-march=native', '-fstrict-overflow', '-Wstrict-overflow=2', '-std=c++11', '-DNS3_BUILD_PROFILE_OPTIMIZED', '-DHAVE___UINT128_T=1', '-DINT64X64_USE_128=1', '-DHAVE_STDINT_H=1', '-DHAVE_INTTYPES_H=1', '../test.cpp', '-c', '-o/home/pfoytik/Documents/Blockchain/simulation/ns-allinone-3.29/ns-3.29/build/optimized/.conf_check_725f4b5b1940f24fbb6bbef10d0320a9/testbuild/test.cpp.1.o']
+['/usr/bin/g++', '-std=c++11', '-march=native', '-fstrict-overflow', '-Wstrict-overflow=2', '-std=c++11', '-DNS3_BUILD_PROFILE_OPTIMIZED', '-DHAVE___UINT128_T=1', '-DINT64X64_USE_128=1', '-DHAVE_STDINT_H=1', '-DHAVE_INTTYPES_H=1', '../test.cpp', '-c', '-o/home/pfoytik/Documents/Blockchain/simulation/ns-allinone-3.29/ns-3.29/build/optimized/.conf_check_b9cb0bf012c9c82cef04facd54e2b61d/testbuild/test.cpp.1.o']
 err: ../test.cpp:1:26: fatal error: sys/inttypes.h: No such file or directory
 compilation terminated.
 
@@ -731,12 +731,12 @@ int main(int argc, char **argv) {
 }
 
 <==
-[1/2] Compiling [32mbuild/optimized/.conf_check_6f5c1f3f3c9ba816745095ba6a590624/test.cpp[0m
+[1/2] Compiling [32mbuild/optimized/.conf_check_7bc5102458f073b6c6838efb35ec96f8/test.cpp[0m
 
-['/usr/bin/g++', '-std=c++11', '-march=native', '-fstrict-overflow', '-Wstrict-overflow=2', '-std=c++11', '-DNS3_BUILD_PROFILE_OPTIMIZED', '-DHAVE___UINT128_T=1', '-DINT64X64_USE_128=1', '-DHAVE_STDINT_H=1', '-DHAVE_INTTYPES_H=1', '../test.cpp', '-c', '-o/home/pfoytik/Documents/Blockchain/simulation/ns-allinone-3.29/ns-3.29/build/optimized/.conf_check_6f5c1f3f3c9ba816745095ba6a590624/testbuild/test.cpp.1.o']
-[2/2] Linking [33mbuild/optimized/.conf_check_6f5c1f3f3c9ba816745095ba6a590624/testbuild/testprog[0m
+['/usr/bin/g++', '-std=c++11', '-march=native', '-fstrict-overflow', '-Wstrict-overflow=2', '-std=c++11', '-DNS3_BUILD_PROFILE_OPTIMIZED', '-DHAVE___UINT128_T=1', '-DINT64X64_USE_128=1', '-DHAVE_STDINT_H=1', '-DHAVE_INTTYPES_H=1', '../test.cpp', '-c', '-o/home/pfoytik/Documents/Blockchain/simulation/ns-allinone-3.29/ns-3.29/build/optimized/.conf_check_7bc5102458f073b6c6838efb35ec96f8/testbuild/test.cpp.1.o']
+[2/2] Linking [33mbuild/optimized/.conf_check_7bc5102458f073b6c6838efb35ec96f8/testbuild/testprog[0m
 
-['/usr/bin/g++', 'test.cpp.1.o', '-o/home/pfoytik/Documents/Blockchain/simulation/ns-allinone-3.29/ns-3.29/build/optimized/.conf_check_6f5c1f3f3c9ba816745095ba6a590624/testbuild/testprog', '-Wl,-Bstatic', '-Wl,-Bdynamic']
+['/usr/bin/g++', 'test.cpp.1.o', '-o/home/pfoytik/Documents/Blockchain/simulation/ns-allinone-3.29/ns-3.29/build/optimized/.conf_check_7bc5102458f073b6c6838efb35ec96f8/testbuild/testprog', '-Wl,-Bstatic', '-Wl,-Bdynamic']
 yes
 ----------------------------------------------------------------
 Checking for header sys/stat.h
@@ -749,12 +749,12 @@ int main(int argc, char **argv) {
 }
 
 <==
-[1/2] Compiling [32mbuild/optimized/.conf_check_146113b67bc7d34cd4bded6f9d284083/test.cpp[0m
+[1/2] Compiling [32mbuild/optimized/.conf_check_0bf301708cd858c8cbd4a5a5a83ce48b/test.cpp[0m
 
-['/usr/bin/g++', '-std=c++11', '-march=native', '-fstrict-overflow', '-Wstrict-overflow=2', '-std=c++11', '-DNS3_BUILD_PROFILE_OPTIMIZED', '-DHAVE___UINT128_T=1', '-DINT64X64_USE_128=1', '-DHAVE_STDINT_H=1', '-DHAVE_INTTYPES_H=1', '-DHAVE_SYS_TYPES_H=1', '../test.cpp', '-c', '-o/home/pfoytik/Documents/Blockchain/simulation/ns-allinone-3.29/ns-3.29/build/optimized/.conf_check_146113b67bc7d34cd4bded6f9d284083/testbuild/test.cpp.1.o']
-[2/2] Linking [33mbuild/optimized/.conf_check_146113b67bc7d34cd4bded6f9d284083/testbuild/testprog[0m
+['/usr/bin/g++', '-std=c++11', '-march=native', '-fstrict-overflow', '-Wstrict-overflow=2', '-std=c++11', '-DNS3_BUILD_PROFILE_OPTIMIZED', '-DHAVE___UINT128_T=1', '-DINT64X64_USE_128=1', '-DHAVE_STDINT_H=1', '-DHAVE_INTTYPES_H=1', '-DHAVE_SYS_TYPES_H=1', '../test.cpp', '-c', '-o/home/pfoytik/Documents/Blockchain/simulation/ns-allinone-3.29/ns-3.29/build/optimized/.conf_check_0bf301708cd858c8cbd4a5a5a83ce48b/testbuild/test.cpp.1.o']
+[2/2] Linking [33mbuild/optimized/.conf_check_0bf301708cd858c8cbd4a5a5a83ce48b/testbuild/testprog[0m
 
-['/usr/bin/g++', 'test.cpp.1.o', '-o/home/pfoytik/Documents/Blockchain/simulation/ns-allinone-3.29/ns-3.29/build/optimized/.conf_check_146113b67bc7d34cd4bded6f9d284083/testbuild/testprog', '-Wl,-Bstatic', '-Wl,-Bdynamic']
+['/usr/bin/g++', 'test.cpp.1.o', '-o/home/pfoytik/Documents/Blockchain/simulation/ns-allinone-3.29/ns-3.29/build/optimized/.conf_check_0bf301708cd858c8cbd4a5a5a83ce48b/testbuild/testprog', '-Wl,-Bstatic', '-Wl,-Bdynamic']
 yes
 ----------------------------------------------------------------
 Checking for header dirent.h
@@ -767,12 +767,12 @@ int main(int argc, char **argv) {
 }
 
 <==
-[1/2] Compiling [32mbuild/optimized/.conf_check_cce0f8a37c0ddf1b783ea1e001d8760d/test.cpp[0m
+[1/2] Compiling [32mbuild/optimized/.conf_check_e2d4b0e8ccf14b410be39875beb2808a/test.cpp[0m
 
-['/usr/bin/g++', '-std=c++11', '-march=native', '-fstrict-overflow', '-Wstrict-overflow=2', '-std=c++11', '-DNS3_BUILD_PROFILE_OPTIMIZED', '-DHAVE___UINT128_T=1', '-DINT64X64_USE_128=1', '-DHAVE_STDINT_H=1', '-DHAVE_INTTYPES_H=1', '-DHAVE_SYS_TYPES_H=1', '-DHAVE_SYS_STAT_H=1', '../test.cpp', '-c', '-o/home/pfoytik/Documents/Blockchain/simulation/ns-allinone-3.29/ns-3.29/build/optimized/.conf_check_cce0f8a37c0ddf1b783ea1e001d8760d/testbuild/test.cpp.1.o']
-[2/2] Linking [33mbuild/optimized/.conf_check_cce0f8a37c0ddf1b783ea1e001d8760d/testbuild/testprog[0m
+['/usr/bin/g++', '-std=c++11', '-march=native', '-fstrict-overflow', '-Wstrict-overflow=2', '-std=c++11', '-DNS3_BUILD_PROFILE_OPTIMIZED', '-DHAVE___UINT128_T=1', '-DINT64X64_USE_128=1', '-DHAVE_STDINT_H=1', '-DHAVE_INTTYPES_H=1', '-DHAVE_SYS_TYPES_H=1', '-DHAVE_SYS_STAT_H=1', '../test.cpp', '-c', '-o/home/pfoytik/Documents/Blockchain/simulation/ns-allinone-3.29/ns-3.29/build/optimized/.conf_check_e2d4b0e8ccf14b410be39875beb2808a/testbuild/test.cpp.1.o']
+[2/2] Linking [33mbuild/optimized/.conf_check_e2d4b0e8ccf14b410be39875beb2808a/testbuild/testprog[0m
 
-['/usr/bin/g++', 'test.cpp.1.o', '-o/home/pfoytik/Documents/Blockchain/simulation/ns-allinone-3.29/ns-3.29/build/optimized/.conf_check_cce0f8a37c0ddf1b783ea1e001d8760d/testbuild/testprog', '-Wl,-Bstatic', '-Wl,-Bdynamic']
+['/usr/bin/g++', 'test.cpp.1.o', '-o/home/pfoytik/Documents/Blockchain/simulation/ns-allinone-3.29/ns-3.29/build/optimized/.conf_check_e2d4b0e8ccf14b410be39875beb2808a/testbuild/testprog', '-Wl,-Bstatic', '-Wl,-Bdynamic']
 yes
 ----------------------------------------------------------------
 Checking for header stdlib.h
@@ -785,12 +785,12 @@ int main(int argc, char **argv) {
 }
 
 <==
-[1/2] Compiling [32mbuild/optimized/.conf_check_d17029232fc60ecb06153e5a8a26485b/test.cpp[0m
+[1/2] Compiling [32mbuild/optimized/.conf_check_3aca4a782e8f64c2047c7e8ffade8241/test.cpp[0m
 
-['/usr/bin/g++', '-std=c++11', '-march=native', '-fstrict-overflow', '-Wstrict-overflow=2', '-std=c++11', '-DNS3_BUILD_PROFILE_OPTIMIZED', '-DHAVE___UINT128_T=1', '-DINT64X64_USE_128=1', '-DHAVE_STDINT_H=1', '-DHAVE_INTTYPES_H=1', '-DHAVE_SYS_TYPES_H=1', '-DHAVE_SYS_STAT_H=1', '-DHAVE_DIRENT_H=1', '../test.cpp', '-c', '-o/home/pfoytik/Documents/Blockchain/simulation/ns-allinone-3.29/ns-3.29/build/optimized/.conf_check_d17029232fc60ecb06153e5a8a26485b/testbuild/test.cpp.1.o']
-[2/2] Linking [33mbuild/optimized/.conf_check_d17029232fc60ecb06153e5a8a26485b/testbuild/testprog[0m
+['/usr/bin/g++', '-std=c++11', '-march=native', '-fstrict-overflow', '-Wstrict-overflow=2', '-std=c++11', '-DNS3_BUILD_PROFILE_OPTIMIZED', '-DHAVE___UINT128_T=1', '-DINT64X64_USE_128=1', '-DHAVE_STDINT_H=1', '-DHAVE_INTTYPES_H=1', '-DHAVE_SYS_TYPES_H=1', '-DHAVE_SYS_STAT_H=1', '-DHAVE_DIRENT_H=1', '../test.cpp', '-c', '-o/home/pfoytik/Documents/Blockchain/simulation/ns-allinone-3.29/ns-3.29/build/optimized/.conf_check_3aca4a782e8f64c2047c7e8ffade8241/testbuild/test.cpp.1.o']
+[2/2] Linking [33mbuild/optimized/.conf_check_3aca4a782e8f64c2047c7e8ffade8241/testbuild/testprog[0m
 
-['/usr/bin/g++', 'test.cpp.1.o', '-o/home/pfoytik/Documents/Blockchain/simulation/ns-allinone-3.29/ns-3.29/build/optimized/.conf_check_d17029232fc60ecb06153e5a8a26485b/testbuild/testprog', '-Wl,-Bstatic', '-Wl,-Bdynamic']
+['/usr/bin/g++', 'test.cpp.1.o', '-o/home/pfoytik/Documents/Blockchain/simulation/ns-allinone-3.29/ns-3.29/build/optimized/.conf_check_3aca4a782e8f64c2047c7e8ffade8241/testbuild/testprog', '-Wl,-Bstatic', '-Wl,-Bdynamic']
 yes
 ----------------------------------------------------------------
 Checking for header signal.h
@@ -803,12 +803,12 @@ int main(int argc, char **argv) {
 }
 
 <==
-[1/2] Compiling [32mbuild/optimized/.conf_check_a3ad6f995e5ae3e8016c26b4d3530b0e/test.cpp[0m
+[1/2] Compiling [32mbuild/optimized/.conf_check_c0c54160cd4bc27a14efac0ff0a86079/test.cpp[0m
 
-['/usr/bin/g++', '-std=c++11', '-march=native', '-fstrict-overflow', '-Wstrict-overflow=2', '-std=c++11', '-DNS3_BUILD_PROFILE_OPTIMIZED', '-DHAVE___UINT128_T=1', '-DINT64X64_USE_128=1', '-DHAVE_STDINT_H=1', '-DHAVE_INTTYPES_H=1', '-DHAVE_SYS_TYPES_H=1', '-DHAVE_SYS_STAT_H=1', '-DHAVE_DIRENT_H=1', '-DHAVE_STDLIB_H=1', '-DHAVE_GETENV=1', '../test.cpp', '-c', '-o/home/pfoytik/Documents/Blockchain/simulation/ns-allinone-3.29/ns-3.29/build/optimized/.conf_check_a3ad6f995e5ae3e8016c26b4d3530b0e/testbuild/test.cpp.1.o']
-[2/2] Linking [33mbuild/optimized/.conf_check_a3ad6f995e5ae3e8016c26b4d3530b0e/testbuild/testprog[0m
+['/usr/bin/g++', '-std=c++11', '-march=native', '-fstrict-overflow', '-Wstrict-overflow=2', '-std=c++11', '-DNS3_BUILD_PROFILE_OPTIMIZED', '-DHAVE___UINT128_T=1', '-DINT64X64_USE_128=1', '-DHAVE_STDINT_H=1', '-DHAVE_INTTYPES_H=1', '-DHAVE_SYS_TYPES_H=1', '-DHAVE_SYS_STAT_H=1', '-DHAVE_DIRENT_H=1', '-DHAVE_STDLIB_H=1', '-DHAVE_GETENV=1', '../test.cpp', '-c', '-o/home/pfoytik/Documents/Blockchain/simulation/ns-allinone-3.29/ns-3.29/build/optimized/.conf_check_c0c54160cd4bc27a14efac0ff0a86079/testbuild/test.cpp.1.o']
+[2/2] Linking [33mbuild/optimized/.conf_check_c0c54160cd4bc27a14efac0ff0a86079/testbuild/testprog[0m
 
-['/usr/bin/g++', 'test.cpp.1.o', '-o/home/pfoytik/Documents/Blockchain/simulation/ns-allinone-3.29/ns-3.29/build/optimized/.conf_check_a3ad6f995e5ae3e8016c26b4d3530b0e/testbuild/testprog', '-Wl,-Bstatic', '-Wl,-Bdynamic']
+['/usr/bin/g++', 'test.cpp.1.o', '-o/home/pfoytik/Documents/Blockchain/simulation/ns-allinone-3.29/ns-3.29/build/optimized/.conf_check_c0c54160cd4bc27a14efac0ff0a86079/testbuild/testprog', '-Wl,-Bstatic', '-Wl,-Bdynamic']
 yes
 ----------------------------------------------------------------
 Checking for header pthread.h
@@ -823,12 +823,12 @@ int main ()
 }
 
 <==
-[1/2] Compiling [32mbuild/optimized/.conf_check_85696a5cd8000452973ea393b7115c17/test.cpp[0m
+[1/2] Compiling [32mbuild/optimized/.conf_check_147a8371cb993896e0df532372f9838d/test.cpp[0m
 
-['/usr/bin/g++', '-std=c++11', '-march=native', '-fstrict-overflow', '-Wstrict-overflow=2', '-std=c++11', '-pthread', '-DNS3_BUILD_PROFILE_OPTIMIZED', '-DHAVE___UINT128_T=1', '-DINT64X64_USE_128=1', '-DHAVE_STDINT_H=1', '-DHAVE_INTTYPES_H=1', '-DHAVE_SYS_TYPES_H=1', '-DHAVE_SYS_STAT_H=1', '-DHAVE_DIRENT_H=1', '-DHAVE_STDLIB_H=1', '-DHAVE_GETENV=1', '-DHAVE_SIGNAL_H=1', '../test.cpp', '-c', '-o/home/pfoytik/Documents/Blockchain/simulation/ns-allinone-3.29/ns-3.29/build/optimized/.conf_check_85696a5cd8000452973ea393b7115c17/testbuild/test.cpp.1.o']
-[2/2] Linking [33mbuild/optimized/.conf_check_85696a5cd8000452973ea393b7115c17/testbuild/testprog[0m
+['/usr/bin/g++', '-std=c++11', '-march=native', '-fstrict-overflow', '-Wstrict-overflow=2', '-std=c++11', '-pthread', '-DNS3_BUILD_PROFILE_OPTIMIZED', '-DHAVE___UINT128_T=1', '-DINT64X64_USE_128=1', '-DHAVE_STDINT_H=1', '-DHAVE_INTTYPES_H=1', '-DHAVE_SYS_TYPES_H=1', '-DHAVE_SYS_STAT_H=1', '-DHAVE_DIRENT_H=1', '-DHAVE_STDLIB_H=1', '-DHAVE_GETENV=1', '-DHAVE_SIGNAL_H=1', '../test.cpp', '-c', '-o/home/pfoytik/Documents/Blockchain/simulation/ns-allinone-3.29/ns-3.29/build/optimized/.conf_check_147a8371cb993896e0df532372f9838d/testbuild/test.cpp.1.o']
+[2/2] Linking [33mbuild/optimized/.conf_check_147a8371cb993896e0df532372f9838d/testbuild/testprog[0m
 
-['/usr/bin/g++', '-pthread', 'test.cpp.1.o', '-o/home/pfoytik/Documents/Blockchain/simulation/ns-allinone-3.29/ns-3.29/build/optimized/.conf_check_85696a5cd8000452973ea393b7115c17/testbuild/testprog', '-Wl,-Bstatic', '-Wl,-Bdynamic']
+['/usr/bin/g++', '-pthread', 'test.cpp.1.o', '-o/home/pfoytik/Documents/Blockchain/simulation/ns-allinone-3.29/ns-3.29/build/optimized/.conf_check_147a8371cb993896e0df532372f9838d/testbuild/testprog', '-Wl,-Bstatic', '-Wl,-Bdynamic']
 yes
 ----------------------------------------------------------------
 Checking for header stdint.h
@@ -841,12 +841,12 @@ int main(int argc, char **argv) {
 }
 
 <==
-[1/2] Compiling [32mbuild/optimized/.conf_check_180fe391020c99e46aa67b5d1e16f8fa/test.cpp[0m
+[1/2] Compiling [32mbuild/optimized/.conf_check_eeccfc084c63c161fd3c13a9b247467a/test.cpp[0m
 
-['/usr/bin/g++', '-std=c++11', '-march=native', '-fstrict-overflow', '-Wstrict-overflow=2', '-std=c++11', '-DNS3_BUILD_PROFILE_OPTIMIZED', '-DHAVE___UINT128_T=1', '-DINT64X64_USE_128=1', '-DHAVE_INTTYPES_H=1', '-DHAVE_SYS_TYPES_H=1', '-DHAVE_SYS_STAT_H=1', '-DHAVE_DIRENT_H=1', '-DHAVE_STDLIB_H=1', '-DHAVE_GETENV=1', '-DHAVE_SIGNAL_H=1', '-DHAVE_PTHREAD_H=1', '../test.cpp', '-c', '-o/home/pfoytik/Documents/Blockchain/simulation/ns-allinone-3.29/ns-3.29/build/optimized/.conf_check_180fe391020c99e46aa67b5d1e16f8fa/testbuild/test.cpp.1.o']
-[2/2] Linking [33mbuild/optimized/.conf_check_180fe391020c99e46aa67b5d1e16f8fa/testbuild/testprog[0m
+['/usr/bin/g++', '-std=c++11', '-march=native', '-fstrict-overflow', '-Wstrict-overflow=2', '-std=c++11', '-DNS3_BUILD_PROFILE_OPTIMIZED', '-DHAVE___UINT128_T=1', '-DINT64X64_USE_128=1', '-DHAVE_INTTYPES_H=1', '-DHAVE_SYS_TYPES_H=1', '-DHAVE_SYS_STAT_H=1', '-DHAVE_DIRENT_H=1', '-DHAVE_STDLIB_H=1', '-DHAVE_GETENV=1', '-DHAVE_SIGNAL_H=1', '-DHAVE_PTHREAD_H=1', '../test.cpp', '-c', '-o/home/pfoytik/Documents/Blockchain/simulation/ns-allinone-3.29/ns-3.29/build/optimized/.conf_check_eeccfc084c63c161fd3c13a9b247467a/testbuild/test.cpp.1.o']
+[2/2] Linking [33mbuild/optimized/.conf_check_eeccfc084c63c161fd3c13a9b247467a/testbuild/testprog[0m
 
-['/usr/bin/g++', 'test.cpp.1.o', '-o/home/pfoytik/Documents/Blockchain/simulation/ns-allinone-3.29/ns-3.29/build/optimized/.conf_check_180fe391020c99e46aa67b5d1e16f8fa/testbuild/testprog', '-Wl,-Bstatic', '-Wl,-Bdynamic']
+['/usr/bin/g++', 'test.cpp.1.o', '-o/home/pfoytik/Documents/Blockchain/simulation/ns-allinone-3.29/ns-3.29/build/optimized/.conf_check_eeccfc084c63c161fd3c13a9b247467a/testbuild/testprog', '-Wl,-Bstatic', '-Wl,-Bdynamic']
 yes
 ----------------------------------------------------------------
 Checking for header inttypes.h
@@ -859,12 +859,12 @@ int main(int argc, char **argv) {
 }
 
 <==
-[1/2] Compiling [32mbuild/optimized/.conf_check_b58ec3a3c9ef7d5c948318b2ed36060d/test.cpp[0m
+[1/2] Compiling [32mbuild/optimized/.conf_check_548859962005c5438f9a0f64fb11a812/test.cpp[0m
 
-['/usr/bin/g++', '-std=c++11', '-march=native', '-fstrict-overflow', '-Wstrict-overflow=2', '-std=c++11', '-DNS3_BUILD_PROFILE_OPTIMIZED', '-DHAVE___UINT128_T=1', '-DINT64X64_USE_128=1', '-DHAVE_SYS_TYPES_H=1', '-DHAVE_SYS_STAT_H=1', '-DHAVE_DIRENT_H=1', '-DHAVE_STDLIB_H=1', '-DHAVE_GETENV=1', '-DHAVE_SIGNAL_H=1', '-DHAVE_PTHREAD_H=1', '-DHAVE_STDINT_H=1', '../test.cpp', '-c', '-o/home/pfoytik/Documents/Blockchain/simulation/ns-allinone-3.29/ns-3.29/build/optimized/.conf_check_b58ec3a3c9ef7d5c948318b2ed36060d/testbuild/test.cpp.1.o']
-[2/2] Linking [33mbuild/optimized/.conf_check_b58ec3a3c9ef7d5c948318b2ed36060d/testbuild/testprog[0m
+['/usr/bin/g++', '-std=c++11', '-march=native', '-fstrict-overflow', '-Wstrict-overflow=2', '-std=c++11', '-DNS3_BUILD_PROFILE_OPTIMIZED', '-DHAVE___UINT128_T=1', '-DINT64X64_USE_128=1', '-DHAVE_SYS_TYPES_H=1', '-DHAVE_SYS_STAT_H=1', '-DHAVE_DIRENT_H=1', '-DHAVE_STDLIB_H=1', '-DHAVE_GETENV=1', '-DHAVE_SIGNAL_H=1', '-DHAVE_PTHREAD_H=1', '-DHAVE_STDINT_H=1', '../test.cpp', '-c', '-o/home/pfoytik/Documents/Blockchain/simulation/ns-allinone-3.29/ns-3.29/build/optimized/.conf_check_548859962005c5438f9a0f64fb11a812/testbuild/test.cpp.1.o']
+[2/2] Linking [33mbuild/optimized/.conf_check_548859962005c5438f9a0f64fb11a812/testbuild/testprog[0m
 
-['/usr/bin/g++', 'test.cpp.1.o', '-o/home/pfoytik/Documents/Blockchain/simulation/ns-allinone-3.29/ns-3.29/build/optimized/.conf_check_b58ec3a3c9ef7d5c948318b2ed36060d/testbuild/testprog', '-Wl,-Bstatic', '-Wl,-Bdynamic']
+['/usr/bin/g++', 'test.cpp.1.o', '-o/home/pfoytik/Documents/Blockchain/simulation/ns-allinone-3.29/ns-3.29/build/optimized/.conf_check_548859962005c5438f9a0f64fb11a812/testbuild/testprog', '-Wl,-Bstatic', '-Wl,-Bdynamic']
 yes
 ----------------------------------------------------------------
 Checking for header sys/inttypes.h
@@ -877,9 +877,9 @@ int main(int argc, char **argv) {
 }
 
 <==
-[1/2] Compiling [32mbuild/optimized/.conf_check_725f4b5b1940f24fbb6bbef10d0320a9/test.cpp[0m
+[1/2] Compiling [32mbuild/optimized/.conf_check_b9cb0bf012c9c82cef04facd54e2b61d/test.cpp[0m
 
-['/usr/bin/g++', '-std=c++11', '-march=native', '-fstrict-overflow', '-Wstrict-overflow=2', '-std=c++11', '-DNS3_BUILD_PROFILE_OPTIMIZED', '-DHAVE___UINT128_T=1', '-DINT64X64_USE_128=1', '-DHAVE_SYS_TYPES_H=1', '-DHAVE_SYS_STAT_H=1', '-DHAVE_DIRENT_H=1', '-DHAVE_STDLIB_H=1', '-DHAVE_GETENV=1', '-DHAVE_SIGNAL_H=1', '-DHAVE_PTHREAD_H=1', '-DHAVE_STDINT_H=1', '-DHAVE_INTTYPES_H=1', '../test.cpp', '-c', '-o/home/pfoytik/Documents/Blockchain/simulation/ns-allinone-3.29/ns-3.29/build/optimized/.conf_check_725f4b5b1940f24fbb6bbef10d0320a9/testbuild/test.cpp.1.o']
+['/usr/bin/g++', '-std=c++11', '-march=native', '-fstrict-overflow', '-Wstrict-overflow=2', '-std=c++11', '-DNS3_BUILD_PROFILE_OPTIMIZED', '-DHAVE___UINT128_T=1', '-DINT64X64_USE_128=1', '-DHAVE_SYS_TYPES_H=1', '-DHAVE_SYS_STAT_H=1', '-DHAVE_DIRENT_H=1', '-DHAVE_STDLIB_H=1', '-DHAVE_GETENV=1', '-DHAVE_SIGNAL_H=1', '-DHAVE_PTHREAD_H=1', '-DHAVE_STDINT_H=1', '-DHAVE_INTTYPES_H=1', '../test.cpp', '-c', '-o/home/pfoytik/Documents/Blockchain/simulation/ns-allinone-3.29/ns-3.29/build/optimized/.conf_check_b9cb0bf012c9c82cef04facd54e2b61d/testbuild/test.cpp.1.o']
 err: ../test.cpp:1:26: fatal error: sys/inttypes.h: No such file or directory
 compilation terminated.
 
@@ -903,12 +903,12 @@ int main(int argc, char **argv) {
 }
 
 <==
-[1/2] Compiling [32mbuild/optimized/.conf_check_4621501c3239b5fae25301ba1e190e9f/test.cpp[0m
+[1/2] Compiling [32mbuild/optimized/.conf_check_57d43bdac4bd66190eb404985710e5ef/test.cpp[0m
 
-['/usr/bin/g++', '-std=c++11', '-march=native', '-fstrict-overflow', '-Wstrict-overflow=2', '-std=c++11', '-pthread', '-DNS3_BUILD_PROFILE_OPTIMIZED', '-DHAVE___UINT128_T=1', '-DINT64X64_USE_128=1', '-DHAVE_SYS_TYPES_H=1', '-DHAVE_SYS_STAT_H=1', '-DHAVE_DIRENT_H=1', '-DHAVE_STDLIB_H=1', '-DHAVE_GETENV=1', '-DHAVE_SIGNAL_H=1', '-DHAVE_PTHREAD_H=1', '-DHAVE_STDINT_H=1', '-DHAVE_INTTYPES_H=1', '../test.cpp', '-c', '-o/home/pfoytik/Documents/Blockchain/simulation/ns-allinone-3.29/ns-3.29/build/optimized/.conf_check_4621501c3239b5fae25301ba1e190e9f/testbuild/test.cpp.1.o']
-[2/2] Linking [33mbuild/optimized/.conf_check_4621501c3239b5fae25301ba1e190e9f/testbuild/testprog[0m
+['/usr/bin/g++', '-std=c++11', '-march=native', '-fstrict-overflow', '-Wstrict-overflow=2', '-std=c++11', '-pthread', '-DNS3_BUILD_PROFILE_OPTIMIZED', '-DHAVE___UINT128_T=1', '-DINT64X64_USE_128=1', '-DHAVE_SYS_TYPES_H=1', '-DHAVE_SYS_STAT_H=1', '-DHAVE_DIRENT_H=1', '-DHAVE_STDLIB_H=1', '-DHAVE_GETENV=1', '-DHAVE_SIGNAL_H=1', '-DHAVE_PTHREAD_H=1', '-DHAVE_STDINT_H=1', '-DHAVE_INTTYPES_H=1', '../test.cpp', '-c', '-o/home/pfoytik/Documents/Blockchain/simulation/ns-allinone-3.29/ns-3.29/build/optimized/.conf_check_57d43bdac4bd66190eb404985710e5ef/testbuild/test.cpp.1.o']
+[2/2] Linking [33mbuild/optimized/.conf_check_57d43bdac4bd66190eb404985710e5ef/testbuild/testprog[0m
 
-['/usr/bin/g++', '-pthread', 'test.cpp.1.o', '-o/home/pfoytik/Documents/Blockchain/simulation/ns-allinone-3.29/ns-3.29/build/optimized/.conf_check_4621501c3239b5fae25301ba1e190e9f/testbuild/testprog', '-Wl,-Bstatic', '-Wl,-Bdynamic', '-lrt']
+['/usr/bin/g++', '-pthread', 'test.cpp.1.o', '-o/home/pfoytik/Documents/Blockchain/simulation/ns-allinone-3.29/ns-3.29/build/optimized/.conf_check_57d43bdac4bd66190eb404985710e5ef/testbuild/testprog', '-Wl,-Bstatic', '-Wl,-Bdynamic', '-lrt']
 yes
 ----------------------------------------------------------------
 Checking for header sys/ioctl.h
@@ -921,12 +921,12 @@ int main(int argc, char **argv) {
 }
 
 <==
-[1/2] Compiling [32mbuild/optimized/.conf_check_3e0a542b76dde917be254f2596779924/test.cpp[0m
+[1/2] Compiling [32mbuild/optimized/.conf_check_e8cf9de6382f0f2eb31acfc65d967c84/test.cpp[0m
 
-['/usr/bin/g++', '-std=c++11', '-march=native', '-fstrict-overflow', '-Wstrict-overflow=2', '-std=c++11', '-DNS3_BUILD_PROFILE_OPTIMIZED', '../test.cpp', '-c', '-o/home/pfoytik/Documents/Blockchain/simulation/ns-allinone-3.29/ns-3.29/build/optimized/.conf_check_3e0a542b76dde917be254f2596779924/testbuild/test.cpp.1.o']
-[2/2] Linking [33mbuild/optimized/.conf_check_3e0a542b76dde917be254f2596779924/testbuild/testprog[0m
+['/usr/bin/g++', '-std=c++11', '-march=native', '-fstrict-overflow', '-Wstrict-overflow=2', '-std=c++11', '-DNS3_BUILD_PROFILE_OPTIMIZED', '../test.cpp', '-c', '-o/home/pfoytik/Documents/Blockchain/simulation/ns-allinone-3.29/ns-3.29/build/optimized/.conf_check_e8cf9de6382f0f2eb31acfc65d967c84/testbuild/test.cpp.1.o']
+[2/2] Linking [33mbuild/optimized/.conf_check_e8cf9de6382f0f2eb31acfc65d967c84/testbuild/testprog[0m
 
-['/usr/bin/g++', 'test.cpp.1.o', '-o/home/pfoytik/Documents/Blockchain/simulation/ns-allinone-3.29/ns-3.29/build/optimized/.conf_check_3e0a542b76dde917be254f2596779924/testbuild/testprog', '-Wl,-Bstatic', '-Wl,-Bdynamic']
+['/usr/bin/g++', 'test.cpp.1.o', '-o/home/pfoytik/Documents/Blockchain/simulation/ns-allinone-3.29/ns-3.29/build/optimized/.conf_check_e8cf9de6382f0f2eb31acfc65d967c84/testbuild/testprog', '-Wl,-Bstatic', '-Wl,-Bdynamic']
 yes
 ----------------------------------------------------------------
 Checking for header net/if.h
@@ -939,12 +939,12 @@ int main(int argc, char **argv) {
 }
 
 <==
-[1/2] Compiling [32mbuild/optimized/.conf_check_099cf92edaf81b472dff77da3655ad7b/test.cpp[0m
+[1/2] Compiling [32mbuild/optimized/.conf_check_6b3c98f0deb199a66d641be9c12c03c0/test.cpp[0m
 
-['/usr/bin/g++', '-std=c++11', '-march=native', '-fstrict-overflow', '-Wstrict-overflow=2', '-std=c++11', '-DNS3_BUILD_PROFILE_OPTIMIZED', '-DHAVE_SYS_IOCTL_H=1', '../test.cpp', '-c', '-o/home/pfoytik/Documents/Blockchain/simulation/ns-allinone-3.29/ns-3.29/build/optimized/.conf_check_099cf92edaf81b472dff77da3655ad7b/testbuild/test.cpp.1.o']
-[2/2] Linking [33mbuild/optimized/.conf_check_099cf92edaf81b472dff77da3655ad7b/testbuild/testprog[0m
+['/usr/bin/g++', '-std=c++11', '-march=native', '-fstrict-overflow', '-Wstrict-overflow=2', '-std=c++11', '-DNS3_BUILD_PROFILE_OPTIMIZED', '-DHAVE_SYS_IOCTL_H=1', '../test.cpp', '-c', '-o/home/pfoytik/Documents/Blockchain/simulation/ns-allinone-3.29/ns-3.29/build/optimized/.conf_check_6b3c98f0deb199a66d641be9c12c03c0/testbuild/test.cpp.1.o']
+[2/2] Linking [33mbuild/optimized/.conf_check_6b3c98f0deb199a66d641be9c12c03c0/testbuild/testprog[0m
 
-['/usr/bin/g++', 'test.cpp.1.o', '-o/home/pfoytik/Documents/Blockchain/simulation/ns-allinone-3.29/ns-3.29/build/optimized/.conf_check_099cf92edaf81b472dff77da3655ad7b/testbuild/testprog', '-Wl,-Bstatic', '-Wl,-Bdynamic']
+['/usr/bin/g++', 'test.cpp.1.o', '-o/home/pfoytik/Documents/Blockchain/simulation/ns-allinone-3.29/ns-3.29/build/optimized/.conf_check_6b3c98f0deb199a66d641be9c12c03c0/testbuild/testprog', '-Wl,-Bstatic', '-Wl,-Bdynamic']
 yes
 ----------------------------------------------------------------
 Checking for header net/ethernet.h
@@ -957,12 +957,12 @@ int main(int argc, char **argv) {
 }
 
 <==
-[1/2] Compiling [32mbuild/optimized/.conf_check_4a146161d0a72f47b0c40c3b186f15dd/test.cpp[0m
+[1/2] Compiling [32mbuild/optimized/.conf_check_d8d608b99dce37f8906c03aa0d5c0742/test.cpp[0m
 
-['/usr/bin/g++', '-std=c++11', '-march=native', '-fstrict-overflow', '-Wstrict-overflow=2', '-std=c++11', '-DNS3_BUILD_PROFILE_OPTIMIZED', '-DHAVE_SYS_IOCTL_H=1', '-DHAVE_IF_NETS_H=1', '../test.cpp', '-c', '-o/home/pfoytik/Documents/Blockchain/simulation/ns-allinone-3.29/ns-3.29/build/optimized/.conf_check_4a146161d0a72f47b0c40c3b186f15dd/testbuild/test.cpp.1.o']
-[2/2] Linking [33mbuild/optimized/.conf_check_4a146161d0a72f47b0c40c3b186f15dd/testbuild/testprog[0m
+['/usr/bin/g++', '-std=c++11', '-march=native', '-fstrict-overflow', '-Wstrict-overflow=2', '-std=c++11', '-DNS3_BUILD_PROFILE_OPTIMIZED', '-DHAVE_SYS_IOCTL_H=1', '-DHAVE_IF_NETS_H=1', '../test.cpp', '-c', '-o/home/pfoytik/Documents/Blockchain/simulation/ns-allinone-3.29/ns-3.29/build/optimized/.conf_check_d8d608b99dce37f8906c03aa0d5c0742/testbuild/test.cpp.1.o']
+[2/2] Linking [33mbuild/optimized/.conf_check_d8d608b99dce37f8906c03aa0d5c0742/testbuild/testprog[0m
 
-['/usr/bin/g++', 'test.cpp.1.o', '-o/home/pfoytik/Documents/Blockchain/simulation/ns-allinone-3.29/ns-3.29/build/optimized/.conf_check_4a146161d0a72f47b0c40c3b186f15dd/testbuild/testprog', '-Wl,-Bstatic', '-Wl,-Bdynamic']
+['/usr/bin/g++', 'test.cpp.1.o', '-o/home/pfoytik/Documents/Blockchain/simulation/ns-allinone-3.29/ns-3.29/build/optimized/.conf_check_d8d608b99dce37f8906c03aa0d5c0742/testbuild/testprog', '-Wl,-Bstatic', '-Wl,-Bdynamic']
 yes
 ----------------------------------------------------------------
 Checking for header linux/if_tun.h
@@ -975,12 +975,12 @@ int main(int argc, char **argv) {
 }
 
 <==
-[1/2] Compiling [32mbuild/optimized/.conf_check_59e08c3e091c293beea396e7e01ce63e/test.cpp[0m
+[1/2] Compiling [32mbuild/optimized/.conf_check_78b726c6f24f7023049236555f877aaf/test.cpp[0m
 
-['/usr/bin/g++', '-std=c++11', '-march=native', '-fstrict-overflow', '-Wstrict-overflow=2', '-std=c++11', '-DNS3_BUILD_PROFILE_OPTIMIZED', '-DHAVE_SYS_IOCTL_H=1', '-DHAVE_IF_NETS_H=1', '-DHAVE_NET_ETHERNET_H=1', '../test.cpp', '-c', '-o/home/pfoytik/Documents/Blockchain/simulation/ns-allinone-3.29/ns-3.29/build/optimized/.conf_check_59e08c3e091c293beea396e7e01ce63e/testbuild/test.cpp.1.o']
-[2/2] Linking [33mbuild/optimized/.conf_check_59e08c3e091c293beea396e7e01ce63e/testbuild/testprog[0m
+['/usr/bin/g++', '-std=c++11', '-march=native', '-fstrict-overflow', '-Wstrict-overflow=2', '-std=c++11', '-DNS3_BUILD_PROFILE_OPTIMIZED', '-DHAVE_SYS_IOCTL_H=1', '-DHAVE_IF_NETS_H=1', '-DHAVE_NET_ETHERNET_H=1', '../test.cpp', '-c', '-o/home/pfoytik/Documents/Blockchain/simulation/ns-allinone-3.29/ns-3.29/build/optimized/.conf_check_78b726c6f24f7023049236555f877aaf/testbuild/test.cpp.1.o']
+[2/2] Linking [33mbuild/optimized/.conf_check_78b726c6f24f7023049236555f877aaf/testbuild/testprog[0m
 
-['/usr/bin/g++', 'test.cpp.1.o', '-o/home/pfoytik/Documents/Blockchain/simulation/ns-allinone-3.29/ns-3.29/build/optimized/.conf_check_59e08c3e091c293beea396e7e01ce63e/testbuild/testprog', '-Wl,-Bstatic', '-Wl,-Bdynamic']
+['/usr/bin/g++', 'test.cpp.1.o', '-o/home/pfoytik/Documents/Blockchain/simulation/ns-allinone-3.29/ns-3.29/build/optimized/.conf_check_78b726c6f24f7023049236555f877aaf/testbuild/testprog', '-Wl,-Bstatic', '-Wl,-Bdynamic']
 yes
 ----------------------------------------------------------------
 Checking for header netpacket/packet.h
@@ -993,12 +993,12 @@ int main(int argc, char **argv) {
 }
 
 <==
-[1/2] Compiling [32mbuild/optimized/.conf_check_c31a6803de286068058198349c0fb26a/test.cpp[0m
+[1/2] Compiling [32mbuild/optimized/.conf_check_e56d0852abed0f0e251164ea8715ce35/test.cpp[0m
 
-['/usr/bin/g++', '-std=c++11', '-march=native', '-fstrict-overflow', '-Wstrict-overflow=2', '-std=c++11', '-DNS3_BUILD_PROFILE_OPTIMIZED', '-DHAVE_SYS_IOCTL_H=1', '-DHAVE_IF_NETS_H=1', '-DHAVE_NET_ETHERNET_H=1', '-DHAVE_IF_TUN_H=1', '../test.cpp', '-c', '-o/home/pfoytik/Documents/Blockchain/simulation/ns-allinone-3.29/ns-3.29/build/optimized/.conf_check_c31a6803de286068058198349c0fb26a/testbuild/test.cpp.1.o']
-[2/2] Linking [33mbuild/optimized/.conf_check_c31a6803de286068058198349c0fb26a/testbuild/testprog[0m
+['/usr/bin/g++', '-std=c++11', '-march=native', '-fstrict-overflow', '-Wstrict-overflow=2', '-std=c++11', '-DNS3_BUILD_PROFILE_OPTIMIZED', '-DHAVE_SYS_IOCTL_H=1', '-DHAVE_IF_NETS_H=1', '-DHAVE_NET_ETHERNET_H=1', '-DHAVE_IF_TUN_H=1', '../test.cpp', '-c', '-o/home/pfoytik/Documents/Blockchain/simulation/ns-allinone-3.29/ns-3.29/build/optimized/.conf_check_e56d0852abed0f0e251164ea8715ce35/testbuild/test.cpp.1.o']
+[2/2] Linking [33mbuild/optimized/.conf_check_e56d0852abed0f0e251164ea8715ce35/testbuild/testprog[0m
 
-['/usr/bin/g++', 'test.cpp.1.o', '-o/home/pfoytik/Documents/Blockchain/simulation/ns-allinone-3.29/ns-3.29/build/optimized/.conf_check_c31a6803de286068058198349c0fb26a/testbuild/testprog', '-Wl,-Bstatic', '-Wl,-Bdynamic']
+['/usr/bin/g++', 'test.cpp.1.o', '-o/home/pfoytik/Documents/Blockchain/simulation/ns-allinone-3.29/ns-3.29/build/optimized/.conf_check_e56d0852abed0f0e251164ea8715ce35/testbuild/testprog', '-Wl,-Bstatic', '-Wl,-Bdynamic']
 yes
 ----------------------------------------------------------------
 Checking for NSC location
@@ -1031,12 +1031,12 @@ int main(int argc, char **argv) {
 }
 
 <==
-[1/2] Compiling [32mbuild/optimized/.conf_check_59e08c3e091c293beea396e7e01ce63e/test.cpp[0m
+[1/2] Compiling [32mbuild/optimized/.conf_check_78b726c6f24f7023049236555f877aaf/test.cpp[0m
 
-['/usr/bin/g++', '-std=c++11', '-march=native', '-fstrict-overflow', '-Wstrict-overflow=2', '-std=c++11', '-DNS3_BUILD_PROFILE_OPTIMIZED', '-DHAVE_SYS_IOCTL_H=1', '-DHAVE_IF_NETS_H=1', '-DHAVE_NET_ETHERNET_H=1', '-DHAVE_PACKET_H=1', '-DHAVE_MPI=1', '../test.cpp', '-c', '-o/home/pfoytik/Documents/Blockchain/simulation/ns-allinone-3.29/ns-3.29/build/optimized/.conf_check_59e08c3e091c293beea396e7e01ce63e/testbuild/test.cpp.1.o']
-[2/2] Linking [33mbuild/optimized/.conf_check_59e08c3e091c293beea396e7e01ce63e/testbuild/testprog[0m
+['/usr/bin/g++', '-std=c++11', '-march=native', '-fstrict-overflow', '-Wstrict-overflow=2', '-std=c++11', '-DNS3_BUILD_PROFILE_OPTIMIZED', '-DHAVE_SYS_IOCTL_H=1', '-DHAVE_IF_NETS_H=1', '-DHAVE_NET_ETHERNET_H=1', '-DHAVE_PACKET_H=1', '-DHAVE_MPI=1', '../test.cpp', '-c', '-o/home/pfoytik/Documents/Blockchain/simulation/ns-allinone-3.29/ns-3.29/build/optimized/.conf_check_78b726c6f24f7023049236555f877aaf/testbuild/test.cpp.1.o']
+[2/2] Linking [33mbuild/optimized/.conf_check_78b726c6f24f7023049236555f877aaf/testbuild/testprog[0m
 
-['/usr/bin/g++', 'test.cpp.1.o', '-o/home/pfoytik/Documents/Blockchain/simulation/ns-allinone-3.29/ns-3.29/build/optimized/.conf_check_59e08c3e091c293beea396e7e01ce63e/testbuild/testprog', '-Wl,-Bstatic', '-Wl,-Bdynamic']
+['/usr/bin/g++', 'test.cpp.1.o', '-o/home/pfoytik/Documents/Blockchain/simulation/ns-allinone-3.29/ns-3.29/build/optimized/.conf_check_78b726c6f24f7023049236555f877aaf/testbuild/testprog', '-Wl,-Bstatic', '-Wl,-Bdynamic']
 yes
 ----------------------------------------------------------------
 Checking for program 'sudo'
@@ -1067,18 +1067,18 @@ Checking for compilation flag -fstrict-aliasing support
 ==>
 int main() { return 0; }
 <==
-[1/1] Compiling [32mbuild/optimized/.conf_check_aa9fbef14c3274c0005dbcdac7ca1475/test.c[0m
+[1/1] Compiling [32mbuild/optimized/.conf_check_f82b6820cab36c039fa3957f8d5b2a14/test.c[0m
 
-['/usr/bin/gcc', '-fstrict-aliasing', '-DNS3_BUILD_PROFILE_OPTIMIZED', '-DHAVE_SYS_IOCTL_H=1', '-DHAVE_IF_NETS_H=1', '-DHAVE_NET_ETHERNET_H=1', '-DHAVE_PACKET_H=1', '-DHAVE_MPI=1', '-DHAVE_IF_TUN_H=1', '../test.c', '-c', '-o/home/pfoytik/Documents/Blockchain/simulation/ns-allinone-3.29/ns-3.29/build/optimized/.conf_check_aa9fbef14c3274c0005dbcdac7ca1475/testbuild/test.c.1.o']
+['/usr/bin/gcc', '-fstrict-aliasing', '-DNS3_BUILD_PROFILE_OPTIMIZED', '-DHAVE_SYS_IOCTL_H=1', '-DHAVE_IF_NETS_H=1', '-DHAVE_NET_ETHERNET_H=1', '-DHAVE_PACKET_H=1', '-DHAVE_MPI=1', '-DHAVE_IF_TUN_H=1', '../test.c', '-c', '-o/home/pfoytik/Documents/Blockchain/simulation/ns-allinone-3.29/ns-3.29/build/optimized/.conf_check_f82b6820cab36c039fa3957f8d5b2a14/testbuild/test.c.1.o']
 ok
 ----------------------------------------------------------------
 Checking for compilation flag -Wstrict-aliasing support
 ==>
 int main() { return 0; }
 <==
-[1/1] Compiling [32mbuild/optimized/.conf_check_aa9fbef14c3274c0005dbcdac7ca1475/test.c[0m
+[1/1] Compiling [32mbuild/optimized/.conf_check_f82b6820cab36c039fa3957f8d5b2a14/test.c[0m
 
-['/usr/bin/gcc', '-Wstrict-aliasing', '-DNS3_BUILD_PROFILE_OPTIMIZED', '-DHAVE_SYS_IOCTL_H=1', '-DHAVE_IF_NETS_H=1', '-DHAVE_NET_ETHERNET_H=1', '-DHAVE_PACKET_H=1', '-DHAVE_MPI=1', '-DHAVE_IF_TUN_H=1', '../test.c', '-c', '-o/home/pfoytik/Documents/Blockchain/simulation/ns-allinone-3.29/ns-3.29/build/optimized/.conf_check_aa9fbef14c3274c0005dbcdac7ca1475/testbuild/test.c.1.o']
+['/usr/bin/gcc', '-Wstrict-aliasing', '-DNS3_BUILD_PROFILE_OPTIMIZED', '-DHAVE_SYS_IOCTL_H=1', '-DHAVE_IF_NETS_H=1', '-DHAVE_NET_ETHERNET_H=1', '-DHAVE_PACKET_H=1', '-DHAVE_MPI=1', '-DHAVE_IF_TUN_H=1', '../test.c', '-c', '-o/home/pfoytik/Documents/Blockchain/simulation/ns-allinone-3.29/ns-3.29/build/optimized/.conf_check_f82b6820cab36c039fa3957f8d5b2a14/testbuild/test.c.1.o']
 ok
 ----------------------------------------------------------------
 Checking for program 'doxygen'

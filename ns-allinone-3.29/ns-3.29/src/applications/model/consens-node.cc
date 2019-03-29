@@ -21,11 +21,14 @@
 #include <fstream>
 #include <time.h>
 #include <sys/time.h>
+#include <cstdlib>
 
 
 static double GetWallTime();
 
 namespace ns3 {
+
+//int m_messageCount;
 
 NS_LOG_COMPONENT_DEFINE ("Consens");
 
@@ -87,7 +90,7 @@ Consens::GetTypeId (void)
                    "The block generation bin size",
                    DoubleValue (-1),
                    MakeDoubleAccessor (&Consens::m_blockGenBinSize),
-                   MakeDoubleChecker<double> ())
+                   MakeDoubleChecker<double>  ())
     .AddAttribute ("BlockGenParameter",
                    "The block generation distribution parameter",
                    DoubleValue (-1),
@@ -120,6 +123,9 @@ Consens::Consens () : BitcoinNode(), m_realAverageBlockGenIntervalSeconds(10*m_s
                                 m_timeStart (0), m_timeFinish (0), m_fistToMine (false)
 {
   NS_LOG_FUNCTION (this);
+
+
+  m_messageCount = 0;
   m_minerAverageBlockGenInterval = 0;
   m_minerGeneratedBlocks = 0;
   m_previousBlockGenerationTime = 0;
@@ -145,7 +151,6 @@ Consens::~Consens(void)
 {
   NS_LOG_FUNCTION (this);
 }
-
 
 void
 Consens::StartApplication ()    // Called at time specified by Start
@@ -386,6 +391,12 @@ Consens::ScheduleNextMiningEvent (void)
 {
   NS_LOG_FUNCTION (this);
 
+
+  //---------------------------------------------------
+  //        If state of consens is complete then
+  //        execute normal mine with very little Delay
+  //---------------------------------------------------
+
   if(m_fixedBlockTimeGeneration > 0)
   {
     m_nextBlockTime = m_fixedBlockTimeGeneration;
@@ -407,6 +418,328 @@ Consens::ScheduleNextMiningEvent (void)
                  << "  min and  " << static_cast<int>(m_nextBlockTime) % m_secondsPerMin
                  << "s using Geometric Block Time Generation with parameter = "<< m_blockGenParameter);
   }
+}
+
+void
+Consens::ConsensMessage (void)
+{
+  rapidjson::Document inv;
+  rapidjson::Document block;
+
+  inv.SetObject();
+  block.SetObject();
+
+/*
+  switch(m_blockBroadcastType)
+  {
+    case STANDARD:
+    {
+      rapidjson::Value value;
+      rapidjson::Value array(rapidjson::kArrayType);
+      rapidjson::Value blockInfo(rapidjson::kObjectType);
+
+      value.SetString("block"); //Remove
+      inv.AddMember("type", value, inv.GetAllocator());
+
+      if (m_protocolType == STANDARD_PROTOCOL)
+      {
+        if (!m_blockTorrent)
+        {
+          value = INV;
+          inv.AddMember("message", value, inv.GetAllocator());
+
+          value.SetString(blockHash.c_str(), blockHash.size(), inv.GetAllocator());
+          array.PushBack(value, inv.GetAllocator());
+
+          inv.AddMember("inv", array, inv.GetAllocator());
+        }
+        else
+        {
+          value = EXT_INV;
+          inv.AddMember("message", value, inv.GetAllocator());
+
+          value.SetString(blockHash.c_str(), blockHash.size(), inv.GetAllocator());
+          blockInfo.AddMember("hash", value, inv.GetAllocator ());
+
+          value = newBlock.GetBlockSizeBytes ();
+          blockInfo.AddMember("size", value, inv.GetAllocator ());
+
+          value = true;
+          blockInfo.AddMember("fullBlock", value, inv.GetAllocator ());
+
+          array.PushBack(blockInfo, inv.GetAllocator());
+          inv.AddMember("inv", array, inv.GetAllocator());
+        }
+      }
+      else if (m_protocolType == SENDHEADERS)
+      {
+
+        value = newBlock.GetBlockHeight ();
+        blockInfo.AddMember("height", value, inv.GetAllocator ());
+
+        value = newBlock.GetMinerId ();
+        blockInfo.AddMember("minerId", value, inv.GetAllocator ());
+
+        value = newBlock.GetParentBlockMinerId ();
+        blockInfo.AddMember("parentBlockMinerId", value, inv.GetAllocator ());
+
+        value = newBlock.GetBlockSizeBytes ();
+        blockInfo.AddMember("size", value, inv.GetAllocator ());
+
+        value = newBlock.GetTimeCreated ();
+        blockInfo.AddMember("timeCreated", value, inv.GetAllocator ());
+
+        value = newBlock.GetTimeReceived ();
+        blockInfo.AddMember("timeReceived", value, inv.GetAllocator ());
+
+        if (!m_blockTorrent)
+        {
+          value = HEADERS;
+          inv.AddMember("message", value, inv.GetAllocator());
+        }
+        else
+        {
+          value = EXT_HEADERS;
+          inv.AddMember("message", value, inv.GetAllocator());
+
+          value = true;
+          blockInfo.AddMember("fullBlock", value, inv.GetAllocator ());
+        }
+
+        array.PushBack(blockInfo, inv.GetAllocator());
+        inv.AddMember("blocks", array, inv.GetAllocator());
+      }
+      break;
+    }
+    case UNSOLICITED:
+    {
+      rapidjson::Value value (BLOCK);
+      rapidjson::Value blockInfo(rapidjson::kObjectType);
+      rapidjson::Value array(rapidjson::kArrayType);
+
+      block.AddMember("message", value, block.GetAllocator());
+
+      value.SetString("block"); //Remove
+      block.AddMember("type", value, block.GetAllocator());
+
+      value = newBlock.GetBlockHeight ();
+      blockInfo.AddMember("height", value, block.GetAllocator ());
+
+      value = newBlock.GetMinerId ();
+      blockInfo.AddMember("minerId", value, block.GetAllocator ());
+
+      value = newBlock.GetParentBlockMinerId ();
+      blockInfo.AddMember("parentBlockMinerId", value, block.GetAllocator ());
+
+      value = newBlock.GetBlockSizeBytes ();
+      blockInfo.AddMember("size", value, block.GetAllocator ());
+
+      value = newBlock.GetTimeCreated ();
+      blockInfo.AddMember("timeCreated", value, block.GetAllocator ());
+
+      value = newBlock.GetTimeReceived ();
+      blockInfo.AddMember("timeReceived", value, block.GetAllocator ());
+
+      array.PushBack(blockInfo, block.GetAllocator());
+      block.AddMember("blocks", array, block.GetAllocator());
+
+      break;
+    }
+    case RELAY_NETWORK:
+    {
+      rapidjson::Value value;
+      rapidjson::Value headersInfo(rapidjson::kObjectType);
+      rapidjson::Value chunkInfo(rapidjson::kObjectType);
+      rapidjson::Value blockInfo(rapidjson::kObjectType);
+      rapidjson::Value invArray(rapidjson::kArrayType);
+      rapidjson::Value blockArray(rapidjson::kArrayType);
+
+      value.SetString("block"); //Remove
+      inv.AddMember("type", value, inv.GetAllocator());
+
+      if (m_protocolType == STANDARD_PROTOCOL)
+      {
+        if (!m_blockTorrent)
+        {
+          value = INV;
+          inv.AddMember("message", value, inv.GetAllocator());
+
+          value.SetString(blockHash.c_str(), blockHash.size(), inv.GetAllocator());
+          invArray.PushBack(value, inv.GetAllocator());
+
+          inv.AddMember("inv", invArray, inv.GetAllocator());
+        }
+        else
+        {
+          value = EXT_INV;
+          inv.AddMember("message", value, inv.GetAllocator());
+
+          value.SetString(blockHash.c_str(), blockHash.size(), inv.GetAllocator());
+          chunkInfo.AddMember("hash", value, inv.GetAllocator ());
+
+          value = newBlock.GetBlockSizeBytes ();
+          chunkInfo.AddMember("size", value, inv.GetAllocator ());
+
+          value = true;
+          chunkInfo.AddMember("fullBlock", value, inv.GetAllocator ());
+
+          invArray.PushBack(chunkInfo, inv.GetAllocator());
+          inv.AddMember("inv", invArray, inv.GetAllocator());
+        }
+      }
+      else if (m_protocolType == SENDHEADERS)
+      {
+
+        value = newBlock.GetBlockHeight ();
+        headersInfo.AddMember("height", value, inv.GetAllocator ());
+
+        value = newBlock.GetMinerId ();
+        headersInfo.AddMember("minerId", value, inv.GetAllocator ());
+
+        value = newBlock.GetParentBlockMinerId ();
+        headersInfo.AddMember("parentBlockMinerId", value, inv.GetAllocator ());
+
+        value = newBlock.GetBlockSizeBytes ();
+        headersInfo.AddMember("size", value, inv.GetAllocator ());
+
+        value = newBlock.GetTimeCreated ();
+        headersInfo.AddMember("timeCreated", value, inv.GetAllocator ());
+
+        value = newBlock.GetTimeReceived ();
+        headersInfo.AddMember("timeReceived", value, inv.GetAllocator ());
+
+        if (!m_blockTorrent)
+        {
+          value = HEADERS;
+          inv.AddMember("message", value, inv.GetAllocator());
+        }
+        else
+        {
+          value = EXT_HEADERS;
+          inv.AddMember("message", value, inv.GetAllocator());
+
+          value = true;
+          headersInfo.AddMember("fullBlock", value, inv.GetAllocator ());
+        }
+
+        invArray.PushBack(headersInfo, inv.GetAllocator());
+        inv.AddMember("blocks", invArray, inv.GetAllocator());
+      }
+
+
+
+      //Unsolicited for miners
+      value = BLOCK;
+      block.AddMember("message", value, block.GetAllocator());
+
+      value.SetString("compressed-block"); //Remove
+      block.AddMember("type", value, block.GetAllocator());
+
+      value = newBlock.GetBlockHeight ();
+      blockInfo.AddMember("height", value, block.GetAllocator ());
+
+      value = newBlock.GetMinerId ();
+      blockInfo.AddMember("minerId", value, block.GetAllocator ());
+
+      value = newBlock.GetParentBlockMinerId ();
+      blockInfo.AddMember("parentBlockMinerId", value, block.GetAllocator ());
+
+      value = newBlock.GetBlockSizeBytes ();
+      blockInfo.AddMember("size", value, block.GetAllocator ());
+
+      value = newBlock.GetTimeCreated ();
+      blockInfo.AddMember("timeCreated", value, block.GetAllocator ());
+
+      value = newBlock.GetTimeReceived ();
+      blockInfo.AddMember("timeReceived", value, block.GetAllocator ());
+
+      blockArray.PushBack(blockInfo, block.GetAllocator());
+      block.AddMember("blocks", blockArray, block.GetAllocator());
+
+      break;
+    }
+    case UNSOLICITED_RELAY_NETWORK:
+    {
+      rapidjson::Value value;
+      rapidjson::Value blockNodesInfo(rapidjson::kObjectType);
+      rapidjson::Value blockInfo(rapidjson::kObjectType);
+      rapidjson::Value invArray(rapidjson::kArrayType);
+      rapidjson::Value blockArray(rapidjson::kArrayType);
+
+      //Unsolicited for nodes
+      value = BLOCK;
+      inv.AddMember("message", value, inv.GetAllocator());
+
+      value.SetString("block"); //Remove
+      inv.AddMember("type", value, inv.GetAllocator());
+
+      value = newBlock.GetBlockHeight ();
+      blockNodesInfo.AddMember("height", value, inv.GetAllocator ());
+
+      value = newBlock.GetMinerId ();
+      blockNodesInfo.AddMember("minerId", value, inv.GetAllocator ());
+
+      value = newBlock.GetParentBlockMinerId ();
+      blockNodesInfo.AddMember("parentBlockMinerId", value, inv.GetAllocator ());
+
+      value = newBlock.GetBlockSizeBytes ();
+      blockNodesInfo.AddMember("size", value, inv.GetAllocator ());
+
+      value = newBlock.GetTimeCreated ();
+      blockNodesInfo.AddMember("timeCreated", value, inv.GetAllocator ());
+
+      value = newBlock.GetTimeReceived ();
+      blockNodesInfo.AddMember("timeReceived", value, inv.GetAllocator ());
+
+      invArray.PushBack(blockNodesInfo, inv.GetAllocator());
+      inv.AddMember("blocks", invArray, inv.GetAllocator());
+
+
+      //Unsolicited for miners
+      value = BLOCK;
+      block.AddMember("message", value, block.GetAllocator());
+
+      value.SetString("compressed-block"); //Remove
+      block.AddMember("type", value, block.GetAllocator());
+
+      value = newBlock.GetBlockHeight ();
+      blockInfo.AddMember("height", value, block.GetAllocator ());
+
+      value = newBlock.GetMinerId ();
+      blockInfo.AddMember("minerId", value, block.GetAllocator ());
+
+      value = newBlock.GetParentBlockMinerId ();
+      blockInfo.AddMember("parentBlockMinerId", value, block.GetAllocator ());
+
+      value = newBlock.GetBlockSizeBytes ();
+      blockInfo.AddMember("size", value, block.GetAllocator ());
+
+      value = newBlock.GetTimeCreated ();
+      blockInfo.AddMember("timeCreated", value, block.GetAllocator ());
+
+      value = newBlock.GetTimeReceived ();
+      blockInfo.AddMember("timeReceived", value, block.GetAllocator ());
+
+      blockArray.PushBack(blockInfo, block.GetAllocator());
+      block.AddMember("blocks", blockArray, block.GetAllocator());
+
+      break;
+    }
+  }
+*/
+}
+
+bool
+Consens::checkCompleted (void)
+{
+
+  int t_completedCount = 0;
+  int count = 0;
+  for (std::vector<Ipv4Address>::const_iterator i = m_peersAddresses.begin(); i != m_peersAddresses.end(); ++i, ++count)
+  {
+
+  }
+  return true;
 }
 
 void
@@ -501,7 +834,7 @@ Consens::MineBlock (void)
           value.SetString(blockHash.c_str(), blockHash.size(), inv.GetAllocator());
           blockInfo.AddMember("hash", value, inv.GetAllocator ());
 
-	      value = newBlock.GetBlockSizeBytes ();
+	        value = newBlock.GetBlockSizeBytes ();
           blockInfo.AddMember("size", value, inv.GetAllocator ());
 
           value = true;
@@ -767,7 +1100,6 @@ Consens::MineBlock (void)
     }
   }
 
-
   /**
    * Update m_meanBlockReceiveTime with the timeCreated of the newly generated block
    */
@@ -1031,6 +1363,9 @@ Consens::MineBlock (void)
   m_previousBlockGenerationTime = Simulator::Now ().GetSeconds ();
   m_minerGeneratedBlocks++;
 
+  m_messageCount++;
+
+  std::cout << "Current node " << minerId << " message count " << m_messageCount << " \n";
   ScheduleNextMiningEvent ();
 }
 

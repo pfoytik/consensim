@@ -1,7 +1,7 @@
 /**
  * This file contains declares the BitcoinMinerHelper class.
  */
- 
+
 #ifndef BITCOIN_MINER_HELPER_H
 #define BITCOIN_MINER_HELPER_H
 
@@ -16,7 +16,7 @@ namespace ns3 {
 /**
  * Based on packet-sink-helper
  */
- 
+
 class BitcoinMinerHelper : public BitcoinNodeHelper
 {
   public:
@@ -25,7 +25,7 @@ class BitcoinMinerHelper : public BitcoinNodeHelper
    *
    * \param protocol the name of the protocol to use to receive traffic
    *        This string identifies the socket factory type used to create
-   *        sockets for the applications.  A typical value would be 
+   *        sockets for the applications.  A typical value would be
    *        ns3::TcpSocketFactory.
    * \param address the address of the bitcoin node
    * \param noMiners total number of miners in the simulation
@@ -40,7 +40,7 @@ class BitcoinMinerHelper : public BitcoinNodeHelper
   BitcoinMinerHelper (std::string protocol, Address address, std::vector<Ipv4Address> peers, int noMiners,
                       std::map<Ipv4Address, double> &peersDownloadSpeeds, std::map<Ipv4Address, double> &peersUploadSpeeds,
                       nodeInternetSpeeds &internetSpeeds, nodeStatistics *stats, double hashRate, double averageBlockGenIntervalSeconds);
-					  
+
   enum MinerType GetMinerType(void);
   void SetMinerType (enum MinerType m);
   void SetBlockBroadcastType (enum BlockBroadcastType m);
@@ -54,13 +54,12 @@ protected:
    * \returns Ptr to the application installed.
    */
   virtual Ptr<Application> InstallPriv (Ptr<Node> node);
-  
+
   /**
    * Customizes the factory object according to the arguments of the constructor
    */
   void SetFactoryAttributes (void);
-  
-  
+
   enum MinerType            m_minerType;
   enum BlockBroadcastType   m_blockBroadcastType;
   int                       m_noMiners;

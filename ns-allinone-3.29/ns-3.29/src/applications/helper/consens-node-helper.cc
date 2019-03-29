@@ -34,7 +34,7 @@ ConsensHelper::ConsensHelper (std::string protocol, Address address, std::vector
 }
 
 Ptr<Application>
-ConsensHelper::InstallPriv (Ptr<Node> node) //FIX ME
+  ConsensHelper::InstallPriv (Ptr<Node> node) //FIX ME
 {
    switch (m_minerType)
    {

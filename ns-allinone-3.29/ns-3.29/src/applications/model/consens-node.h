@@ -113,6 +113,11 @@ public:
    */
   void SetBlockBroadcastType (enum BlockBroadcastType blockBroadcastType);
 
+  int               m_messageCount;
+  int               m_consensState;
+  int               m_requiredCount;
+  std::vector<uint32_t> *m_miners;
+
 protected:
   // inherited from Application base class.
   virtual void StartApplication (void);    // Called at time specified by Start
@@ -120,7 +125,7 @@ protected:
 
   virtual void DoDispose (void);
 
-  /**
+  /**Count
    * \brief Schedule the next mining event
    */
   void ScheduleNextMiningEvent (void);
@@ -129,6 +134,21 @@ protected:
    * \brief Mines a new block and advertises it to its peers
    */
   virtual void MineBlock (void);
+
+  /**
+   * This method is used to control messaged based consensus
+   * It will process each message for a delay based on Distributions
+   * Once the appropriate number of messages have been processed
+   * The normal Mineblock will be executed with minimal delay
+   */
+  virtual void ConsensMessage (void);
+
+  /**
+   * This method will check all of the states of participating nodes
+   * if the appropriate number of participating nodes are in the state of
+   * completed then run mineblock
+   */
+  virtual bool checkCompleted (void);
 
   /**
    * \brief Called for blocks with better score(height). Removes m_nextMiningEvent and call MineBlock again.

@@ -13,7 +13,7 @@
 #include <algorithm>
 
 namespace ns3 {
-	
+
 /**
  * The bitcoin message types that have been implemented.
  */
@@ -32,6 +32,8 @@ enum Messages
   EXT_GET_BLOCKS,   //10
   CHUNK,            //11
   EXT_GET_DATA,     //12
+	COMP,							//13
+	PROC, 						//14
 };
 
 
@@ -70,7 +72,7 @@ enum ProtocolType
 };
 
 
-/** 
+/**
  * The different cryptocurrency networks that the simulation supports.
  */
 enum Cryptocurrency
@@ -81,7 +83,7 @@ enum Cryptocurrency
 };
 
 
-/** 
+/**
  * The geographical regions used in the simulation. OTHER was only used for debugging reasons.
  */
 enum BitcoinRegion
@@ -161,46 +163,46 @@ enum BitcoinRegion getBitcoinEnum(uint32_t n);
 class Block
 {
 public:
-  Block (int blockHeight, int minerId, int parentBlockMinerId = 0, int blockSizeBytes = 0, 
+  Block (int blockHeight, int minerId, int parentBlockMinerId = 0, int blockSizeBytes = 0,
          double timeCreated = 0, double timeReceived = 0, Ipv4Address receivedFromIpv4 = Ipv4Address("0.0.0.0"));
   Block ();
   Block (const Block &blockSource);  // Copy constructor
   virtual ~Block (void);
- 
+
   int GetBlockHeight (void) const;
   void SetBlockHeight (int blockHeight);
-  
+
   int GetMinerId (void) const;
   void SetMinerId (int minerId);
-  
+
   int GetParentBlockMinerId (void) const;
   void SetParentBlockMinerId (int parentBlockMinerId);
-  
+
   int GetBlockSizeBytes (void) const;
   void SetBlockSizeBytes (int blockSizeBytes);
-  
+
   double GetTimeCreated (void) const;
   double GetTimeReceived (void) const;
 
   Ipv4Address GetReceivedFromIpv4 (void) const;
   void SetReceivedFromIpv4 (Ipv4Address receivedFromIpv4);
-    
+
   /**
    * Checks if the block provided as the argument is the parent of this block object
    */
-  bool IsParent (const Block &block) const; 
+  bool IsParent (const Block &block) const;
 
   /**
    * Checks if the block provided as the argument is a child of this block object
    */
-  bool IsChild (const Block &block) const; 
-  
+  bool IsChild (const Block &block) const;
+
   Block& operator= (const Block &blockSource); //Assignment Constructor
-  
+
   friend bool operator== (const Block &block1, const Block &block2);
   friend std::ostream& operator<< (std::ostream &out, const Block &block);
-  
-protected:	
+
+protected:
   int           m_blockHeight;                // The height of the block
   int           m_minerId;                    // The id of the miner which mined this block
   int           m_parentBlockMinerId;         // The id of the miner which mined the parent of this block
@@ -213,22 +215,22 @@ protected:
 class BitcoinChunk : public Block
 {
 public:
-  BitcoinChunk (int blockHeight, int minerId, int chunkId, int parentBlockMinerId = 0, int blockSizeBytes = 0, 
+  BitcoinChunk (int blockHeight, int minerId, int chunkId, int parentBlockMinerId = 0, int blockSizeBytes = 0,
                 double timeCreated = 0, double timeReceived = 0, Ipv4Address receivedFromIpv4 = Ipv4Address("0.0.0.0"));
   BitcoinChunk ();
   BitcoinChunk (const BitcoinChunk &chunkSource);  // Copy constructor
   virtual ~BitcoinChunk (void);
- 
+
   int GetChunkId (void) const;
   void SetChunkId (int minerId);
-  
+
   BitcoinChunk& operator= (const BitcoinChunk &chunkSource); //Assignment Constructor
-  
+
   friend bool operator== (const BitcoinChunk &chunk, const BitcoinChunk &chunk2);
   friend bool operator< (const BitcoinChunk &chunk, const BitcoinChunk &chunk2);
   friend std::ostream& operator<< (std::ostream &out, const BitcoinChunk &chunk);
-  
-protected:	
+
+protected:
   int           m_chunkId;
 
 };
@@ -240,11 +242,11 @@ public:
   virtual ~Blockchain (void);
 
   int GetNoStaleBlocks (void) const;
-  
+
   int GetNoOrphans (void) const;
-  
+
   int GetTotalBlocks (void) const;
-  
+
   int GetBlockchainHeight (void) const;
 
   /**
@@ -252,13 +254,13 @@ public:
    */
   bool HasBlock (const Block &newBlock) const;
   bool HasBlock (int height, int minerId) const;
-  
+
   /**
    * Return the block with the specified height and minerId.
    * Should be called after HasBlock() to make sure that the block exists.
    * Returns the orphan blocks too.
    */
-  Block ReturnBlock(int height, int minerId);  
+  Block ReturnBlock(int height, int minerId);
 
   /**
    * Check if the block is an orphan.
@@ -274,12 +276,12 @@ public:
   /**
    * Gets the children of a block that are not orphans.
    */
-  const std::vector<const Block *> GetChildrenPointers (const Block &block);  
-  
+  const std::vector<const Block *> GetChildrenPointers (const Block &block);
+
   /**
    * Gets the children of a newBlock that used to be orphans before receiving the newBlock.
    */
-  const std::vector<const Block *> GetOrphanChildrenPointers (const Block &newBlock);  
+  const std::vector<const Block *> GetOrphanChildrenPointers (const Block &newBlock);
 
   /**
    * Gets the parent of a block
@@ -300,12 +302,12 @@ public:
    * Adds a new orphan block in the blockchain.
    */
   void AddOrphan (const Block& newBlock);
-  
+
   /**
    * Removes a new orphan block in the blockchain.
    */
   void RemoveOrphan (const Block& newBlock);
-  
+
   /**
    * Prints all the currently orphan blocks.
    */
