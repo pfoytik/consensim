@@ -321,6 +321,7 @@ BitcoinNode::StopApplication ()     // Called at time specified by Stop
 void
 BitcoinNode::HandleRead (Ptr<Socket> socket)
 {
+  //std::cout << "handle read \n";
   NS_LOG_FUNCTION (this << socket);
   Ptr<Packet> packet;
   Address from;
@@ -381,8 +382,85 @@ BitcoinNode::HandleRead (Ptr<Socket> socket)
                         << " port " << InetSocketAddress::ConvertFrom (from).GetPort ()
                         << " with info = " << buffer.GetString());
 
+
           switch (d["message"].GetInt())
           {
+            case PROC:
+            {
+                //NS_LOG_INFO ("INV");
+                int j;
+                std::vector<std::string>            requestBlocks;
+                std::vector<std::string>::iterator  block_it;
+
+                m_nodeStats->invReceivedBytes += m_bitcoinMessageHeader + m_countBytes + d["inv"].Size()*m_inventorySizeBytes;
+
+                for (j=0; j<d["inv"].Size(); j++)
+                {
+                  std::string   invDelimiter = "/";
+                  std::string   parsedInv = d["inv"][j].GetString();
+                  size_t        invPos = parsedInv.find(invDelimiter);
+                  EventId       timeout;
+
+                  int height = atoi(parsedInv.substr(0, invPos).c_str());
+                  int minerId = atoi(parsedInv.substr(invPos+1, parsedInv.size()).c_str());
+
+
+                  if (m_blockchain.HasBlock(height, minerId) || m_blockchain.IsOrphan(height, minerId) || ReceivedButNotValidated(parsedInv))
+                  {
+                    NS_LOG_INFO("INV: Bitcoin node " << GetNode ()->GetId ()
+                                << " has already received the block with height = "
+                                << height << " and minerId = " << minerId);
+                  }
+                  else
+                  {
+                    NS_LOG_INFO("INV: Bitcoin node " << GetNode ()->GetId ()
+                                << " does not have the block with height = "
+                                << height << " and minerId = " << minerId);
+
+                    /**
+                     * Check if we have already requested the block
+                     */
+
+                    if (m_invTimeouts.find(parsedInv) == m_invTimeouts.end())
+                    {
+                      NS_LOG_INFO("INV: Bitcoin node " << GetNode ()->GetId ()
+                                   << " has not requested the block yet");
+                      requestBlocks.push_back(parsedInv);
+                      timeout = Simulator::Schedule (m_invTimeoutMinutes, &BitcoinNode::InvTimeoutExpired, this, parsedInv);
+                      m_invTimeouts[parsedInv] = timeout;
+                    }
+                    else
+                    {
+                      NS_LOG_INFO("INV: Bitcoin node " << GetNode ()->GetId ()
+                                   << " has already requested the block");
+                    }
+
+                    m_queueInv[parsedInv].push_back(from);
+                    //PrintQueueInv();
+                    //PrintInvTimeouts();
+                  }
+                }
+
+                if (!requestBlocks.empty())
+                {
+                  rapidjson::Value   value;
+                  rapidjson::Value   array(rapidjson::kArrayType);
+                  d.RemoveMember("inv");
+
+                  for (block_it = requestBlocks.begin(); block_it < requestBlocks.end(); block_it++)
+                  {
+                    value.SetString(block_it->c_str(), block_it->size(), d.GetAllocator());
+                    array.PushBack(value, d.GetAllocator());
+                  }
+
+                  d.AddMember("blocks", array, d.GetAllocator());
+
+                  SendMessage(INV, GET_HEADERS, d, from);
+                  SendMessage(INV, GET_DATA, d, from);
+
+                }
+                break;
+            }
             case INV:
             {
               //NS_LOG_INFO ("INV");
@@ -1798,112 +1876,6 @@ BitcoinNode::HandleRead (Ptr<Socket> socket)
 
               break;
             }
-            case COMP:
-            {
-              // Needs to call comlete function
-              NS_LOG_INFO ("COMP");
-              int chunkMessageSize = 0;
-              double receiveTime = 0;
-              double eventTime = 0;
-              double minSpeed = std::min(m_downloadSpeed, m_peersUploadSpeeds[InetSocketAddress::ConvertFrom(from).GetIpv4 ()] * 1000000 / 8);
-
-              chunkMessageSize += m_bitcoinMessageHeader;
-              for (int j=0; j<d["chunks"].Size(); j++)
-              {
-                int noChunks = ceil(d["chunks"][j]["size"].GetInt() / static_cast<double>(m_chunkSize));
-                if (d["chunks"][j]["chunk"] == noChunks -1 && d["chunks"][j]["size"].GetInt() % m_chunkSize > 0)
-                  chunkMessageSize += d["chunks"][j]["size"].GetInt() % m_chunkSize;
-                else
-                  chunkMessageSize += m_chunkSize;
-
-                m_nodeStats->chunkReceivedBytes += chunkMessageSize + 1 + 1;//the requested chunk + the fullBlock
-                if (!d["chunks"][j]["fullBlock"].GetBool())
-                  m_nodeStats->chunkReceivedBytes += d["chunks"][j]["availableChunks"].Size();
-                if (d["chunks"][j]["requestChunks"].Size() > 0)
-                  m_nodeStats->chunkReceivedBytes += d["chunks"][j]["requestChunks"].Size() - 1;
-              }
-
-              // Stringify the DOM
-              rapidjson::StringBuffer chunkInfo;
-              rapidjson::Writer<rapidjson::StringBuffer> blockWriter(chunkInfo);
-              d.Accept(blockWriter);
-
-
-              NS_LOG_INFO("CHUNK: At time " << Simulator::Now ().GetSeconds ()
-                          << " Node " << GetNode()->GetId() << " received a chunk message " << chunkInfo.GetString());
-
-              std::string help = chunkInfo.GetString();
-              if (m_receiveBlockTimes.size() == 0 || Simulator::Now ().GetSeconds() >  m_receiveBlockTimes.back())
-              {
-                receiveTime = chunkMessageSize / m_downloadSpeed;
-                eventTime = chunkMessageSize / minSpeed;
-              }
-              else
-              {
-                receiveTime = chunkMessageSize / m_downloadSpeed + m_receiveBlockTimes.back() - Simulator::Now ().GetSeconds();
-                eventTime = chunkMessageSize / minSpeed + m_receiveBlockTimes.back() - Simulator::Now ().GetSeconds();
-              }
-              m_receiveBlockTimes.push_back(Simulator::Now ().GetSeconds() + receiveTime);
-
-              NS_LOG_INFO("CHUNK:  Node " << GetNode()->GetId() << " will receive the full chunk message at " << Simulator::Now ().GetSeconds() + eventTime);
-              Simulator::Schedule (Seconds(eventTime), &BitcoinNode::ReceivedChunkMessage, this, help, from);
-              Simulator::Schedule (Seconds(receiveTime), &BitcoinNode::RemoveReceiveTime, this);
-
-              break;
-            }
-            case PROC:
-            {
-              //needs to call process function
-              NS_LOG_INFO ("PROC");
-              int chunkMessageSize = 0;
-              double receiveTime = 0;
-              double eventTime = 0;
-              double minSpeed = std::min(m_downloadSpeed, m_peersUploadSpeeds[InetSocketAddress::ConvertFrom(from).GetIpv4 ()] * 1000000 / 8);
-
-              chunkMessageSize += m_bitcoinMessageHeader;
-              for (int j=0; j<d["chunks"].Size(); j++)
-              {
-                int noChunks = ceil(d["chunks"][j]["size"].GetInt() / static_cast<double>(m_chunkSize));
-                if (d["chunks"][j]["chunk"] == noChunks -1 && d["chunks"][j]["size"].GetInt() % m_chunkSize > 0)
-                  chunkMessageSize += d["chunks"][j]["size"].GetInt() % m_chunkSize;
-                else
-                  chunkMessageSize += m_chunkSize;
-
-                m_nodeStats->chunkReceivedBytes += chunkMessageSize + 1 + 1;//the requested chunk + the fullBlock
-                if (!d["chunks"][j]["fullBlock"].GetBool())
-                  m_nodeStats->chunkReceivedBytes += d["chunks"][j]["availableChunks"].Size();
-                if (d["chunks"][j]["requestChunks"].Size() > 0)
-                  m_nodeStats->chunkReceivedBytes += d["chunks"][j]["requestChunks"].Size() - 1;
-              }
-
-              // Stringify the DOM
-              rapidjson::StringBuffer chunkInfo;
-              rapidjson::Writer<rapidjson::StringBuffer> blockWriter(chunkInfo);
-              d.Accept(blockWriter);
-
-
-              NS_LOG_INFO("CHUNK: At time " << Simulator::Now ().GetSeconds ()
-                          << " Node " << GetNode()->GetId() << " received a chunk message " << chunkInfo.GetString());
-
-              std::string help = chunkInfo.GetString();
-              if (m_receiveBlockTimes.size() == 0 || Simulator::Now ().GetSeconds() >  m_receiveBlockTimes.back())
-              {
-                receiveTime = chunkMessageSize / m_downloadSpeed;
-                eventTime = chunkMessageSize / minSpeed;
-              }
-              else
-              {
-                receiveTime = chunkMessageSize / m_downloadSpeed + m_receiveBlockTimes.back() - Simulator::Now ().GetSeconds();
-                eventTime = chunkMessageSize / minSpeed + m_receiveBlockTimes.back() - Simulator::Now ().GetSeconds();
-              }
-              m_receiveBlockTimes.push_back(Simulator::Now ().GetSeconds() + receiveTime);
-
-              NS_LOG_INFO("CHUNK:  Node " << GetNode()->GetId() << " will receive the full chunk message at " << Simulator::Now ().GetSeconds() + eventTime);
-              Simulator::Schedule (Seconds(eventTime), &BitcoinNode::ReceivedChunkMessage, this, help, from);
-              Simulator::Schedule (Seconds(receiveTime), &BitcoinNode::RemoveReceiveTime, this);
-
-              break;
-            }
             default:
               NS_LOG_INFO ("Default");
               break;
@@ -3085,6 +3057,16 @@ BitcoinNode::SendMessage(enum Messages receivedMessage,  enum Messages responseM
       }
       break;
     }
+    case COMP:
+    {
+      //set up the message that indicates the participating node is complete
+
+    }
+    case PROC:
+    {
+      //set up the message that indicates a processed message
+
+    }
   }
 }
 
@@ -3635,7 +3617,7 @@ BitcoinNode::RemoveCompressedBlockSendTime ()
 {
   NS_LOG_FUNCTION (this);
 
-  NS_LOG_INFO ("RemoveCompressedBlockSendTime: At Time " << Simulator::Now ().GetSeconds () << " " << m_sendCompressedBlockTimes.front() << " was removed");
+  NS_LOG_INFO ("RemoveCompressedBlockSendTime:2.20224101 At Time " << Simulator::Now ().GetSeconds () << " " << m_sendCompressedBlockTimes.front() << " was removed");
   m_sendCompressedBlockTimes.erase(m_sendCompressedBlockTimes.begin());
 }
 

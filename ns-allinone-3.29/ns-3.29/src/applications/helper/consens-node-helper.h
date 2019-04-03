@@ -44,6 +44,7 @@ class ConsensHelper : public BitcoinNodeHelper
   enum MinerType GetMinerType(void);
   void SetMinerType (enum MinerType m);
   void SetBlockBroadcastType (enum BlockBroadcastType m);
+  void HandleRead (Ptr<Socket> socket);
 
 protected:
   /**

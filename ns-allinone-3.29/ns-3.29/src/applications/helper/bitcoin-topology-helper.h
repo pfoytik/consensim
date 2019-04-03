@@ -40,9 +40,9 @@ namespace ns3 {
  * \brief A helper to make it easier to create a grid topology
  * with p2p links
  */
-class BitcoinTopologyHelper 
+class BitcoinTopologyHelper
 {
-public: 
+public:
   /**
    * Create a BitcoinTopologyHelper in order to easily create
    * grid topologies using p2p links
@@ -51,12 +51,12 @@ public:
    *
    * \param nCols total number of colums in the grid
    *
-   * \param pointToPoint the PointToPointHelper which is used 
-   *                     to connect all of the nodes together 
+   * \param pointToPoint the PointToPointHelper which is used
+   *                     to connect all of the nodes together
    *                     in the grid
    */
   BitcoinTopologyHelper (uint32_t noCpus, uint32_t totalNoNodes, uint32_t noMiners, enum BitcoinRegion *minersRegions,
-                         enum Cryptocurrency cryptocurrency, int minConnectionsPerNode, int maxConnectionsPerNode, 
+                         enum Cryptocurrency cryptocurrency, int minConnectionsPerNode, int maxConnectionsPerNode,
                          double latencyParetoShapeDivider, uint32_t systemId);
 
   ~BitcoinTopologyHelper ();
@@ -66,32 +66,33 @@ public:
    *
    * \param col the column address of the node desired
    *
-   * \returns a pointer to the node specified by the 
+   * \returns a pointer to the node specified by the
    *          (row, col) address
    */
   Ptr<Node> GetNode (uint32_t id);
 
   /**
-   * This returns an Ipv4 address at the node specified by 
-   * the (row, col) address.  Technically, a node will have 
-   * multiple interfaces in the grid; therefore, it also has 
-   * multiple Ipv4 addresses.  This method only returns one of 
-   * the addresses. If you picture the grid, the address returned 
-   * is the left row device of all the nodes, except the left-most 
+   * This returns an Ipv4 address at the node specified by
+   * the (row, col) address.  Technically, a node will have
+   * multiple interfaces in the grid; therefore, it also has
+   * multiple Ipv4 addresses.  This method only returns one of
+   * the addresses. If you picture the grid, the address returned
+   * is the left row device of all the nodes, except the left-most
    * grid nodes, which returns the right row device.
+/*
    *
    * \param row the row address of the node desired
    *
    * \param col the column address of the node desired
    *
-   * \returns Ipv4Address of one of the interfaces of the node 
+   * \returns Ipv4Address of one of the interfaces of the node
    *          specified by the (row, col) address
    */
   Ipv4Address GetIpv4Address (uint32_t row, uint32_t col);
 
 
   /**
-   * \param stack an InternetStackHelper which is used to install 
+   * \param stack an InternetStackHelper which is used to install
    *              on every node in the grid
    */
   void InstallStack (InternetStackHelper stack);
@@ -99,10 +100,10 @@ public:
   /**
    * Assigns Ipv4 addresses to all the row and column interfaces
    *
-   * \param ip the Ipv4AddressHelper used to assign Ipv4 addresses 
+   * \param ip the Ipv4AddressHelper used to assign Ipv4 addresses
    *              to all of the row interfaces in the grid
    *
-   * \param ip the Ipv4AddressHelper used to assign Ipv4 addresses 
+   * \param ip the Ipv4AddressHelper used to assign Ipv4 addresses
    *              to all of the row interfaces in the grid
    */
   void AssignIpv4Addresses (Ipv4AddressHelperCustom ip);
@@ -123,13 +124,13 @@ public:
    * Get the interface container
    */
    Ipv4InterfaceContainer GetIpv4InterfaceContainer (void) const;
-   
+
    std::map<uint32_t, std::vector<Ipv4Address>> GetNodesConnectionsIps (void) const;
-   
+
    std::vector<uint32_t> GetMiners (void) const;
-   
+
    uint32_t* GetBitcoinNodesRegions (void);
-   
+
    std::map<uint32_t, std::map<Ipv4Address, double>> GetPeersDownloadSpeeds(void) const;
    std::map<uint32_t, std::map<Ipv4Address, double>> GetPeersUploadSpeeds(void) const;
 
@@ -139,7 +140,7 @@ private:
 
   void AssignRegion (uint32_t id);
   void AssignInternetSpeeds(uint32_t id);
-  
+
   uint32_t     m_totalNoNodes;                  //!< The total number of nodes
   uint32_t     m_noMiners;                      //!< The total number of miners
   uint32_t     m_noCpus;                        //!< The number of the available cpus in the simulation
@@ -152,7 +153,7 @@ private:
   double       m_minerUploadSpeed;              //!<  The upload speed of miners
   uint32_t     m_totalNoLinks;                  //!<  Total number of links
   uint32_t     m_systemId;
-  
+
   enum BitcoinRegion                             *m_minersRegions;
   enum Cryptocurrency                             m_cryptocurrency;
   std::vector<uint32_t>                           m_miners;                  //!< The ids of the miners
@@ -163,9 +164,9 @@ private:
   std::vector<Ipv4InterfaceContainer>             m_interfaces;              //!< IPv4 interfaces in the network
   uint32_t                                       *m_bitcoinNodesRegion;      //!< The region in which the bitcoin nodes are located
   double                                          m_regionLatencies[6][6];   //!< The inter- and intra-region latencies
-  double                                          m_regionDownloadSpeeds[6];     
-  double                                          m_regionUploadSpeeds[6];     
-  
+  double                                          m_regionDownloadSpeeds[6];
+  double                                          m_regionUploadSpeeds[6];
+
 
   std::map<uint32_t, std::map<Ipv4Address, double>>    m_peersDownloadSpeeds;     //!< key1 = nodeId, key2 = Ipv4Address of peer
   std::map<uint32_t, std::map<Ipv4Address, double>>    m_peersUploadSpeeds;       //!< key1 = nodeId, key2 = Ipv4Address of peer

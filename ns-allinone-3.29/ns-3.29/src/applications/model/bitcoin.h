@@ -34,6 +34,7 @@ enum Messages
   EXT_GET_DATA,     //12
 	COMP,							//13
 	PROC, 						//14
+  SPEC,             //15
 };
 
 

@@ -116,7 +116,13 @@ public:
   int               m_messageCount;
   int               m_consensState;
   int               m_requiredCount;
-  std::vector<uint32_t> *m_miners;
+  int               m_nodeReqCount;
+  int               m_nodeCompCount;
+  int               m_leaderID;
+
+  double            m_messageProc;
+  double            m_specialCaseProc;
+  //std::vector<uint32_t> *m_miners;
 
 protected:
   // inherited from Application base class.
@@ -144,11 +150,10 @@ protected:
   virtual void ConsensMessage (void);
 
   /**
-   * This method will check all of the states of participating nodes
-   * if the appropriate number of participating nodes are in the state of
-   * completed then run mineblock
-   */
-  virtual bool checkCompleted (void);
+  * This method is used to process special case Messages
+  * Special case messages could be leader selection
+  */
+  virtual void SpecialCaseMessage (void);
 
   /**
    * \brief Called for blocks with better score(height). Removes m_nextMiningEvent and call MineBlock again.
