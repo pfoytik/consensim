@@ -119,9 +119,12 @@ public:
   int               m_nodeReqCount;
   int               m_nodeCompCount;
   int               m_leaderID;
+  int               m_maxNumBlocks;
+  int               m_blockCount;
 
   double            m_messageProc;
   double            m_specialCaseProc;
+  double            m_timeCompleted;
   //std::vector<uint32_t> *m_miners;
 
 protected:
@@ -150,6 +153,21 @@ protected:
   virtual void ConsensMessage (void);
 
   /**
+   * The method to respond that message proc is complete for a node
+   */
+  virtual void CompMessage (void);
+
+  /**
+   * The method to handle the recording of a block written
+   */
+  virtual void BlockWritten (void);
+
+  /**
+   * Method to respond that message comp is recieved
+   */
+  virtual void ReceivedCompMessage(void);
+
+  /**
   * This method is used to process special case Messages
   * Special case messages could be leader selection
   */
@@ -160,6 +178,11 @@ protected:
    * \param newBlock the new block which was received
    */
   virtual void ReceivedHigherBlock(const Block &newBlock);
+
+  /**
+   * Handle read the recieved processed message
+   */
+  virtual void ReceivedProcMessage(void);
 
   /**
    * \brief Sends a BLOCK message as a response to a GET_DATA message

@@ -23,8 +23,8 @@ class Address;
 class Socket;
 class Packet;
 
- 
-class BitcoinNode : public Application 
+
+class BitcoinNode : public Application
 {
 public:
 
@@ -45,16 +45,16 @@ public:
 
   /**
    * \return a vector containing the addresses of peers
-   */  
+   */
   std::vector<Ipv4Address> GetPeersAddresses (void) const;
-  
-  
+
+
   /**
    * \brief Set the addresses of peers
    * \param peers the reference of a vector containing the Ipv4 addresses of peers
    */
   void SetPeersAddresses (const std::vector<Ipv4Address> &peers);
-  
+
   /**
    * \brief set the download speeds of peers
    * \param peersDownloadSpeeds the reference of a map containing the Ipv4 addresses of peers and their corresponding download speed
@@ -66,19 +66,19 @@ public:
    * \param peersUploadSpeeds the reference of a map containing the Ipv4 addresses of peers and their corresponding upload speed
   */
   void SetPeersUploadSpeeds (const std::map<Ipv4Address, double> &peersUploadSpeeds);
-  
+
   /**
    * \brief Set the internet speeds of the node
    * \param internetSpeeds a struct containing the download and upload speed of the node
    */
   void SetNodeInternetSpeeds (const nodeInternetSpeeds &internetSpeeds);
-  
+
   /**
    * \brief Set the node statistics
    * \param nodeStats a reference to a nodeStatistics struct
    */
   void SetNodeStats (nodeStatistics *nodeStats);
-  
+
   /**
    * \brief Set the protocol type(default: STANDARD_PROTOCOL)
    * \param protocolType the type of protocol used for advertising new blocks
@@ -96,20 +96,20 @@ protected:
    * \param socket the receiving socket
    */
   void HandleRead (Ptr<Socket> socket);
-  
+
   /**
    * \brief Handle an incoming connection
    * \param socket the incoming connection socket
    * \param from the address the connection is from
    */
   void HandleAccept (Ptr<Socket> socket, const Address& from);
-  
+
   /**
    * \brief Handle an connection close
    * \param socket the connected socket
    */
   void HandlePeerClose (Ptr<Socket> socket);
-  
+
   /**
    * \brief Handle an connection error
    * \param socket the connected socket
@@ -118,29 +118,44 @@ protected:
 
   /**
    * \brief Handle an incoming BLOCK Message.
-   * \param blockInfo the block message info 
+   * \param blockInfo the block message info
    * \param from the address the connection is from
    */
-  void ReceivedBlockMessage(std::string &blockInfo, Address &from);	
+  void ReceivedBlockMessage(std::string &blockInfo, Address &from);
 
   /**
    * \brief Handle an incoming CHUNK Message.
-   * \param chunkInfo the chunk message info 
+   * \param chunkInfo the chunk message info
    * \param from the address the connection is from
    */
-  void ReceivedChunkMessage(std::string &chunkInfo, Address &from);		
+  void ReceivedChunkMessage(std::string &chunkInfo, Address &from);
+
+  /**
+   * Handle the recieved message that is a process message
+   */
+  virtual void ReceivedProcMessage(void);
+
+  /**
+   * Handle the received Block write message
+   */
+  virtual void BlockWritten(void);
+
+  /**
+   * Handle the recieved message that is a comp message
+   */
+  virtual void ReceivedCompMessage(void);
 
   /**
    * \brief Called when a new block non-orphan block is received
    * \param newBlock the newly received block
    */
-  virtual void ReceiveBlock(const Block &newBlock);				                   
-  
+  virtual void ReceiveBlock(const Block &newBlock);
+
   /**
    * \brief Called when the last chunk of a block is received
    * \param newBlock the newly received block
    */
-  void ReceivedLastChunk(const Block &newBlock);				           
+  void ReceivedLastChunk(const Block &newBlock);
 
   /**
    * \brief Sends a BLOCK message as a response to a GET_DATA message
@@ -154,26 +169,26 @@ protected:
    * \param packetInfo the info of the CHUNK message
    * \param from the address the EXT_GET_DATA/CHUNK was received from
    */
-  void SendChunk(std::string packetInfo, Address &from);				   
+  void SendChunk(std::string packetInfo, Address &from);
 
   /**
    * \brief Called for blocks with higher score(height)
    * \param newBlock the new block with higher score
    */
-  virtual void ReceivedHigherBlock(const Block &newBlock);	
+  virtual void ReceivedHigherBlock(const Block &newBlock);
 
   /**
    * \brief Validates new Blocks by calculating the necessary time interval
    * \param newBlock the new block
    */
   void ValidateBlock(const Block &newBlock);
-  
+
   /**
    * \brief Adds the new block in to the blockchain, advertises it to the peers and validates any ophan children
    * \param newBlock the new block
    */
   void AfterBlockValidation(const Block &newBlock);
-  
+
   /**
    * \brief Validates any ophan children of the newly received block
    * \param newBlock the new block
@@ -185,13 +200,13 @@ protected:
    * \param newBlock the new block
    */
   void AdvertiseNewBlock (const Block &newBlock);
-  
+
   /**
    * \brief Advertises the newly validated block when blockTorrent is used
    * \param newBlock the new block
    */
   void AdvertiseFullBlock (const Block &newBlock);
-  
+
   /**
    * \brief Advertises the newly validated block when blockTorrent and spv are used
    * \param newBlock the new block
@@ -206,7 +221,7 @@ protected:
    * \param outgoingSocket the socket of the peer
    */
   void SendMessage(enum Messages receivedMessage,  enum Messages responseMessage, rapidjson::Document &d, Ptr<Socket> outgoingSocket);
-  
+
   /**
    * \brief Sends a message to a peer
    * \param receivedMessage the type of the received message
@@ -215,7 +230,7 @@ protected:
    * \param outgoingAddress the Address of the peer
    */
   void SendMessage(enum Messages receivedMessage,  enum Messages responseMessage, rapidjson::Document &d, Address &outgoingAddress);
-  
+
   /**
    * \brief Sends a message to a peer
    * \param receivedMessage the type of the received message
@@ -229,32 +244,32 @@ protected:
    * \brief Print m_queueInv to stdout
    */
   void PrintQueueInv();
-  
+
   /**
    * \brief Print m_invTimeouts to stdout
    */
   void PrintInvTimeouts();
-  
+
   /**
    * \brief Print m_chunkTimeouts to stdout
    */
   void PrintChunkTimeouts();
-  
+
   /**
    * \brief Print m_queueChunks to stdout
    */
   void PrintQueueChunks();
-  
+
   /**
    * \brief Print m_queueChunkPeers to stdout
    */
   void PrintQueueChunkPeers();
-  
+
   /**
    * \brief Print m_receivedChunks to stdout
    */
   void PrintReceivedChunks();
-  
+
   /**
    * \brief Print m_onlyHeadersReceived to stdout
    */
@@ -265,7 +280,7 @@ protected:
    * \param blockHash the block hash for which the timeout expired
    */
   void InvTimeoutExpired (std::string blockHash);
-  
+
   /**
    * \brief Called when a timeout for a chunk expires
    * \param blockHash the chunk hash for which the timeout expired
@@ -274,27 +289,27 @@ protected:
 
   /**
    * \brief Checks if a block has been received but not been validated yet (if it is included in m_receivedNotValidated)
-   * \param blockHash the block hash 
+   * \param blockHash the block hash
    * \return true if the block has been received but not validated yet, false otherwise
    */
   bool ReceivedButNotValidated (std::string blockHash);
-  
+
   /**
    * \brief Removes a block from m_receivedNotValidated
-   * \param blockHash the block hash 
+   * \param blockHash the block hash
    */
   void RemoveReceivedButNotValidated (std::string blockHash);
 
   /**
    * \brief Checks if the node has received only the headers of a particular block (if it is included in m_onlyHeadersReceived)
-   * \param blockHash the block hash 
+   * \param blockHash the block hash
    * \return true if only the block headers have been received, false otherwise
    */
   bool OnlyHeadersReceived (std::string blockHash);
-  
+
   /**
    * \brief Checks if the node has received a particular chunk of a specific block
-   * \param blockHash the block hash 
+   * \param blockHash the block hash
    * \param blockHash the chunk id
    */
   bool HasChunk (std::string blockHash, int chunk);
@@ -303,7 +318,7 @@ protected:
    * \brief Removes the fist element from m_sendBlockTimes, when a block is sent
    */
   void RemoveSendTime ();
-  
+
   /**
    * \brief Removes the fist element from m_sendCompressedBlockTimes, when a compressed-block is sent
    */
@@ -313,13 +328,13 @@ protected:
    * \brief Removes the fist element from m_receiveBlockTimes, when a block is received
    */
   void RemoveReceiveTime ();
-  
+
   /**
    * \brief Removes the fist element from m_receiveCompressedBlockTimes, when a compressed-block is received
    */
   void RemoveCompressedBlockReceiveTime ();
 
-  // In the case of TCP, each socket accept returns a new socket, so the 
+  // In the case of TCP, each socket accept returns a new socket, so the
   // listening socket is stored separately from the accepted sockets
   Ptr<Socket>     m_socket;                           //!< Listening socket
   Address         m_local;                            //!< Local address to bind to
@@ -339,7 +354,7 @@ protected:
   bool            m_blockTorrent;                     //!< True if the blockTorrent mechanism is used, False otherwise
   uint32_t        m_chunkSize;                        //!< The size of the chunk in Bytes, when blockTorrent is used
   bool            m_spv;                              //!< Simplified Payment Verification. Used only in conjuction with blockTorrent
-  
+
   std::vector<Ipv4Address>                            m_peersAddresses;                 //!< The addresses of peers
   std::map<Ipv4Address, double>                       m_peersDownloadSpeeds;            //!< The peersDownloadSpeeds of channels
   std::map<Ipv4Address, double>                       m_peersUploadSpeeds;              //!< The peersUploadSpeeds of channels
@@ -368,13 +383,12 @@ protected:
   const int       m_getHeadersSizeBytes;       //!< The size of the GET_HEADERS message, 72 Bytes
   const int       m_headersSizeBytes;          //!< 81 Bytes
   const int       m_blockHeadersSizeBytes;     //!< 81 Bytes
-  
+
   /// Traced Callback: received packets, source address.
   TracedCallback<Ptr<const Packet>, const Address &> m_rxTrace;
-  
+
 };
 
 } // namespace ns3
 
 #endif /* BITCOIN_NODE_H */
-

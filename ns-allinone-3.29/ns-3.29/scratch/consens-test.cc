@@ -142,13 +142,14 @@ main (int argc, char *argv[])
   cmd.AddValue ("dogecoin", "Imitate the litecoin network behaviour", dogecoin);
   cmd.AddValue ("blockTorrent", "Enable the BlockTorrent protocol", blockTorrent);
   cmd.AddValue ("spv", "Enable the spv mechanism", spv);
+  cmd.AddValue ("miners", "change the number of miners", noMiners);
 
   cmd.Parse(argc, argv);
 
   if (noMiners % 16 != 0)
   {
     std::cout << "The number of miners must be multiple of 16" << std::endl;
-	return 0;
+	//return 0;
   }
 
   if (litecoin && dogecoin)

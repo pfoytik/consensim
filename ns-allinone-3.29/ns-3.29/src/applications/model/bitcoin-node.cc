@@ -382,12 +382,96 @@ BitcoinNode::HandleRead (Ptr<Socket> socket)
                         << " port " << InetSocketAddress::ConvertFrom (from).GetPort ()
                         << " with info = " << buffer.GetString());
 
+          //std::cout << " !!!!! getting ready for the switch of handleread " << d["message"].GetInt();
 
           switch (d["message"].GetInt())
           {
+            case COMP:
+            {
+
+              //std::cout << GetNode()->GetId() << " is the culprit \n";
+              //NS_LOG_INFO ("INV");
+              ReceivedCompMessage();
+
+              int j;
+              std::vector<std::string>            requestBlocks;
+              std::vector<std::string>::iterator  block_it;
+
+              m_nodeStats->invReceivedBytes += m_bitcoinMessageHeader + m_countBytes + d["inv"].Size()*m_inventorySizeBytes;
+
+              for (j=0; j<d["inv"].Size(); j++)
+              {
+                std::string   invDelimiter = "/";
+                std::string   parsedInv = d["inv"][j].GetString();
+                size_t        invPos = parsedInv.find(invDelimiter);
+                EventId       timeout;
+
+                int height = atoi(parsedInv.substr(0, invPos).c_str());
+                int minerId = atoi(parsedInv.substr(invPos+1, parsedInv.size()).c_str());
+
+
+                if (m_blockchain.HasBlock(height, minerId) || m_blockchain.IsOrphan(height, minerId) || ReceivedButNotValidated(parsedInv))
+                {
+                  NS_LOG_INFO("INV: Bitcoin node " << GetNode ()->GetId ()
+                              << " has already received the block with height = "
+                              << height << " and minerId = " << minerId);
+                }
+                else
+                {
+                  NS_LOG_INFO("INV: Bitcoin node " << GetNode ()->GetId ()
+                              << " does not have the block with height = "
+                              << height << " and minerId = " << minerId);
+
+                  /**
+                   * Check if we have already requested the block
+                   */
+
+                  if (m_invTimeouts.find(parsedInv) == m_invTimeouts.end())
+                  {
+                    NS_LOG_INFO("INV: Bitcoin node " << GetNode ()->GetId ()
+                                 << " has not requested the block yet");
+                    requestBlocks.push_back(parsedInv);
+                    timeout = Simulator::Schedule (m_invTimeoutMinutes, &BitcoinNode::InvTimeoutExpired, this, parsedInv);
+                    m_invTimeouts[parsedInv] = timeout;
+                  }
+                  else
+                  {
+                    NS_LOG_INFO("INV: Bitcoin node " << GetNode ()->GetId ()
+                                 << " has already requested the block");
+                  }
+
+                  m_queueInv[parsedInv].push_back(from);
+                  //PrintQueueInv();
+                  //PrintInvTimeouts();
+                }
+              }
+
+              if (!requestBlocks.empty())
+              {
+                rapidjson::Value   value;
+                rapidjson::Value   array(rapidjson::kArrayType);
+                d.RemoveMember("inv");
+
+                for (block_it = requestBlocks.begin(); block_it < requestBlocks.end(); block_it++)
+                {
+                  value.SetString(block_it->c_str(), block_it->size(), d.GetAllocator());
+                  array.PushBack(value, d.GetAllocator());
+                }
+
+                d.AddMember("blocks", array, d.GetAllocator());
+
+                SendMessage(INV, GET_HEADERS, d, from);
+                SendMessage(INV, GET_DATA, d, from);
+
+              }
+
+              break;
+            }
             case PROC:
             {
                 //NS_LOG_INFO ("INV");
+
+                ReceivedProcMessage();
                 int j;
                 std::vector<std::string>            requestBlocks;
                 std::vector<std::string>::iterator  block_it;
@@ -458,12 +542,17 @@ BitcoinNode::HandleRead (Ptr<Socket> socket)
                   SendMessage(INV, GET_HEADERS, d, from);
                   SendMessage(INV, GET_DATA, d, from);
 
+
+
                 }
+
                 break;
             }
             case INV:
             {
               //NS_LOG_INFO ("INV");
+
+              //BlockWritten();
               int j;
               std::vector<std::string>            requestBlocks;
               std::vector<std::string>::iterator  block_it;
@@ -1903,6 +1992,25 @@ BitcoinNode::HandleRead (Ptr<Socket> socket)
   }
 }
 
+void
+BitcoinNode::ReceivedCompMessage(void)
+{
+  //std::cout << "node miner received comp message ";
+  return;
+}
+
+void
+BitcoinNode::BlockWritten(void)
+{
+  return;
+}
+
+void
+BitcoinNode::ReceivedProcMessage(void)
+{
+  //std::cout << "node Recieved a proc message ";
+  return;
+}
 
 void
 BitcoinNode::ReceivedBlockMessage(std::string &blockInfo, Address &from)
