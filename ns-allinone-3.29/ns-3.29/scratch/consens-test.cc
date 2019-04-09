@@ -61,7 +61,7 @@ main (int argc, char *argv[])
   double tStart = get_wall_time(), tStartSimulation, tFinish;
   const int secsPerMin = 60;
   const uint16_t bitcoinPort = 8333;
-  const double realAverageBlockGenIntervalMinutes = 10; //minutes
+  const double realAverageBlockGenIntervalMinutes = 1; //minutes
   int targetNumberOfBlocks = 100;
   double averageBlockGenIntervalSeconds = 10 * secsPerMin; //seconds
   double fixedHashRate = 0.5;
@@ -76,11 +76,18 @@ main (int argc, char *argv[])
 
 #ifdef MPI_TEST
 
+  //double bitcoinMinersHash[] = {0.289, 0.196, 0.159, 0.133, 0.066, 0.054,
+  //                              0.029, 0.016, 0.012, 0.012, 0.012, 0.009,
+  //                              0.005, 0.005, 0.002, 0.002};
+  //
+  //enum BitcoinRegion bitcoinMinersRegions[] = {ASIA_PACIFIC, ASIA_PACIFIC, ASIA_PACIFIC, NORTH_AMERICA, ASIA_PACIFIC, NORTH_AMERICA,
+  //                                             EUROPE, EUROPE, NORTH_AMERICA, NORTH_AMERICA, NORTH_AMERICA, EUROPE,
+  //                                             NORTH_AMERICA, NORTH_AMERICA, NORTH_AMERICA, NORTH_AMERICA};
   double bitcoinMinersHash[] = {0.289, 0.196, 0.159, 0.133, 0.066, 0.054,
                                 0.029, 0.016, 0.012, 0.012, 0.012, 0.009,
                                 0.005, 0.005, 0.002, 0.002};
-  enum BitcoinRegion bitcoinMinersRegions[] = {ASIA_PACIFIC, ASIA_PACIFIC, ASIA_PACIFIC, NORTH_AMERICA, ASIA_PACIFIC, NORTH_AMERICA,
-                                               EUROPE, EUROPE, NORTH_AMERICA, NORTH_AMERICA, NORTH_AMERICA, EUROPE,
+  enum BitcoinRegion bitcoinMinersRegions[] = {NORTH_AMERICA, NORTH_AMERICA, NORTH_AMERICA, NORTH_AMERICA, NORTH_AMERICA, NORTH_AMERICA,
+                                               NORTH_AMERICA, NORTH_AMERICA, NORTH_AMERICA, NORTH_AMERICA, NORTH_AMERICA, NORTH_AMERICA,
                                                NORTH_AMERICA, NORTH_AMERICA, NORTH_AMERICA, NORTH_AMERICA};
 
   double litecoinMinersHash[] = {0.366, 0.314, 0.122, 0.072, 0.028, 0.024, 0.022, 0.018, 0.012, 0.01, 0.006, 0.006};

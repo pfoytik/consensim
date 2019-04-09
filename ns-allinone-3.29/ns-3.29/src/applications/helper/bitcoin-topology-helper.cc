@@ -49,12 +49,19 @@ BitcoinTopologyHelper::BitcoinTopologyHelper (uint32_t noCpus, uint32_t totalNoN
   std::vector<uint32_t>     nodes;    //nodes contain the ids of the nodes
   double                    tStart = GetWallTime();
   double                    tFinish;
-  double regionLatencies[6][6] = { {35.5, 119.49, 254.79, 310.11, 154.36, 207.91},
-	                               {119.49, 11.61, 221.08, 241.9, 266.45, 350.07},
-	                               {254.79, 221.08, 137.09, 346.65, 255.95, 268.91},
-	                               {310.11, 241.9, 346.65, 99.46, 172.24, 277.8},
-	                               {154.36, 266.45, 255.95, 172.24, 8.76, 162.59},
-	                               {207.91, 350.07, 268.91, 277.8, 162.59, 21.72}};
+  //double regionLatencies[6][6] = { {35.5, 119.49, 254.79, 310.11, 154.36, 207.91},
+	//                               {119.49, 11.61, 221.08, 241.9, 266.45, 350.07},
+	//                               {254.79, 221.08, 137.09, 346.65, 255.95, 268.91},
+	//                               {310.11, 241.9, 346.65, 99.46, 172.24, 277.8},
+	//                               {154.36, 266.45, 255.95, 172.24, 8.76, 162.59},
+	//                               {207.91, 350.07, 268.91, 277.8, 162.59, 21.72}};
+
+ double regionLatencies[6][6] = { {0.1, 119.49, 254.79, 310.11, 154.36, 207.91},
+                                {119.49, 11.61, 221.08, 241.9, 266.45, 350.07},
+                                {254.79, 221.08, 137.09, 346.65, 255.95, 268.91},
+                                {310.11, 241.9, 346.65, 99.46, 172.24, 277.8},
+                                {154.36, 266.45, 255.95, 172.24, 8.76, 162.59},
+                                {207.91, 350.07, 268.91, 277.8, 162.59, 21.72}};
 
   std::array<double,1001> downloadBandwitdhIntervals {
    0.1, 0.6, 1.1, 1.6, 2.1, 2.6, 3.1, 3.6, 4.1, 4.6, 5.1, 5.6, 6.1, 6.6,
@@ -638,14 +645,16 @@ BitcoinTopologyHelper::BitcoinTopologyHelper (uint32_t noCpus, uint32_t totalNoN
     for (int j = 0; j < 6; j++)
 	  m_regionLatencies[k][j] = regionLatencies[k][j];
 
-  m_regionDownloadSpeeds[NORTH_AMERICA] = 41.68;
+  //m_regionDownloadSpeeds[NORTH_AMERICA] = 41.68;
+  m_regionDownloadSpeeds[NORTH_AMERICA] = 100;
   m_regionDownloadSpeeds[EUROPE] = 21.29;
   m_regionDownloadSpeeds[SOUTH_AMERICA] = 9.89;
   m_regionDownloadSpeeds[ASIA_PACIFIC] = 14.56;
   m_regionDownloadSpeeds[JAPAN] = 6.9;
   m_regionDownloadSpeeds[AUSTRALIA] = 16;
 
-  m_regionUploadSpeeds[NORTH_AMERICA] = 6.74;
+  //m_regionUploadSpeeds[NORTH_AMERICA] = 6.74;
+  m_regionUploadSpeeds[NORTH_AMERICA] = 100;
   m_regionUploadSpeeds[EUROPE] = 6.72;
   m_regionUploadSpeeds[SOUTH_AMERICA] = 2.2;
   m_regionUploadSpeeds[ASIA_PACIFIC] = 6.53;
@@ -1042,7 +1051,7 @@ BitcoinTopologyHelper::BitcoinTopologyHelper (uint32_t noCpus, uint32_t totalNoN
 /* 	if (m_systemId == 0)
       std::cout << "Creating a node with Id = " << i << " and systemId = " << i % m_noCpus << "\n"; */
     m_nodes.push_back (currentNode);
-	AssignRegion(i);
+	   AssignRegion(i);
     AssignInternetSpeeds(i);
   }
 

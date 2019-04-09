@@ -136,6 +136,11 @@ protected:
   virtual void ReceivedProcMessage(void);
 
   /**
+   * Handle the received message that is a start message
+   */
+  virtual void ReceivedStartMessage(void);
+
+  /**
    * Handle the received Block write message
    */
   virtual void BlockWritten(void);

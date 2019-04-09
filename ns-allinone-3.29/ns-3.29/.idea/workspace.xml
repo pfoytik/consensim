@@ -20,6 +20,35 @@
       <change beforePath="$PROJECT_DIR$/../../Kiayias2017_Chapter_OuroborosAProvablySecureProof-.pdf" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../../Ouroboros-BFT-Protocol.pdf" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../../hand_simulation.ods" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/optimized/.wafpickle-linux2-34016496-20" beforeDir="false" afterPath="$PROJECT_DIR$/build/optimized/.wafpickle-linux2-34016496-20" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/optimized/lib/libns3.29-applications-optimized.a" beforeDir="false" afterPath="$PROJECT_DIR$/build/optimized/lib/libns3.29-applications-optimized.a" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/optimized/ns3/bitcoin-node.h" beforeDir="false" afterPath="$PROJECT_DIR$/build/optimized/ns3/bitcoin-node.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/optimized/ns3/consens-node.h" beforeDir="false" afterPath="$PROJECT_DIR$/build/optimized/ns3/consens-node.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/optimized/scratch/bitcoin-test" beforeDir="false" afterPath="$PROJECT_DIR$/build/optimized/scratch/bitcoin-test" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/optimized/scratch/consens-test" beforeDir="false" afterPath="$PROJECT_DIR$/build/optimized/scratch/consens-test" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/optimized/scratch/consens-test.cc.3.o" beforeDir="false" afterPath="$PROJECT_DIR$/build/optimized/scratch/consens-test.cc.3.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/optimized/scratch/csma-broadcast" beforeDir="false" afterPath="$PROJECT_DIR$/build/optimized/scratch/csma-broadcast" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/optimized/scratch/fifth" beforeDir="false" afterPath="$PROJECT_DIR$/build/optimized/scratch/fifth" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/optimized/scratch/sample-simulator" beforeDir="false" afterPath="$PROJECT_DIR$/build/optimized/scratch/sample-simulator" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/optimized/scratch/scratch-simulator" beforeDir="false" afterPath="$PROJECT_DIR$/build/optimized/scratch/scratch-simulator" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/optimized/scratch/selfish-miner-test" beforeDir="false" afterPath="$PROJECT_DIR$/build/optimized/scratch/selfish-miner-test" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/optimized/scratch/subdir/subdir" beforeDir="false" afterPath="$PROJECT_DIR$/build/optimized/scratch/subdir/subdir" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/optimized/src/applications/helper/bitcoin-topology-helper.cc.1.o" beforeDir="false" afterPath="$PROJECT_DIR$/build/optimized/src/applications/helper/bitcoin-topology-helper.cc.1.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/optimized/src/applications/model/bitcoin-miner.cc.1.o" beforeDir="false" afterPath="$PROJECT_DIR$/build/optimized/src/applications/model/bitcoin-miner.cc.1.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/optimized/src/applications/model/bitcoin-node.cc.1.o" beforeDir="false" afterPath="$PROJECT_DIR$/build/optimized/src/applications/model/bitcoin-node.cc.1.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/optimized/src/applications/model/bitcoin-selfish-miner-trials.cc.1.o" beforeDir="false" afterPath="$PROJECT_DIR$/build/optimized/src/applications/model/bitcoin-selfish-miner-trials.cc.1.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/optimized/src/applications/model/bitcoin-selfish-miner.cc.1.o" beforeDir="false" afterPath="$PROJECT_DIR$/build/optimized/src/applications/model/bitcoin-selfish-miner.cc.1.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/optimized/src/applications/model/bitcoin-simple-attacker.cc.1.o" beforeDir="false" afterPath="$PROJECT_DIR$/build/optimized/src/applications/model/bitcoin-simple-attacker.cc.1.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/optimized/src/applications/model/consens-node.cc.1.o" beforeDir="false" afterPath="$PROJECT_DIR$/build/optimized/src/applications/model/consens-node.cc.1.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/optimized/utils/ns3.29-print-introspected-doxygen-optimized" beforeDir="false" afterPath="$PROJECT_DIR$/build/optimized/utils/ns3.29-print-introspected-doxygen-optimized" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/optimized/utils/ns3.29-test-runner-optimized" beforeDir="false" afterPath="$PROJECT_DIR$/build/optimized/utils/ns3.29-test-runner-optimized" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scratch/bitcoin-test.cc" beforeDir="false" afterPath="$PROJECT_DIR$/scratch/bitcoin-test.cc" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scratch/consens-test.cc" beforeDir="false" afterPath="$PROJECT_DIR$/scratch/consens-test.cc" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/applications/helper/bitcoin-topology-helper.cc" beforeDir="false" afterPath="$PROJECT_DIR$/src/applications/helper/bitcoin-topology-helper.cc" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/applications/model/bitcoin-node.cc" beforeDir="false" afterPath="$PROJECT_DIR$/src/applications/model/bitcoin-node.cc" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/applications/model/bitcoin-node.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/applications/model/bitcoin-node.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/applications/model/consens-node.cc" beforeDir="false" afterPath="$PROJECT_DIR$/src/applications/model/consens-node.cc" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/applications/model/consens-node.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/applications/model/consens-node.h" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -31,20 +60,21 @@
     <session id="-604534267">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="1" />
+          <entry key="project.closed" value="2" />
+          <entry key="project.open.time.20" value="1" />
           <entry key="project.open.time.21" value="1" />
           <entry key="project.open.time.3" value="1" />
-          <entry key="project.opened" value="2" />
+          <entry key="project.opened" value="3" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="cc" value="43" />
+          <entry key="cc" value="57" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="ObjectiveC" value="43" />
+          <entry key="ObjectiveC" value="57" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
@@ -64,11 +94,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/scratch/bitcoin-test.cc">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="420">
-              <caret line="28" column="5" selection-start-line="28" selection-start-column="5" selection-end-line="28" selection-end-column="5" />
+            <state relative-caret-position="333">
+              <caret line="382" selection-start-line="382" selection-end-line="382" />
               <folding>
                 <element signature="e#1061#1077#0" expanded="true" />
               </folding>
@@ -76,7 +106,7 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/build/ns3/applications-module.h">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="30">
@@ -102,8 +132,8 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/scratch/bitcoin-test.cc" />
         <option value="$PROJECT_DIR$/src/csma/model/csma-channel.cc" />
+        <option value="$PROJECT_DIR$/scratch/bitcoin-test.cc" />
       </list>
     </option>
   </component>
@@ -114,8 +144,8 @@
     <sorting>DEFINITION_ORDER</sorting>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="67" />
-    <option name="y" value="35" />
+    <option name="x" value="101" />
+    <option name="y" value="29" />
     <option name="width" value="1853" />
     <option name="height" value="1168" />
   </component>
@@ -182,16 +212,18 @@
       <updated>1541800637264</updated>
       <workItem from="1541800640019" duration="2265000" />
       <workItem from="1549575846771" duration="2399000" />
+      <workItem from="1554816969601" duration="300000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="4664000" />
+    <option name="totallyTimeSpent" value="4964000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="67" y="35" width="1853" height="1168" extended-state="0" />
+    <frame x="101" y="29" width="1853" height="1168" extended-state="0" />
+    <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.18539014" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.18760376" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -225,16 +257,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/scratch/bitcoin-test.cc">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="420">
-          <caret line="28" column="5" selection-start-line="28" selection-start-column="5" selection-end-line="28" selection-end-column="5" />
-          <folding>
-            <element signature="e#1061#1077#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/build/ns3/applications-module.h">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="30">
@@ -242,6 +264,16 @@
           <folding>
             <element signature="e#31#148#0" expanded="true" />
             <element signature="e#214#251#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/scratch/bitcoin-test.cc">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="333">
+          <caret line="382" selection-start-line="382" selection-end-line="382" />
+          <folding>
+            <element signature="e#1061#1077#0" expanded="true" />
           </folding>
         </state>
       </provider>

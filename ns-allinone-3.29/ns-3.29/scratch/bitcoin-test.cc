@@ -380,6 +380,7 @@ main (int argc, char *argv[])
 	  }
 	}
   }
+
   bitcoinNodes.Start (Seconds (start));
   bitcoinNodes.Stop (Minutes (stop));
 

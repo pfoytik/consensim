@@ -153,6 +153,12 @@ protected:
   virtual void ConsensMessage (void);
 
   /**
+   * This method handles the beginning of the consensus process
+   * for the next block
+   */
+  virtual void StartMessage (void);
+
+  /**
    * The method to respond that message proc is complete for a node
    */
   virtual void CompMessage (void);
@@ -183,6 +189,11 @@ protected:
    * Handle read the recieved processed message
    */
   virtual void ReceivedProcMessage(void);
+
+  /**
+   * Handle reading the start message
+   */
+  virtual void ReceivedStartMessage(void);
 
   /**
    * \brief Sends a BLOCK message as a response to a GET_DATA message
