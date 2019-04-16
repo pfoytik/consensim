@@ -61,6 +61,7 @@ public:
    */
   void SetPeersDownloadSpeeds (const std::map<Ipv4Address, double> &peersDownloadSpeeds);
 
+  void SetLeaderID (int &leaderID);
   /**
    * \brief Set the upload speeds of peers
    * \param peersUploadSpeeds the reference of a map containing the Ipv4 addresses of peers and their corresponding upload speed
@@ -84,6 +85,8 @@ public:
    * \param protocolType the type of protocol used for advertising new blocks
    */
   void SetProtocolType (enum ProtocolType protocolType);
+
+  int m_leaderID;
 
 protected:
   virtual void DoDispose (void);           // inherited from Application base class.

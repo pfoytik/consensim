@@ -152,16 +152,15 @@ protected:
    */
   virtual void ConsensMessage (void);
 
-  /**
-   * This method handles the beginning of the consensus process
-   * for the next block
-   */
-  virtual void StartMessage (void);
+
+  //virtual void StartConsens (void);
 
   /**
    * The method to respond that message proc is complete for a node
    */
   virtual void CompMessage (void);
+
+  virtual void StartMessage (void);
 
   /**
    * The method to handle the recording of a block written

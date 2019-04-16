@@ -103,7 +103,7 @@ main (int argc, char *argv[])
 /*   double bitcoinMinersHash[] = {1};
   enum BitcoinRegion bitcoinMinersRegions[] = {ASIA_PACIFIC}; */
   double bitcoinMinersHash[] = {0.5, 0.5};
-  enum BitcoinRegion bitcoinMinersRegions[] = {ASIA_PACIFIC, ASIA_PACIFIC};
+  enum BitcoinRegion bitcoinMinersRegions[] = {NORTH_AMERICA, NORTH_AMERICA};
 /*   double bitcoinMinersHash[] = {0.4, 0.3, 0.3};
   enum BitcoinRegion bitcoinMinersRegions[] = {ASIA_PACIFIC, ASIA_PACIFIC, ASIA_PACIFIC}; */
 
@@ -273,6 +273,7 @@ main (int argc, char *argv[])
   if (systemId == 0)
     PrintBitcoinRegionStats(bitcoinTopologyHelper.GetBitcoinNodesRegions(), totalNoNodes);
 
+  std::cout << " incoming node connections " << nodesConnections[miners[0]][0] << "\n";
   //Install miners
   //BitcoinMinerHelper bitcoinMinerHelper ("ns3::TcpSocketFactory", InetSocketAddress (Ipv4Address::GetAny (), bitcoinPort),
   //                                        nodesConnections[miners[0]], noMiners, peersDownloadSpeeds[0], peersUploadSpeeds[0],
@@ -288,9 +289,16 @@ main (int argc, char *argv[])
     bitcoinMinerHelper.SetAttribute("FixedBlockIntervalGeneration", DoubleValue(averageBlockGenIntervalSeconds));
   }
 
+  int leaderID = 4;
+
   for(auto &miner : miners)
   {
 	Ptr<Node> targetNode = bitcoinTopologyHelper.GetNode (miner);
+  if(leaderID==0)
+  {
+    leaderID = targetNode->GetId();
+    std::cout << " found a leader " << leaderID << " with IP " << "\n";
+  }
 
 	if (systemId == targetNode->GetSystemId())
 	{
@@ -319,11 +327,12 @@ main (int argc, char *argv[])
         if (spv)
           bitcoinMinerHelper.SetAttribute("SPV", BooleanValue(true));
 	  }
-      bitcoinMinerHelper.SetPeersAddresses (nodesConnections[miner]);
+    bitcoinMinerHelper.SetPeersAddresses (nodesConnections[miner]);
 	  bitcoinMinerHelper.SetPeersDownloadSpeeds (peersDownloadSpeeds[miner]);
 	  bitcoinMinerHelper.SetPeersUploadSpeeds (peersUploadSpeeds[miner]);
 	  bitcoinMinerHelper.SetNodeInternetSpeeds (nodesInternetSpeeds[miner]);
 	  bitcoinMinerHelper.SetNodeStats (&stats[miner]);
+    bitcoinMinerHelper.SetLeaderID (leaderID);
 
 	  if(unsolicited)
 	    bitcoinMinerHelper.SetBlockBroadcastType (UNSOLICITED);
@@ -333,9 +342,9 @@ main (int argc, char *argv[])
 	    bitcoinMinerHelper.SetBlockBroadcastType (UNSOLICITED_RELAY_NETWORK);
 
 	  bitcoinMiners.Add(bitcoinMinerHelper.Install (targetNode));
-/*       std::cout << "SystemId " << systemId << ": Miner " << miner << " with hash power = " << minersHash[count]
+       std::cout << "SystemId " << systemId << ": Miner " << miner << " with hash power = " << minersHash[count]
 	            << " and systemId = " << targetNode->GetSystemId() << " was installed in node "
-                << targetNode->GetId () << std::endl;  */
+                << targetNode->GetId () << " : " << nodesConnections[miner][1] << std::endl;
 
 	  if (systemId == 0)
         nodesInSystemId0++;

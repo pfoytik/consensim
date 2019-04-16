@@ -45,6 +45,7 @@ class ConsensHelper : public BitcoinNodeHelper
   void SetMinerType (enum MinerType m);
   void SetBlockBroadcastType (enum BlockBroadcastType m);
   void HandleRead (Ptr<Socket> socket);
+  void SetLeaderID(int);
 
 protected:
   /**
@@ -65,6 +66,7 @@ protected:
   enum MinerType            m_minerType;
   enum BlockBroadcastType   m_blockBroadcastType;
   int                       m_noMiners;
+  int                       m_leaderID;
   double                    m_hashRate;
   double                    m_blockGenBinSize;
   double                    m_blockGenParameter;

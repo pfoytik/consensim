@@ -48,6 +48,7 @@ Ptr<Application>
         app->SetNodeStats(m_nodeStats);
         app->SetBlockBroadcastType(m_blockBroadcastType);
         app->SetProtocolType(m_protocolType);
+        app->SetLeaderID(m_leaderID);
 
         node->AddApplication (app);
         return app;
@@ -150,6 +151,11 @@ ConsensHelper::SetBlockBroadcastType (enum BlockBroadcastType m)
   m_blockBroadcastType = m;
 }
 
+void
+ConsensHelper::SetLeaderID (int leaderID)
+{
+  m_leaderID = leaderID;
+}
 
 void
 ConsensHelper::SetFactoryAttributes (void)

@@ -40,9 +40,9 @@ BitcoinTopologyHelper::BitcoinTopologyHelper (uint32_t noCpus, uint32_t totalNoN
                                               enum Cryptocurrency cryptocurrency, int minConnectionsPerNode, int maxConnectionsPerNode,
 						                      double latencyParetoShapeDivider, uint32_t systemId)
   : m_noCpus(noCpus), m_totalNoNodes (totalNoNodes), m_noMiners (noMiners),
-    m_minConnectionsPerNode (minConnectionsPerNode), m_maxConnectionsPerNode (maxConnectionsPerNode),
+    m_minConnectionsPerNode (noMiners+1), m_maxConnectionsPerNode (noMiners+1),
 	m_totalNoLinks (0), m_latencyParetoShapeDivider (latencyParetoShapeDivider),
-	m_systemId (systemId), m_minConnectionsPerMiner (700), m_maxConnectionsPerMiner (800),
+	m_systemId (systemId), m_minConnectionsPerMiner (noMiners+1), m_maxConnectionsPerMiner (800),
 	m_minerDownloadSpeed (100), m_minerUploadSpeed (100), m_cryptocurrency (cryptocurrency)
 {
 
@@ -62,6 +62,7 @@ BitcoinTopologyHelper::BitcoinTopologyHelper (uint32_t noCpus, uint32_t totalNoN
                                 {310.11, 241.9, 346.65, 99.46, 172.24, 277.8},
                                 {154.36, 266.45, 255.95, 172.24, 8.76, 162.59},
                                 {207.91, 350.07, 268.91, 277.8, 162.59, 21.72}};
+
 
   std::array<double,1001> downloadBandwitdhIntervals {
    0.1, 0.6, 1.1, 1.6, 2.1, 2.6, 3.1, 3.6, 4.1, 4.6, 5.1, 5.6, 6.1, 6.6,
@@ -676,6 +677,7 @@ BitcoinTopologyHelper::BitcoinTopologyHelper (uint32_t noCpus, uint32_t totalNoN
   m_bitcoinNodesRegion = new uint32_t[m_totalNoNodes];
 
 
+  //std::array<double,7> nodesDistributionIntervals {NORTH_AMERICA, EUROPE, SOUTH_AMERICA, ASIA_PACIFIC, JAPAN, AUSTRALIA, OTHER};
   std::array<double,7> nodesDistributionIntervals {NORTH_AMERICA, EUROPE, SOUTH_AMERICA, ASIA_PACIFIC, JAPAN, AUSTRALIA, OTHER};
 
   switch (m_cryptocurrency)
@@ -684,7 +686,8 @@ BitcoinTopologyHelper::BitcoinTopologyHelper (uint32_t noCpus, uint32_t totalNoN
     {
       if (m_systemId == 0)
         std::cout << "BITCOIN Mode selected\n";
-      std::array<double,6> nodesDistributionWeights {38.69, 51.59, 1.13, 5.74, 1.19, 1.66};
+      //std::array<double,6> nodesDistributionWeights {38.69, 51.59, 1.13, 5.74, 1.19, 1.66};
+      std::array<double,6> nodesDistributionWeights {100, 0, 0, 0, 0, 0};
       m_nodesDistribution = std::piecewise_constant_distribution<double> (nodesDistributionIntervals.begin(), nodesDistributionIntervals.end(), nodesDistributionWeights.begin());
 
       break;
@@ -720,8 +723,10 @@ BitcoinTopologyHelper::BitcoinTopologyHelper (uint32_t noCpus, uint32_t totalNoN
 
   m_europeDownloadBandwidthDistribution = std::piecewise_constant_distribution<double> (downloadBandwitdhIntervals.begin(), downloadBandwitdhIntervals.end(), EuropeDownloadWeights.begin());
   m_europeUploadBandwidthDistribution = std::piecewise_constant_distribution<double> (uploadBandwitdhIntervals.begin(), uploadBandwitdhIntervals.end(), EuropeUploadWeights.begin());
+
   m_northAmericaDownloadBandwidthDistribution = std::piecewise_constant_distribution<double> (downloadBandwitdhIntervals.begin(), downloadBandwitdhIntervals.end(), NorthAmericaDownloadWeights.begin());
   m_northAmericaUploadBandwidthDistribution = std::piecewise_constant_distribution<double> (uploadBandwitdhIntervals.begin(), uploadBandwitdhIntervals.end(), NorthAmericaUploadWeights.begin());
+
   m_asiaPacificDownloadBandwidthDistribution = std::piecewise_constant_distribution<double> (downloadBandwitdhIntervals.begin(), downloadBandwitdhIntervals.end(), AsiaPacificDownloadWeights.begin());
   m_asiaPacificUploadBandwidthDistribution = std::piecewise_constant_distribution<double> (uploadBandwitdhIntervals.begin(), uploadBandwitdhIntervals.end(), AsiaPacificUploadWeights.begin());
   m_japanDownloadBandwidthDistribution = std::piecewise_constant_distribution<double> (downloadBandwitdhIntervals.begin(), downloadBandwitdhIntervals.end(), JapanDownloadWeights.begin());
@@ -777,7 +782,7 @@ BitcoinTopologyHelper::BitcoinTopologyHelper (uint32_t noCpus, uint32_t totalNoN
 
   sort(m_miners.begin(), m_miners.end());
 
-/*   //Print the miners
+   //Print the miners
   if (m_systemId == 0)
   {
     std::cout << "\n\nThe miners are:\n";
@@ -786,7 +791,7 @@ BitcoinTopologyHelper::BitcoinTopologyHelper (uint32_t noCpus, uint32_t totalNoN
 	  std::cout << *j << " " ;
     }
     std::cout << "\n\n";
-  } */
+  }
 
   //Interconnect the miners
   for(auto &miner : m_miners)
@@ -799,7 +804,7 @@ BitcoinTopologyHelper::BitcoinTopologyHelper (uint32_t noCpus, uint32_t totalNoN
   }
 
 
-/*   //Print the miners' connections
+   //Print the miners' connections
   if (m_systemId == 0)
   {
     std::cout << "The miners are interconnected:";
@@ -812,7 +817,7 @@ BitcoinTopologyHelper::BitcoinTopologyHelper (uint32_t noCpus, uint32_t totalNoN
 	  }
     }
     std::cout << "\n" << std::endl;
-  } */
+  }
 
   //Interconnect the nodes
 
@@ -873,7 +878,7 @@ BitcoinTopologyHelper::BitcoinTopologyHelper (uint32_t noCpus, uint32_t totalNoN
     while (m_nodesConnections[i].size() < m_minConnections[i] && count < 10*m_minConnections[i])
     {
       uint32_t index = rand() % nodes.size();
-	  uint32_t candidatePeer = nodes[index];
+	    uint32_t candidatePeer = nodes[index];
 
       if (candidatePeer == i)
       {
@@ -904,6 +909,7 @@ BitcoinTopologyHelper::BitcoinTopologyHelper (uint32_t noCpus, uint32_t totalNoN
       }
       count++;
 	}
+
   }
 
   //Then the rest of nodes
@@ -1139,19 +1145,21 @@ BitcoinTopologyHelper::BitcoinTopologyHelper (uint32_t noCpus, uint32_t totalNoN
         }
 
 
-		pointToPoint.SetDeviceAttribute ("DataRate", StringValue (bandwidthStream.str()));
-		pointToPoint.SetChannelAttribute ("Delay", StringValue (latencyStringStream.str()));
+		//pointToPoint.SetDeviceAttribute ("DataRate", StringValue (bandwidthStream.str()));
+    pointToPoint.SetDeviceAttribute ("DataRate", StringValue ("5.25Mbps"));
+    pointToPoint.SetChannelAttribute ("Delay", StringValue("1ms"));
+		//pointToPoint.SetChannelAttribute ("Delay", StringValue (latencyStringStream.str()));
 
         newDevices.Add (pointToPoint.Install (m_nodes.at (*miner).Get (0), m_nodes.at (*it).Get (0)));
 		m_devices.push_back (newDevices);
-/* 		if (m_systemId == 0)
+ 		if (m_systemId == 0)
           std::cout << "Creating link " << m_totalNoLinks << " between nodes "
                     << (m_nodes.at (*miner).Get (0))->GetId() << " ("
                     <<  getBitcoinRegion(getBitcoinEnum(m_bitcoinNodesRegion[(m_nodes.at (*miner).Get (0))->GetId()]))
                     << ") and node " << (m_nodes.at (*it).Get (0))->GetId() << " ("
                     <<  getBitcoinRegion(getBitcoinEnum(m_bitcoinNodesRegion[(m_nodes.at (*it).Get (0))->GetId()]))
                     << ") with latency = " << latencyStringStream.str()
-                    << " and bandwidth = " << bandwidthStream.str() << ".\n"; */
+                    << " and bandwidth = " << bandwidthStream.str() << ".\n";
       }
     }
   }
@@ -1195,10 +1203,12 @@ BitcoinTopologyHelper::BitcoinTopologyHelper (uint32_t noCpus, uint32_t totalNoN
                                                 [m_bitcoinNodesRegion[(m_nodes.at (*it).Get (0))->GetId()]] << "ms";
         }
 
-		pointToPoint.SetDeviceAttribute ("DataRate", StringValue (bandwidthStream.str()));
-		pointToPoint.SetChannelAttribute ("Delay", StringValue (latencyStringStream.str()));
+		//pointToPoint.SetDeviceAttribute ("DataRate", StringValue (bandwidthStream.str()));
+		//pointToPoint.SetChannelAttribute ("Delay", StringValue (latencyStringStream.str()));
+    pointToPoint.SetDeviceAttribute ("DataRate", StringValue ("1000000Mbps"));
+    pointToPoint.SetChannelAttribute ("Delay", StringValue("0.0000000001ms"));
 
-        newDevices.Add (pointToPoint.Install (m_nodes.at (node.first).Get (0), m_nodes.at (*it).Get (0)));
+    newDevices.Add (pointToPoint.Install (m_nodes.at (node.first).Get (0), m_nodes.at (*it).Get (0)));
 		m_devices.push_back (newDevices);
 /* 		if (m_systemId == 0)
           std::cout << "Creating link " << m_totalNoLinks << " between nodes "
@@ -1267,9 +1277,9 @@ BitcoinTopologyHelper::AssignIpv4Addresses (Ipv4AddressHelperCustom ip)
 
 /*     if (m_systemId == 0)
       std::cout << i << "/" << m_devices.size () << "\n"; */
-/* 	if (m_systemId == 0)
+ 	if (m_systemId == 0)
 	  std::cout << "Node " << node1 << "(" << interfaceAddress1 << ") is connected with node  "
-                << node2 << "(" << interfaceAddress2 << ")\n"; */
+                << node2 << "(" << interfaceAddress2 << ")\n";
 
 	m_nodesConnectionsIps[node1].push_back(interfaceAddress2);
 	m_nodesConnectionsIps[node2].push_back(interfaceAddress1);
@@ -1285,7 +1295,7 @@ BitcoinTopologyHelper::AssignIpv4Addresses (Ipv4AddressHelperCustom ip)
   }
 
 
-/*   //Print the nodes' connections
+   //Print the nodes' connections
   if (m_systemId == 0)
   {
     std::cout << "The nodes connections are:" << std::endl;
@@ -1298,11 +1308,11 @@ BitcoinTopologyHelper::AssignIpv4Addresses (Ipv4AddressHelperCustom ip)
 	  }
     }
     std::cout << "\n" << std::endl;
-  } */
+  }
 
   tFinish = GetWallTime();
   if (m_systemId == 0)
-    std::cout << "The Ip addresses have been assigned in " << tFinish - tStart << "s.\n";
+    std::cout << "The Ip addresses have been assigned in for " << m_nodesConnectionsIps.size() << " : " << tFinish - tStart << "s.\n";
 }
 
 
@@ -1400,8 +1410,8 @@ BitcoinTopologyHelper::AssignInternetSpeeds(uint32_t id)
       }
       case NORTH_AMERICA:
       {
-        m_nodesInternetSpeeds[id].downloadSpeed = m_northAmericaDownloadBandwidthDistribution(m_generator);
-        m_nodesInternetSpeeds[id].uploadSpeed = m_northAmericaUploadBandwidthDistribution(m_generator);
+        m_nodesInternetSpeeds[id].downloadSpeed = 1000;//m_northAmericaDownloadBandwidthDistribution(m_generator);
+        m_nodesInternetSpeeds[id].uploadSpeed = 1000;//m_northAmericaUploadBandwidthDistribution(m_generator);
         break;
       }
       case SOUTH_AMERICA:
