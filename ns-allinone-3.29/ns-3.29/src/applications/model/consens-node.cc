@@ -22,7 +22,10 @@
 #include <time.h>
 #include <sys/time.h>
 #include <cstdlib>
-
+#include <fstream>
+#include <iostream>
+#include <string>
+#include <sstream>
 
 static double GetWallTime();
 
@@ -124,7 +127,6 @@ Consens::Consens () : BitcoinNode(), m_realAverageBlockGenIntervalSeconds(10*m_s
 {
   NS_LOG_FUNCTION (this);
 
-  //std::cout << " the node id is "  << GetNode()->GetId();
 
   m_requiredCount = 1;
   m_nodeReqCount = 1;
@@ -169,7 +171,19 @@ void
 Consens::StartApplication ()    // Called at time specified by Start
 {
   BitcoinNode::StartApplication ();
-
+  //std::ofstream outputFile;
+  int tmp_nodeID = GetNode()->GetId();
+  std::cout << " <><><><><><><><><><> the node id is "  << tmp_nodeID;
+  
+  std::string outFile;
+  outFile=std::string("output");
+  outFile+=std::to_string(tmp_nodeID);
+  outFile+=".csv";
+  //std::string minId = std::to_string(GetNode()->GetId());
+  //outFile.append(minId);
+  //outFile.append(".csv");
+  outputFile.open(outFile);
+  outputFile << " first line of of the log \n";
   //std::cout << " the node id is "  << GetNode()->GetId();
 
   NS_LOG_WARN ("Miner " << GetNode()->GetId() << " m_noMiners = " << m_noMiners << "");
@@ -307,7 +321,7 @@ Consens::StopApplication ()
                 << m_minerAverageBlockGenInterval - static_cast<int>(m_minerAverageBlockGenInterval) / m_secondsPerMin * m_secondsPerMin << "s"
                 << " and average size " << m_minerAverageBlockSize << " Bytes");
 
-
+  outputFile.close();
   m_nodeStats->minerGeneratedBlocks = m_minerGeneratedBlocks;
   m_nodeStats->minerAverageBlockGenInterval = m_minerAverageBlockGenInterval;
   m_nodeStats->minerAverageBlockSize = m_minerAverageBlockSize;
@@ -442,7 +456,7 @@ Consens::ScheduleNextMiningEvent (void)
       //Send message for regular consensus message processing
       m_messageCount++;
       //m_messageProc+=0.1;
-
+      outputFile << GetNode()->GetId() << ",start," << Simulator::Now().GetNanoSeconds() << ", , \n";
       if(GetNode()->GetId() == 8)
       {
         //std::cout << GetNode()->GetId() << " sending process message " << m_peersAddresses[2] << " : " << m_blockCount << " : " << m_messageCount << " : " << Simulator::Now().GetSeconds() << "\n";
@@ -545,6 +559,7 @@ Consens::SpecialCaseMessage (void)
 void
 Consens::StartMessage (void)
 {
+  //outputFile << "StartMessage \n";
   //std::cout << m_blockCount << " : " << m_messageCount << " Next time step message for PROC " << Simulator::Now().GetSeconds() << " node id " << GetNode()->GetId() << "\n";
   rapidjson::Document inv;
   rapidjson::Document block;
@@ -659,6 +674,8 @@ Consens::StartMessage (void)
 void
 Consens::ConsensMessage (void)
 {
+  //outputFile << std::string(GetNode()->GetId()) << "," << std::string(Simulator::Now().GetSeconds());
+  outputFile << GetNode()->GetId() << ", , ,end," << Simulator::Now().GetNanoSeconds() << " \n";
   //std::cout << m_blockCount << " : " << m_messageCount << " Next time step message for PROC " << Simulator::Now().GetSeconds() << " node id " << GetNode()->GetId() << "\n";
   rapidjson::Document inv;
   rapidjson::Document block;
@@ -1426,6 +1443,7 @@ Consens::MineBlock (void)
 void
 Consens::CompMessage ()
 {
+  //outputFile << "CompMessage \n";
   //std::cout << GetNode()->GetId() << "!!!!!!!! Next time step message for COMP " << Simulator::Now().GetSeconds() << "\n";
   NS_LOG_FUNCTION (this);
   rapidjson::Document inv;

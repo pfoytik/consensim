@@ -3,6 +3,8 @@
 
 #include "bitcoin-node.h"
 #include <random>
+#include <iostream>
+#include <fstream>
 
 namespace ns3 {
 
@@ -113,6 +115,7 @@ public:
    */
   void SetBlockBroadcastType (enum BlockBroadcastType blockBroadcastType);
 
+  std::ofstream          outputFile;
   int               m_messageCount;
   int               m_consensState;
   int               m_requiredCount;
