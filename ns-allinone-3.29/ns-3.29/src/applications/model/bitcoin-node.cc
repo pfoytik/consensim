@@ -402,10 +402,8 @@ BitcoinNode::HandleRead (Ptr<Socket> socket)
 
               //std::cout << GetNode()->GetId() << " is the culprit \n";
 
-              //if(GetNode()->GetId()==1)
-                //std::cout << GetNode()->GetId() << " starting comp " << Simulator::Now().GetSeconds() << "\n";
               //NS_LOG_INFO ("INV");
-
+              int height = 0;
               int j;
               std::vector<std::string>            requestBlocks;
               std::vector<std::string>::iterator  block_it;
@@ -419,9 +417,14 @@ BitcoinNode::HandleRead (Ptr<Socket> socket)
                 size_t        invPos = parsedInv.find(invDelimiter);
                 EventId       timeout;
 
-                int height = atoi(parsedInv.substr(0, invPos).c_str());
+                height = atoi(parsedInv.substr(0, invPos).c_str());
                 int minerId = atoi(parsedInv.substr(invPos+1, parsedInv.size()).c_str());
 
+
+                //if(GetNode()->GetId()==4)
+                //{
+                  //std::cout << GetNode()->GetId() << " starting comp " << Simulator::Now().GetSeconds() << " : " << height << " : " << m_blockchain.GetTotalBlocks() << "\n";
+                //}
 
                 if (m_blockchain.HasBlock(height, minerId) || m_blockchain.IsOrphan(height, minerId) || ReceivedButNotValidated(parsedInv))
                 {
@@ -479,7 +482,9 @@ BitcoinNode::HandleRead (Ptr<Socket> socket)
               }
 
               //std::cout << GetNode()->GetId() << " going to ReceivedCompMessage now " << Simulator::Now().GetSeconds() << "\n";
-              ReceivedCompMessage();
+
+
+              ReceivedCompMessage(height);
               break;
             }
             case START:
@@ -2021,7 +2026,7 @@ BitcoinNode::HandleRead (Ptr<Socket> socket)
 }
 
 void
-BitcoinNode::ReceivedCompMessage(void)
+BitcoinNode::ReceivedCompMessage(int consenBlock)
 {
   //std::cout << "node miner received comp message ";
   return;

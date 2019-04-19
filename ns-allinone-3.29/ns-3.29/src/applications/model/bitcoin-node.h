@@ -151,7 +151,7 @@ protected:
   /**
    * Handle the recieved message that is a comp message
    */
-  virtual void ReceivedCompMessage(void);
+  virtual void ReceivedCompMessage(int consenBlock);
 
   /**
    * \brief Called when a new block non-orphan block is received

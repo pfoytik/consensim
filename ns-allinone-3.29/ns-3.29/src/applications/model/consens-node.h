@@ -173,7 +173,7 @@ protected:
   /**
    * Method to respond that message comp is recieved
    */
-  virtual void ReceivedCompMessage(void);
+  virtual void ReceivedCompMessage(int consenBlock);
 
   /**
   * This method is used to process special case Messages

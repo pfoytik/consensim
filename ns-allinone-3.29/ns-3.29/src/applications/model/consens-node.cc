@@ -132,7 +132,7 @@ Consens::Consens () : BitcoinNode(), m_realAverageBlockGenIntervalSeconds(10*m_s
   m_nodeReqCount = 1;
   m_messageProc = 0.0000000001;
   m_specialCaseProc = 60;
-  m_maxNumBlocks = 100;
+  m_maxNumBlocks = 1000;
 
   m_nodeCompCount = 0;
   m_blockCount = 0;
@@ -146,7 +146,9 @@ Consens::Consens () : BitcoinNode(), m_realAverageBlockGenIntervalSeconds(10*m_s
   m_previousBlockGenerationTime = 0;
 
   std::random_device rd;
-  m_generator.seed(rd());
+  int r_seed = rd();
+  std::cout << "<SEED> This run is seeded with " << r_seed << "\n";
+  m_generator.seed(r_seed);
 
   if (m_fixedBlockTimeGeneration > 0)
     m_nextBlockTime = m_fixedBlockTimeGeneration;
@@ -173,8 +175,8 @@ Consens::StartApplication ()    // Called at time specified by Start
   BitcoinNode::StartApplication ();
   //std::ofstream outputFile;
   int tmp_nodeID = GetNode()->GetId();
-  std::cout << " <><><><><><><><><><> the node id is "  << tmp_nodeID;
-  
+  //std::cout << " <><><><><><><><><><> the node id is "  << tmp_nodeID;
+
   std::string outFile;
   outFile=std::string("output");
   outFile+=std::to_string(tmp_nodeID);
@@ -185,6 +187,8 @@ Consens::StartApplication ()    // Called at time specified by Start
   outputFile.open(outFile);
   outputFile << " first line of of the log \n";
   //std::cout << " the node id is "  << GetNode()->GetId();
+
+
 
   NS_LOG_WARN ("Miner " << GetNode()->GetId() << " m_noMiners = " << m_noMiners << "");
   NS_LOG_WARN ("Miner " << GetNode()->GetId() << " m_realAverageBlockGenIntervalSeconds = " << m_realAverageBlockGenIntervalSeconds << "s");
@@ -429,7 +433,7 @@ Consens::ScheduleNextMiningEvent (void)
   //std::mt19937 gen{rd()};
   //std::normal_distribution<> normD{237907.507 , 232381.693};
 
-  std::default_random_engine generator (1);
+  //std::default_random_engine generator;
   std::weibull_distribution<double> distribution(1.354783,249857.5);
 
   //Debug settings:
@@ -456,12 +460,14 @@ Consens::ScheduleNextMiningEvent (void)
       //Send message for regular consensus message processing
       m_messageCount++;
       //m_messageProc+=0.1;
-      outputFile << GetNode()->GetId() << ",start," << Simulator::Now().GetNanoSeconds() << ", , \n";
+      double processDelay = distribution(m_generator);
+      outputFile << GetNode()->GetId() << ",start," << processDelay << "," << Simulator::Now().GetNanoSeconds() << ", , \n";
       if(GetNode()->GetId() == 8)
       {
         //std::cout << GetNode()->GetId() << " sending process message " << m_peersAddresses[2] << " : " << m_blockCount << " : " << m_messageCount << " : " << Simulator::Now().GetSeconds() << "\n";
       }
-      m_nextMiningEvent = Simulator::Schedule (NanoSeconds(distribution(generator)), &Consens::ConsensMessage, this);
+      //m_nextMiningEvent = Simulator::Schedule (NanoSeconds(distribution(generator)), &Consens::ConsensMessage, this);
+      m_nextMiningEvent = Simulator::Schedule (NanoSeconds(processDelay), &Consens::ConsensMessage, this);
     }
     else  //normal processing is completed for this node
     {
@@ -511,7 +517,7 @@ Consens::ScheduleNextMiningEvent (void)
                          << "  min and  " << static_cast<int>(m_nextBlockTime) % m_secondsPerMin
                          << "s using Geometric Block Time Generation with parameter = "<< m_blockGenParameter);
 
-            std::cout << m_blockCount << " sending start message " << m_leaderID << " = " << GetNode()->GetId() << " : " << Simulator::Now().GetNanoSeconds() << " is the sim time " << m_nodeCompCount << "\n";
+            std::cout << m_blockCount << ", consented, " << m_leaderID << "," << GetNode()->GetId() << "," << Simulator::Now().GetNanoSeconds() << "," << m_nodeCompCount << "\n";
             m_nodeCompCount = 0;
             m_nextMiningEvent = Simulator::ScheduleNow (&Consens::StartMessage, this);
             //m_nextMiningEvent = Simulator::Schedule (Seconds(m_messageProc), &Consens::StartMessage, this);
@@ -575,10 +581,37 @@ Consens::StartMessage (void)
   std::string blockHash;
 
   stringStream << height << "/" << minerId;
+  //std::cout << "!!! incoming string stream " << stringStream.str() << "\n";
   blockHash = stringStream.str();
 
   inv.SetObject();
   block.SetObject();
+
+
+
+    if (m_fixedBlockSize > 0)
+      m_nextBlockSize = m_fixedBlockSize;
+    else
+    {
+      m_nextBlockSize = m_blockSizeDistribution(m_generator) * 1000;	// *1000 because the m_blockSizeDistribution returns KBytes
+
+      if (m_cryptocurrency == BITCOIN)
+      {
+        // The block size is linearly dependent on the averageBlockGenIntervalSeconds
+        if(m_nextBlockSize < m_maxBlockSize - m_headersSizeBytes)
+          m_nextBlockSize = m_nextBlockSize*m_averageBlockGenIntervalSeconds / m_realAverageBlockGenIntervalSeconds
+                          + m_headersSizeBytes;
+        else
+          m_nextBlockSize = m_nextBlockSize*m_averageBlockGenIntervalSeconds / m_realAverageBlockGenIntervalSeconds;
+      }
+    }
+
+    if (m_nextBlockSize < m_averageTransactionSize)
+      m_nextBlockSize = m_averageTransactionSize + m_headersSizeBytes;
+
+    Block newBlock (height, minerId, parentBlockMinerId, m_nextBlockSize,
+                    currentTime, currentTime, Ipv4Address("127.0.0.1"));
+
 
 /*   //For attacks
    if (GetNode ()->GetId () == 0)
@@ -618,6 +651,20 @@ Consens::StartMessage (void)
     }
   }
 
+  /**
+   * Update m_meanBlockReceiveTime with the timeCreated of the newly generated block
+   */
+  m_meanBlockReceiveTime = (m_blockchain.GetTotalBlocks() - 1)/static_cast<double>(m_blockchain.GetTotalBlocks())*m_meanBlockReceiveTime
+                         + (currentTime - m_previousBlockReceiveTime)/(m_blockchain.GetTotalBlocks());
+  m_previousBlockReceiveTime = currentTime;
+
+  m_meanBlockPropagationTime = (m_blockchain.GetTotalBlocks() - 1)/static_cast<double>(m_blockchain.GetTotalBlocks())*m_meanBlockPropagationTime;
+
+  m_meanBlockSize = (m_blockchain.GetTotalBlocks() - 1)/static_cast<double>(m_blockchain.GetTotalBlocks())*m_meanBlockSize
+                  + (m_nextBlockSize)/static_cast<double>(m_blockchain.GetTotalBlocks());
+
+  m_blockchain.AddBlock(newBlock);
+
 
     // Stringify the DOM
     rapidjson::StringBuffer invInfo;
@@ -643,7 +690,6 @@ Consens::StartMessage (void)
 
           m_peersSockets[*i]->Send (reinterpret_cast<const uint8_t*>(invInfo.GetString()), invInfo.GetSize(), 0);
           m_peersSockets[*i]->Send (delimiter, 1, 0);
-          //m_peersSockets[*i]->Send (delimiter, 1, 0);
 
           NS_LOG_INFO ("At time " << Simulator::Now ().GetSeconds ()
                        << "s bitcoin miner " << GetNode ()->GetId ()
@@ -1637,8 +1683,9 @@ Consens::ReceivedHigherBlock(const Block &newBlock)
 }
 
 void
-Consens::ReceivedCompMessage(void)
+Consens::ReceivedCompMessage(int consenBlock)
 {
+  //Check to see if the compMessage was for the current block or previous block
   m_nodeCompCount++;
 
   if(GetNode()->GetId()==m_leaderID)
@@ -1646,7 +1693,7 @@ Consens::ReceivedCompMessage(void)
     //std::cout << "Miner " << GetNode()->GetId() << " Recieved a comp message " << m_nodeCompCount << " : " << Simulator::Now().GetSeconds() << "\n";
   }
 
-  if(GetNode()->GetId() == (m_leaderID) && m_blockCount <= m_maxNumBlocks)
+  if(GetNode()->GetId() == (m_leaderID) && m_blockCount <= m_maxNumBlocks && consenBlock >= m_maxNumBlocks)
   {
    ScheduleNextMiningEvent();
   }

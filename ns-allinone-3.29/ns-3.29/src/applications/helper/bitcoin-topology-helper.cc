@@ -1146,7 +1146,7 @@ BitcoinTopologyHelper::BitcoinTopologyHelper (uint32_t noCpus, uint32_t totalNoN
 
 
 		//pointToPoint.SetDeviceAttribute ("DataRate", StringValue (bandwidthStream.str()));
-    pointToPoint.SetDeviceAttribute ("DataRate", StringValue ("5.25Mbps"));
+    pointToPoint.SetDeviceAttribute ("DataRate", StringValue ("3Mbps"));
     pointToPoint.SetChannelAttribute ("Delay", StringValue("1ms"));
 		//pointToPoint.SetChannelAttribute ("Delay", StringValue (latencyStringStream.str()));
 
