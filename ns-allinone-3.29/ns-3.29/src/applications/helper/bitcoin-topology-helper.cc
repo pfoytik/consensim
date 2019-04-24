@@ -1146,8 +1146,8 @@ BitcoinTopologyHelper::BitcoinTopologyHelper (uint32_t noCpus, uint32_t totalNoN
 
 
 		//pointToPoint.SetDeviceAttribute ("DataRate", StringValue (bandwidthStream.str()));
-    pointToPoint.SetDeviceAttribute ("DataRate", StringValue ("3Mbps"));
-    pointToPoint.SetChannelAttribute ("Delay", StringValue("1ms"));
+    pointToPoint.SetDeviceAttribute ("DataRate", StringValue ("1000Mbps"));
+    pointToPoint.SetChannelAttribute ("Delay", StringValue("0.5ms"));
 		//pointToPoint.SetChannelAttribute ("Delay", StringValue (latencyStringStream.str()));
 
         newDevices.Add (pointToPoint.Install (m_nodes.at (*miner).Get (0), m_nodes.at (*it).Get (0)));
@@ -1203,10 +1203,10 @@ BitcoinTopologyHelper::BitcoinTopologyHelper (uint32_t noCpus, uint32_t totalNoN
                                                 [m_bitcoinNodesRegion[(m_nodes.at (*it).Get (0))->GetId()]] << "ms";
         }
 
-		//pointToPoint.SetDeviceAttribute ("DataRate", StringValue (bandwidthStream.str()));
-		//pointToPoint.SetChannelAttribute ("Delay", StringValue (latencyStringStream.str()));
-    pointToPoint.SetDeviceAttribute ("DataRate", StringValue ("1000000Mbps"));
-    pointToPoint.SetChannelAttribute ("Delay", StringValue("0.0000000001ms"));
+		pointToPoint.SetDeviceAttribute ("DataRate", StringValue (bandwidthStream.str()));
+		pointToPoint.SetChannelAttribute ("Delay", StringValue (latencyStringStream.str()));
+    //pointToPoint.SetDeviceAttribute ("DataRate", StringValue ("1000000Mbps"));
+    //pointToPoint.SetChannelAttribute ("Delay", StringValue("0.0000000001ms"));
 
     newDevices.Add (pointToPoint.Install (m_nodes.at (node.first).Get (0), m_nodes.at (*it).Get (0)));
 		m_devices.push_back (newDevices);

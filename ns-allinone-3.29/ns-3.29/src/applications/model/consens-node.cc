@@ -129,7 +129,7 @@ Consens::Consens () : BitcoinNode(), m_realAverageBlockGenIntervalSeconds(10*m_s
 
 
   m_requiredCount = 1;
-  m_nodeReqCount = 1;
+  m_nodeReqCount = 3;
   m_messageProc = 0.0000000001;
   m_specialCaseProc = 60;
   m_maxNumBlocks = 1000;
@@ -495,7 +495,7 @@ Consens::ScheduleNextMiningEvent (void)
             //m_nextMiningEvent = Simulator::ScheduleNow (&Consens::MineBlock, this);
 
 
-            std::cout << m_blockCount << " sending FIXED start message " << GetNode()->GetId() << " : " << Simulator::Now().GetSeconds() << " is the sim time \n";
+            //std::cout << m_blockCount << " sending FIXED start message " << GetNode()->GetId() << " : " << Simulator::Now().GetSeconds() << " is the sim time \n";
             m_nextMiningEvent = Simulator::ScheduleNow (&Consens::StartMessage, this);
           }
           else
@@ -566,7 +566,7 @@ void
 Consens::StartMessage (void)
 {
   //outputFile << "StartMessage \n";
-  //std::cout << m_blockCount << " : " << m_messageCount << " Next time step message for PROC " << Simulator::Now().GetSeconds() << " node id " << GetNode()->GetId() << "\n";
+  //std::cout << m_blockCount << " : " << m_messageCount << " Next time step message for START " << Simulator::Now().GetSeconds() << " node id " << GetNode()->GetId() << "\n";
   rapidjson::Document inv;
   rapidjson::Document block;
 
@@ -720,73 +720,105 @@ Consens::StartMessage (void)
 void
 Consens::ConsensMessage (void)
 {
-  //outputFile << std::string(GetNode()->GetId()) << "," << std::string(Simulator::Now().GetSeconds());
-  outputFile << GetNode()->GetId() << ", , ,end," << Simulator::Now().GetNanoSeconds() << " \n";
-  //std::cout << m_blockCount << " : " << m_messageCount << " Next time step message for PROC " << Simulator::Now().GetSeconds() << " node id " << GetNode()->GetId() << "\n";
-  rapidjson::Document inv;
-  rapidjson::Document block;
+    //std::cout << "!!!!!!!! Next time step message for INV " << Simulator::Now().GetSeconds() << "\n";
+    NS_LOG_FUNCTION (this);
+    rapidjson::Document inv;
+    rapidjson::Document block;
 
-  inv.SetObject();
-  block.SetObject();
+    int height =  m_blockchain.GetCurrentTopBlock()->GetBlockHeight() + 1;
+    int minerId = GetNode ()->GetId ();
+    int parentBlockMinerId = m_blockchain.GetCurrentTopBlock()->GetMinerId();
+    double currentTime = Simulator::Now ().GetSeconds ();
+    std::ostringstream stringStream;
+    std::string blockHash;
 
-  int height =  m_blockchain.GetCurrentTopBlock()->GetBlockHeight() + 1;
-  int minerId = GetNode ()->GetId ();
-  int parentBlockMinerId = m_blockchain.GetCurrentTopBlock()->GetMinerId();
-  double currentTime = Simulator::Now ().GetSeconds ();
-  std::ostringstream stringStream;
-  std::string blockHash;
+    stringStream << height << "/" << minerId;
+    blockHash = stringStream.str();
 
-  stringStream << height << "/" << minerId;
-  blockHash = stringStream.str();
+    inv.SetObject();
+    block.SetObject();
 
-  inv.SetObject();
-  block.SetObject();
-
-  if (height == 1)
-  {
-    m_fistToMine = true;
-	m_timeStart = GetWallTime();
-  }
-/*   //For attacks
-   if (GetNode ()->GetId () == 0)
-     height = 2 - m_minerGeneratedBlocks;
-
-   if (GetNode ()->GetId () == 0)
-   {
-	if (height == 1)
-      parentBlockMinerId = -1;
-    else
-	  parentBlockMinerId = 0;
-   } */
-
-  switch(m_blockBroadcastType)
-  {
-    case STANDARD:
+    if (height == 1)
     {
-      rapidjson::Value value;
-      rapidjson::Value array(rapidjson::kArrayType);
-      rapidjson::Value blockInfo(rapidjson::kObjectType);
-
-      value.SetString("block"); //Remove
-      inv.AddMember("type", value, inv.GetAllocator());
-
-      if (m_protocolType == STANDARD_PROTOCOL)
-      {
-        if (!m_blockTorrent)
-        {
-          value = PROC;
-          inv.AddMember("message", value, inv.GetAllocator());
-
-          value.SetString(blockHash.c_str(), blockHash.size(), inv.GetAllocator());
-          array.PushBack(value, inv.GetAllocator());
-
-          inv.AddMember("inv", array, inv.GetAllocator());
-          //std::cout << "Should be a proc message in there somewhere  \n";
-        }
-      }
-      break;
+      m_fistToMine = true;
+  	m_timeStart = GetWallTime();
     }
-   }
+  /*   //For attacks
+     if (GetNode ()->GetId () == 0)
+       height = 2 - m_minerGeneratedBlocks;
+
+     if (GetNode ()->GetId () == 0)
+     {
+  	if (height == 1)
+        parentBlockMinerId = -1;
+      else
+  	  parentBlockMinerId = 0;
+     } */
+
+
+    if (m_fixedBlockSize > 0)
+      m_nextBlockSize = m_fixedBlockSize;
+    else
+    {
+      m_nextBlockSize = m_blockSizeDistribution(m_generator) * 1000;	// *1000 because the m_blockSizeDistribution returns KBytes
+
+      if (m_cryptocurrency == BITCOIN)
+      {
+        // The block size is linearly dependent on the averageBlockGenIntervalSeconds
+        if(m_nextBlockSize < m_maxBlockSize - m_headersSizeBytes)
+          m_nextBlockSize = m_nextBlockSize*m_averageBlockGenIntervalSeconds / m_realAverageBlockGenIntervalSeconds
+                          + m_headersSizeBytes;
+        else
+          m_nextBlockSize = m_nextBlockSize*m_averageBlockGenIntervalSeconds / m_realAverageBlockGenIntervalSeconds;
+      }
+    }
+
+    if (m_nextBlockSize < m_averageTransactionSize)
+      m_nextBlockSize = m_averageTransactionSize + m_headersSizeBytes;
+
+    Block newBlock (height, minerId, parentBlockMinerId, m_nextBlockSize,
+                    currentTime, currentTime, Ipv4Address("127.0.0.1"));
+
+    //std::cout << m_blockBroadcastType << " : " << m_protocolType << " : " << m_blockTorrent << " :  !!!!!!!!!!! ";
+    switch(m_blockBroadcastType)
+    {
+      case STANDARD:
+      {
+        rapidjson::Value value;
+        rapidjson::Value array(rapidjson::kArrayType);
+        rapidjson::Value blockInfo(rapidjson::kObjectType);
+
+        value.SetString("block"); //Remove
+        inv.AddMember("type", value, inv.GetAllocator());
+
+
+            value = PROC;
+            inv.AddMember("message", value, inv.GetAllocator());
+
+            value.SetString(blockHash.c_str(), blockHash.size(), inv.GetAllocator());
+
+            array.PushBack(value, inv.GetAllocator());
+            //std::cout << "push back Value " << "\n";
+            inv.AddMember("inv", array, inv.GetAllocator());
+
+        break;
+      }
+
+    }
+
+    /**
+     * Update m_meanBlockReceiveTime with the timeCreated of the newly generated block
+     */
+    //m_meanBlockReceiveTime = (m_blockchain.GetTotalBlocks() - 1)/static_cast<double>(m_blockchain.GetTotalBlocks())*m_meanBlockReceiveTime
+    //                       + (currentTime - m_previousBlockReceiveTime)/(m_blockchain.GetTotalBlocks());
+    //m_previousBlockReceiveTime = currentTime;
+
+    //m_meanBlockPropagationTime = (m_blockchain.GetTotalBlocks() - 1)/static_cast<double>(m_blockchain.GetTotalBlocks())*m_meanBlockPropagationTime;
+
+    //m_meanBlockSize = (m_blockchain.GetTotalBlocks() - 1)/static_cast<double>(m_blockchain.GetTotalBlocks())*m_meanBlockSize
+    //                + (m_nextBlockSize)/static_cast<double>(m_blockchain.GetTotalBlocks());
+
+    //m_blockchain.AddBlock(newBlock);
 
     // Stringify the DOM
     rapidjson::StringBuffer invInfo;
@@ -799,7 +831,9 @@ Consens::ConsensMessage (void)
 
     int count = 0;
 
-    for (std::vector<Ipv4Address>::const_iterator i = m_peersAddresses.begin(); i != m_peersAddresses.end(); ++i)
+    //std::cout << "!!!!! going into mineblock loop and switch !!!!! " << m_blockBroadcastType << "\n";
+    //std::cout << " packet info " << invInfo.GetString() << "\n";
+    for (std::vector<Ipv4Address>::const_iterator i = m_peersAddresses.begin(); i != m_peersAddresses.end(); ++i, ++count)
     {
 
       const uint8_t delimiter[] = "#";
@@ -808,22 +842,26 @@ Consens::ConsensMessage (void)
       {
         case STANDARD:
         {
-          //if(GetNode()->GetId()==6)
-	         //std::cout << GetNode()->GetId() << " : " << *i << " : " << m_peersAddresses[m_leaderID-1] << " : " << invInfo.GetString() << "\n";
-
+          //std::cout << " packet size being sent is " << invInfo.GetSize() << "\n";
           m_peersSockets[*i]->Send (reinterpret_cast<const uint8_t*>(invInfo.GetString()), invInfo.GetSize(), 0);
           m_peersSockets[*i]->Send (delimiter, 1, 0);
-          //m_peersSockets[*i]->Send (delimiter, 1, 0);
 
-          //NS_LOG_INFO ("At time " << Simulator::Now ().GetSeconds ()
+        }
+
+          NS_LOG_INFO ("At time " << Simulator::Now ().GetSeconds ()
+                       << "s bitcoin miner " << GetNode ()->GetId ()
+                       << " sent a packet " << invInfo.GetString()
+  			         << " to " << *i);
+
+          //std::cout << "At time " << Simulator::Now ().GetSeconds ()
           //             << "s bitcoin miner " << GetNode ()->GetId ()
           //             << " sent a packet " << invInfo.GetString()
-  			   //      << " to " << *i);
+  			   //      << " to " << *i << "\n";
           break;
         }
 
       }
-    }
+
 
   /* 	//Send large packet
   	int k;
@@ -834,16 +872,23 @@ Consens::ConsensMessage (void)
   	} */
 
 
+    //}
 
+    //m_minerAverageBlockGenInterval = m_minerGeneratedBlocks/static_cast<double>(m_minerGeneratedBlocks+1)*m_minerAverageBlockGenInterval
+    //                               + (Simulator::Now ().GetSeconds () - m_previousBlockGenerationTime)/(m_minerGeneratedBlocks+1);
+    //m_minerAverageBlockSize = m_minerGeneratedBlocks/static_cast<double>(m_minerGeneratedBlocks+1)*m_minerAverageBlockSize
+    //                        + static_cast<double>(m_nextBlockSize)/(m_minerGeneratedBlocks+1);
+    //m_previousBlockGenerationTime = Simulator::Now ().GetSeconds ();
+    //m_minerGeneratedBlocks++;
 
     //m_messageCount++;
 
     //std::cout << "Current node " << minerId << " message count " << m_messageCount << " \n";
-
-    //This is now handled in the response of the proc and comp message
-    //ScheduleNextMiningEvent ();
-
-}
+    if(m_blockCount <= m_maxNumBlocks)
+    {
+      ScheduleNextMiningEvent ();
+    }
+  }
 
 void
 Consens::MineBlock (void)
@@ -1648,22 +1693,22 @@ Consens::CompMessage ()
   //std::cout << "!!!!! going into mineblock loop and switch !!!!! " << m_blockBroadcastType << "\n";
   //std::cout << " packet info " << invInfo.GetString() << "\n";
 
-  //for (std::vector<Ipv4Address>::const_iterator i = m_peersAddresses.begin(); i != m_peersAddresses.end(); ++i, ++count)
-  //{
-    Ipv4Address i = m_peersAddresses[0];
-    if(GetNode()->GetId() < m_leaderID)
-      i = m_peersAddresses[m_leaderID-1];
-    else
-      i = m_peersAddresses[m_leaderID];
+  for (std::vector<Ipv4Address>::const_iterator i = m_peersAddresses.begin(); i != m_peersAddresses.end(); ++i, ++count)
+  {
+    //Ipv4Address i = m_peersAddresses[0];
+    //if(GetNode()->GetId() < m_leaderID)
+    //  i = m_peersAddresses[m_leaderID-1];
+    //else
+    //  i = m_peersAddresses[m_leaderID];
 
     const uint8_t delimiter[] = "#";
 
     //if(GetNode()->GetId() == 0)
-      //std::cout << GetNode()->GetId() << " packet info to " << i << " : " << invInfo.GetString() << Simulator::Now().GetSeconds() << "\n";
+      //std::cout << GetNode()->GetId() << " packet info to " << *i << " : " << invInfo.GetString() << Simulator::Now().GetSeconds() << "\n";
 
-        m_peersSockets[i]->Send (reinterpret_cast<const uint8_t*>(invInfo.GetString()), invInfo.GetSize(), 0);
-        m_peersSockets[i]->Send (delimiter, 1, 0);
-
+        m_peersSockets[*i]->Send (reinterpret_cast<const uint8_t*>(invInfo.GetString()), invInfo.GetSize(), 0);
+        m_peersSockets[*i]->Send (delimiter, 1, 0);
+  }
   //m_messageCount++;
 
   //std::cout << "Current node " << minerId << " message count " << m_messageCount << " \n";
@@ -1686,15 +1731,15 @@ void
 Consens::ReceivedCompMessage(int consenBlock)
 {
   //Check to see if the compMessage was for the current block or previous block
-  m_nodeCompCount++;
 
   if(GetNode()->GetId()==m_leaderID)
   {
-    //std::cout << "Miner " << GetNode()->GetId() << " Recieved a comp message " << m_nodeCompCount << " : " << Simulator::Now().GetSeconds() << "\n";
+    //std::cout << "Miner " << GetNode()->GetId() << " Recieved a comp message " << m_blockCount << " : " << consenBlock << " : "<< Simulator::Now().GetSeconds() << "\n";
   }
 
-  if(GetNode()->GetId() == (m_leaderID) && m_blockCount <= m_maxNumBlocks && consenBlock >= m_maxNumBlocks)
+  if(GetNode()->GetId() == (m_leaderID) && m_blockCount <= m_maxNumBlocks && consenBlock >= m_blockCount)
   {
+   m_nodeCompCount++;
    ScheduleNextMiningEvent();
   }
   return;
@@ -1704,10 +1749,10 @@ void
 Consens::ReceivedStartMessage(void)
 {
 
-  if(GetNode()->GetId() == 0)
-  {
-    //std::cout << "Miner " << GetNode()->GetId() << " Recieved a start message " << m_nodeCompCount << " : " << Simulator::Now().GetSeconds() << "\n";
-  }
+  //if(GetNode()->GetId() == 0)
+  //{
+    //std::cout << "Miner " << GetNode()->GetId() << " Recieved a start message " << m_nodeCompCount << " : " << Simulator::Now().GetSeconds() << " : " << m_blockCount << "\n";
+  //}
   m_blockCount++;
   m_messageCount = 0;
   m_consensState = 0;
@@ -1721,14 +1766,20 @@ Consens::ReceivedProcMessage(void)
   //m_messageCount++;
 
   if(GetNode()->GetId() == m_leaderID)
-    //std::cout << GetNode()->GetId() << " Miner Recieved a proc message " << m_messageCount << " : " << Simulator::Now().GetSeconds() << "\n";
-  //if(m_blockCount <= m_maxNumBlocks)
-  //{
+  {
     if(m_consensState == 1)
     {
       //m_consensState = 0;
     }
-      ScheduleNextMiningEvent();
+    //std::cout << GetNode()->GetId() << " Miner Recieved a proc message " << m_messageCount << " : " << Simulator::Now().GetSeconds() << "\n";
+  }
+  //if(m_blockCount <= m_maxNumBlocks)
+  //{
+  if(m_consensState == 1)
+  {
+    //m_consensState = 0;
+  }
+  ScheduleNextMiningEvent();
   //}
   return;
 }
