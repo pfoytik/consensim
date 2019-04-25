@@ -200,17 +200,30 @@ main (int argc, char *argv[])
   else
   {
     minersHash = new double[noMiners];
-	minersRegions = new enum BitcoinRegion[noMiners];
+	  minersRegions = new enum BitcoinRegion[noMiners];
 
-    for(int i = 0; i < noMiners/16; i++)
+    if(noMiners < 16)
     {
-      for (int j = 0; j < 16 ; j++)
+      for(int i=0; i<noMiners; i++)
       {
-        minersHash[i*16 + j] = bitcoinMinersHash[j]*16/noMiners;
-        minersRegions[i*16 + j] = bitcoinMinersRegions[j];
+        for(int j=0; j<noMiners; j++)
+        {
+          minersHash[j]=bitcoinMinersHash[0];
+          minersRegions[j]=bitcoinMinersRegions[0];
+        }
       }
     }
-
+    else
+    {
+      for(int i = 0; i < noMiners/16; i++)
+      {
+        for (int j = 0; j < 16 ; j++)
+        {
+          minersHash[i*16 + j] = bitcoinMinersHash[j]*16/noMiners;
+          minersRegions[i*16 + j] = bitcoinMinersRegions[j];
+        }
+      }
+    }
   }
 
   averageBlockGenIntervalSeconds = averageBlockGenIntervalMinutes * secsPerMin;
@@ -289,7 +302,7 @@ main (int argc, char *argv[])
     bitcoinMinerHelper.SetAttribute("FixedBlockIntervalGeneration", DoubleValue(averageBlockGenIntervalSeconds));
   }
 
-  int leaderID = 4;
+  int leaderID = 1;
 
   for(auto &miner : miners)
   {

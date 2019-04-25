@@ -129,7 +129,7 @@ Consens::Consens () : BitcoinNode(), m_realAverageBlockGenIntervalSeconds(10*m_s
 
 
   m_requiredCount = 1;
-  m_nodeReqCount = 3;
+  m_nodeReqCount = 2;
   m_messageProc = 0.0000000001;
   m_specialCaseProc = 60;
   m_maxNumBlocks = 1000;
@@ -444,7 +444,7 @@ Consens::ScheduleNextMiningEvent (void)
     // Send message for special case (example being leader selection)
     //m_nextMiningEvent = Simulator::Schedule (Seconds(m_specialCaseProc), &Consens::SpecialCaseMessage, this);
     std::cout << "<!!!!!!!!!!!!!!!!> unfortunately we did not have the leader id set :( \n";
-    m_leaderID=4;
+    m_leaderID=1;
     //ScheduleNextMiningEvent();
   }
   //if the number of blocks required has not been processed
@@ -462,10 +462,10 @@ Consens::ScheduleNextMiningEvent (void)
       //m_messageProc+=0.1;
       double processDelay = distribution(m_generator);
       outputFile << GetNode()->GetId() << ",start," << processDelay << "," << Simulator::Now().GetNanoSeconds() << ", , \n";
-      if(GetNode()->GetId() == 8)
-      {
+      //if(GetNode()->GetId() == 8)
+      //{
         //std::cout << GetNode()->GetId() << " sending process message " << m_peersAddresses[2] << " : " << m_blockCount << " : " << m_messageCount << " : " << Simulator::Now().GetSeconds() << "\n";
-      }
+      //}
       //m_nextMiningEvent = Simulator::Schedule (NanoSeconds(distribution(generator)), &Consens::ConsensMessage, this);
       m_nextMiningEvent = Simulator::Schedule (NanoSeconds(processDelay), &Consens::ConsensMessage, this);
     }
