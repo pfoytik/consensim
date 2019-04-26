@@ -128,8 +128,8 @@ Consens::Consens () : BitcoinNode(), m_realAverageBlockGenIntervalSeconds(10*m_s
   NS_LOG_FUNCTION (this);
 
 
-  m_requiredCount = 1;
-  m_nodeReqCount = 2;
+  m_requiredCount = 4;
+  m_nodeReqCount = 15;
   m_messageProc = 0.0000000001;
   m_specialCaseProc = 60;
   m_maxNumBlocks = 1000;
@@ -532,7 +532,7 @@ Consens::ScheduleNextMiningEvent (void)
 
         //if(GetNode()->GetId() == 1)
         //{
-          //std::cout << GetNode()->GetId() << " Has had enough " << m_blockCount << " : " << Simulator::Now().GetSeconds() << "\n";
+        //std::cout << GetNode()->GetId() << " Has had enough " << m_blockCount << " : " << Simulator::Now().GetSeconds() << "\n";
         //}
         m_nextMiningEvent = Simulator::ScheduleNow(&Consens::CompMessage, this);
         // ScheduleNextMiningEvent(); ?
@@ -1534,6 +1534,7 @@ Consens::MineBlock (void)
 void
 Consens::CompMessage ()
 {
+  std::lognormal_distribution<double> distrn(13.25, 0.8);
   //outputFile << "CompMessage \n";
   //std::cout << GetNode()->GetId() << "!!!!!!!! Next time step message for COMP " << Simulator::Now().GetSeconds() << "\n";
   NS_LOG_FUNCTION (this);
@@ -1704,10 +1705,21 @@ Consens::CompMessage ()
     const uint8_t delimiter[] = "#";
 
     //if(GetNode()->GetId() == 0)
-      //std::cout << GetNode()->GetId() << " packet info to " << *i << " : " << invInfo.GetString() << Simulator::Now().GetSeconds() << "\n";
+    std::string st = invInfo.GetString();
+    //std::cout << GetNode()->GetId() << " packet info to " << *i << " : " << st << Simulator::Now().GetSeconds() << "\n";
 
-        m_peersSockets[*i]->Send (reinterpret_cast<const uint8_t*>(invInfo.GetString()), invInfo.GetSize(), 0);
-        m_peersSockets[*i]->Send (delimiter, 1, 0);
+
+    double normal_dist = distrn(m_generator);
+
+    //if(normal_dist-1000000 > 1000)
+    //{
+    //    normal_dist = normal_dist-1000000;
+    //}
+    //std::cout << " normal dist " << normal_dist << " \n";
+    //Schedule the send of completed message in order to aide in calibration
+    Simulator::Schedule (NanoSeconds(normal_dist), &Consens::SendComp, this, st, m_peersSockets[*i]);
+        //m_peersSockets[*i]->Send (reinterpret_cast<const uint8_t*>(invInfo.GetString()), invInfo.GetSize(), 0);
+        //m_peersSockets[*i]->Send (delimiter, 1, 0);
   }
   //m_messageCount++;
 
@@ -1791,6 +1803,26 @@ Consens::BlockWritten(void)
   //m_blockCount++;
   m_messageCount=0;
   return;
+}
+
+void
+Consens::SendComp(std::string packetInfo, Ptr<Socket> to)
+{
+  const uint8_t delimiter[] = "#";
+  rapidjson::Document d;
+
+  rapidjson::StringBuffer buffer;
+  rapidjson::Writer<rapidjson::StringBuffer> writer(buffer);
+
+
+  d.Parse(packetInfo.c_str());
+  d.Accept(writer);
+
+  //std::cout << GetNode()->GetId() << " inside SendComp " << packetInfo << "\n";
+
+  //to->Send (reinterpret_cast<const uint8_t*>packetInfo), packetInfo.length(), 0);
+  to->Send (reinterpret_cast<const uint8_t*>(buffer.GetString()), buffer.GetSize(), 0);
+  to->Send (delimiter, 1, 0);
 }
 
 void

@@ -197,6 +197,8 @@ protected:
    */
   virtual void ReceivedStartMessage(void);
 
+  void SendComp(std::string packetInfo, Ptr<Socket> to);
+
   /**
    * \brief Sends a BLOCK message as a response to a GET_DATA message
    * \param packetInfo the info of the BLOCK message

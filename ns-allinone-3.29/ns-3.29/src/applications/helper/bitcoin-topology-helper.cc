@@ -1145,9 +1145,13 @@ BitcoinTopologyHelper::BitcoinTopologyHelper (uint32_t noCpus, uint32_t totalNoN
         }
 
 
+    //Generate random values for datarate and Delay
+    //std::normal_distribution<doubl> distribution(0.5, 1);
+    //double net_delay =
+
 		//pointToPoint.SetDeviceAttribute ("DataRate", StringValue (bandwidthStream.str()));
-    pointToPoint.SetDeviceAttribute ("DataRate", StringValue ("1000Mbps"));
-    pointToPoint.SetChannelAttribute ("Delay", StringValue("0.5ms"));
+    pointToPoint.SetDeviceAttribute ("DataRate", StringValue ("10000Mbps"));
+    pointToPoint.SetChannelAttribute ("Delay", StringValue("0ms"));
 		//pointToPoint.SetChannelAttribute ("Delay", StringValue (latencyStringStream.str()));
 
         newDevices.Add (pointToPoint.Install (m_nodes.at (*miner).Get (0), m_nodes.at (*it).Get (0)));
