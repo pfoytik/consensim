@@ -128,8 +128,8 @@ Consens::Consens () : BitcoinNode(), m_realAverageBlockGenIntervalSeconds(10*m_s
   NS_LOG_FUNCTION (this);
 
 
-  m_requiredCount = 4;
-  m_nodeReqCount = 15;
+  m_requiredCount = 10;
+  m_nodeReqCount = 3;
   m_messageProc = 0.0000000001;
   m_specialCaseProc = 60;
   m_maxNumBlocks = 1000;
@@ -184,8 +184,16 @@ Consens::StartApplication ()    // Called at time specified by Start
   //std::string minId = std::to_string(GetNode()->GetId());
   //outFile.append(minId);
   //outFile.append(".csv");
-  outputFile.open(outFile);
-  outputFile << " first line of of the log \n";
+  //if(GetNode()->GetId()==m_leaderID)
+  //{
+    outputFile.open(outFile, std::ios_base::app);
+  //}
+  //else
+  //{
+  //  outputFile.open(outFile);
+  //}
+
+  //outputFile << " first line of of the log \n";
   //std::cout << " the node id is "  << GetNode()->GetId();
 
 
@@ -461,7 +469,11 @@ Consens::ScheduleNextMiningEvent (void)
       m_messageCount++;
       //m_messageProc+=0.1;
       double processDelay = distribution(m_generator);
-      outputFile << GetNode()->GetId() << ",start," << processDelay << "," << Simulator::Now().GetNanoSeconds() << ", , \n";
+
+      //if(GetNode()->GetId() != m_leaderID)
+      //{
+      //  outputFile << GetNode()->GetId() << ",start," << processDelay << "," << Simulator::Now().GetNanoSeconds() << ", , \n";
+      //}
       //if(GetNode()->GetId() == 8)
       //{
         //std::cout << GetNode()->GetId() << " sending process message " << m_peersAddresses[2] << " : " << m_blockCount << " : " << m_messageCount << " : " << Simulator::Now().GetSeconds() << "\n";
@@ -502,6 +514,15 @@ Consens::ScheduleNextMiningEvent (void)
           {
 
             m_blockCount++;
+
+            if(m_blockCount>m_maxNumBlocks)
+            {
+              //Add in final out put for time to find consensus x amount of transactions
+              //need to write this to file
+              outputFile << GetNode()->GetId() << "," << m_blockCount << "," << Simulator::Now().GetNanoSeconds() << ", , \n";
+              std::cout << m_blockCount << ", consented, " << m_leaderID << "," << GetNode()->GetId() << "," << Simulator::Now().GetNanoSeconds() << "," << m_nodeCompCount << "\n";
+            }
+
             m_nextBlockTime = m_blockGenTimeDistribution(m_generator)*m_blockGenBinSize*m_secondsPerMin
                             *( m_averageBlockGenIntervalSeconds/m_realAverageBlockGenIntervalSeconds )/m_hashRate;
 
@@ -517,7 +538,6 @@ Consens::ScheduleNextMiningEvent (void)
                          << "  min and  " << static_cast<int>(m_nextBlockTime) % m_secondsPerMin
                          << "s using Geometric Block Time Generation with parameter = "<< m_blockGenParameter);
 
-            std::cout << m_blockCount << ", consented, " << m_leaderID << "," << GetNode()->GetId() << "," << Simulator::Now().GetNanoSeconds() << "," << m_nodeCompCount << "\n";
             m_nodeCompCount = 0;
             m_nextMiningEvent = Simulator::ScheduleNow (&Consens::StartMessage, this);
             //m_nextMiningEvent = Simulator::Schedule (Seconds(m_messageProc), &Consens::StartMessage, this);
@@ -548,10 +568,11 @@ Consens::ScheduleNextMiningEvent (void)
       m_consensState = 1;
       m_messageCount = m_requiredCount;
       m_timeCompleted = Simulator::Now().GetSeconds();
-      return;
+
       //Simulator::Cancel (m_nextMiningEvent);
-      //std::cout << "<!!!!!!!!!!!!!!> " << GetNode()->GetId() << " this node has completed " << Simulator::Now().GetSeconds() << "\n";
+      std::cout << "<!!!!!!!!!!!!!!> " << GetNode()->GetId() << " this node has completed " << Simulator::Now().GetSeconds() << "\n";
     //}
+        return;
   }
 }
 
