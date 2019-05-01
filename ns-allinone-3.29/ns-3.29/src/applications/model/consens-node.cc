@@ -128,8 +128,8 @@ Consens::Consens () : BitcoinNode(), m_realAverageBlockGenIntervalSeconds(10*m_s
   NS_LOG_FUNCTION (this);
 
 
-  m_requiredCount = 10;
-  m_nodeReqCount = 3;
+  m_requiredCount = 1;
+  m_nodeReqCount = 15;
   m_messageProc = 0.0000000001;
   m_specialCaseProc = 60;
   m_maxNumBlocks = 1000;
